@@ -1,6 +1,7 @@
 <?php
     require_once "../classes/bouteille.php";
     require_once "../classes/appellation.php";
+    require_once "../classes/categorie.php";
 
     function connexionBD(): PDO
     {
@@ -24,6 +25,14 @@
         $reponse = $bdd->query("SELECT * FROM appellation where id_appellation = " . $id_appellation);
 
         return $reponse->fetchObject(Appellation::class );
+    }
+
+    function getCategorie( int $id_categorie ): Categorie
+    {
+        $bdd = connexionBD();
+        $reponse = $bdd->query("SELECT * FROM categorie where id_categorie = " . $id_categorie);
+
+        return $reponse->fetchObject(Categorie::class );
     }
 
     echo getBouteille(1);

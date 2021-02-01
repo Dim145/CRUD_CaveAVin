@@ -11,10 +11,12 @@ class Bouteille
     private int $id_categorie;
 
     private Appellation $appellation;
+    private Categorie   $categorie;
 
     public function setObjects(): void
     {
         $this->appellation = getAppellation($this->id_appellation);
+        $this->categorie   = getCategorie($this->id_categorie);
     }
 
     /**
@@ -112,7 +114,7 @@ class Bouteille
     {
         $this->id_appellation = $id_appellation;
 
-        $this->setObjects();
+        $this->appellation = $this->getAppellation($id_appellation);
     }
 
     /**
@@ -130,7 +132,7 @@ class Bouteille
     {
         $this->id_categorie = $id_categorie;
 
-        $this->setObjects();
+        $this->categorie = getCategorie($id_categorie);
     }
 
     /**
@@ -160,6 +162,7 @@ class Bouteille
                "prix: "      . $this->prix_bouteille      . "<br/>" .
                "id_cate: "   . $this->id_categorie        . "<br/>" .
                "id_appel: "  . $this->id_appellation      . "<br/><br/>" .
-                $this->appellation->__toString();
+                $this->appellation->__toString()          . "<br/>" .
+                $this->categorie->__toString();
     }
 }
