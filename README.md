@@ -8,7 +8,7 @@
 
 |      Nom      |  Prénom  |
 |---------------|----------|
-|*Boireaur*     | *Florian*|
+|*Boireau*      | *Florian*|
 |*Dubois*       | *Dimitri*|
 |*Mittlestaedt* | *Arthur* |
 
