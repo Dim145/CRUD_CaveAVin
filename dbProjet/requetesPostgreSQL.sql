@@ -175,10 +175,10 @@ CREATE TRIGGER trigDifferencePrixBouteille
     FOR EACH ROW
     EXECUTE PROCEDURE funcTrigDifferencePrixBouteille();
 
-UPDATE bouteille SET prix_bouteille = 23 WHERE volume_bouteille= 75;
-INSERT INTO bouteille VALUES(DEFAULT,'Zivorac de Neuilly', 75, 1180, 1800, 1, 2);
-INSERT INTO bouteille VALUES(DEFAULT,'Zivorac de Neuilly', 37.5, 1180, 1800, 1, 2);
-DELETE FROM bouteille WHERE nom_bouteille = 'Zivorac de Neuilly';
+--UPDATE bouteille SET prix_bouteille = 23 WHERE volume_bouteille= 75;
+--INSERT INTO bouteille VALUES(DEFAULT,'Zivorac de Neuilly', 75, 1180, 1800, 1, 2);
+--INSERT INTO bouteille VALUES(DEFAULT,'Zivorac de Neuilly', 37.5, 1180, 1800, 1, 2);
+--DELETE FROM bouteille WHERE nom_bouteille = 'Zivorac de Neuilly';
 
 --UPDATE bouteille SET prix_bouteille=10 WHERE volume_bouteille=75; --TEST
 
