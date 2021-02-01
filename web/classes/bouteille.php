@@ -5,10 +5,13 @@ class Bouteille
     private int    $id_bouteille;
     private string $nom_bouteille;
     private float  $volume_bouteille;
-    private string $millesime_bouteille;
+    private int $millesime_bouteille;
     private int    $prix_bouteille;
     private int    $id_appellation;
     private int $id_categorie;
+
+    // Valeurs de $volume_bouteille :
+    public const volumes = [37.5, 75, 150, 300, 500, 600, 900, 1200, 1500, 1800];
 
     private Appellation $appellation;
     private Categorie   $categorie;
@@ -64,23 +67,27 @@ class Bouteille
      */
     public function setVolumeBouteille(float $volume_bouteille): void
     {
-        $this->volume_bouteille = $volume_bouteille;
+        if(in_array($volume_bouteille, self::volumes))
+            $this->volume_bouteille = $volume_bouteille;
+        else;//TODO throw
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getMillesimeBouteille(): string
+    public function getMillesimeBouteille(): int
     {
         return $this->millesime_bouteille;
     }
 
     /**
-     * @param string $millesime_bouteille
+     * @param int $millesime_bouteille
      */
-    public function setMillesimeBouteille(string $millesime_bouteille): void
+    public function setMillesimeBouteille(int $millesime_bouteille): void
     {
-        $this->millesime_bouteille = $millesime_bouteille;
+        if($millesime_bouteille > 0 && $millesime_bouteille <= 2099)
+            $this->millesime_bouteille = $millesime_bouteille;
+        else;//TODO throw
     }
 
     /**
@@ -96,7 +103,9 @@ class Bouteille
      */
     public function setPrixBouteille(int $prix_bouteille): void
     {
-        $this->prix_bouteille = $prix_bouteille;
+        if($prix_bouteille > 0)
+            $this->prix_bouteille = $prix_bouteille;
+        else;//TODO throw
     }
 
     /**
