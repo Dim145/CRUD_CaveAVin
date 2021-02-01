@@ -25,7 +25,7 @@ class Appellation
     public function set_nom_appellation(string $nom_appellation) { $this->nom_appellation = $nom_appellation; }
 
     public function get_categorie_appellation():string                             { return $this->categorie_appellation; }
-    public function set_categorie_appellation(string $categorie_appid_appellation) { $this->id_appellation = $id_appellation; }
+    public function set_categorie_appellation(string $id_appellation) { $this->id_appellation = $id_appellation; }
 
     public function __toString():string
     {
