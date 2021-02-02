@@ -5,10 +5,10 @@ class Bouteille
     private int    $id_bouteille;
     private string $nom_bouteille;
     private float  $volume_bouteille;
-    private int $millesime_bouteille;
+    private int    $millesime_bouteille;
     private int    $prix_bouteille;
     private int    $id_appellation;
-    private int $id_categorie;
+    private int    $id_categorie;
 
     // Valeurs de $volume_bouteille :
     public const volumes = [37.5, 75, 150, 300, 500, 600, 900, 1200, 1500, 1800];
@@ -64,12 +64,14 @@ class Bouteille
 
     /**
      * @param float $volume_bouteille
+     * @throws Exception
      */
     public function setVolumeBouteille(float $volume_bouteille): void
     {
         if(in_array($volume_bouteille, self::volumes))
             $this->volume_bouteille = $volume_bouteille;
-        else;//TODO throw
+        else
+            throw new Exception("Le volume doit etre egale a une de ces valeurs: " . implode(" - ", self::volumes));
     }
 
     /**
@@ -82,12 +84,14 @@ class Bouteille
 
     /**
      * @param int $millesime_bouteille
+     * @throws Exception
      */
     public function setMillesimeBouteille(int $millesime_bouteille): void
     {
         if($millesime_bouteille > 0 && $millesime_bouteille <= 2099)
             $this->millesime_bouteille = $millesime_bouteille;
-        else;//TODO throw
+        else
+            throw new Exception("la millesime doit etre comprise entre 1 et 2099.");
     }
 
     /**
@@ -100,12 +104,14 @@ class Bouteille
 
     /**
      * @param int $prix_bouteille
+     * @throws Exception
      */
     public function setPrixBouteille(int $prix_bouteille): void
     {
-        if($prix_bouteille > 0)
+        if($prix_bouteille >= 0)
             $this->prix_bouteille = $prix_bouteille;
-        else;//TODO throw
+        else
+            throw new Exception("Le prix ne peut pas etre inférieur a 0");
     }
 
     /**
@@ -123,7 +129,7 @@ class Bouteille
     {
         $this->id_appellation = $id_appellation;
 
-        $this->appellation = $this->getAppellation($id_appellation);
+        $this->appellation = getAppellation($id_appellation);
     }
 
     /**
