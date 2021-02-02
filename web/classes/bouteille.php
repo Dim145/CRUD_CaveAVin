@@ -18,8 +18,8 @@ class Bouteille implements DatabaseObject
 
     public function setObjects(): void
     {
-        $this->appellation = getAppellation($this->id_appellation);
-        $this->categorie   = getCategorie($this->id_categorie);
+        $this->appellation = FonctionsUtiles::getAppellation($this->id_appellation);
+        $this->categorie   = FonctionsUtiles::getCategorie($this->id_categorie);
     }
 
     /**
@@ -129,7 +129,7 @@ class Bouteille implements DatabaseObject
     {
         $this->id_appellation = $id_appellation;
 
-        $this->appellation = getAppellation($id_appellation); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
+        $this->appellation = FonctionsUtiles::getAppellation($id_appellation); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
     }
 
     /**
@@ -147,7 +147,7 @@ class Bouteille implements DatabaseObject
     {
         $this->id_categorie = $id_categorie;
 
-        $this->categorie = getCategorie($id_categorie); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
+        $this->categorie = FonctionsUtiles::getCategorie($id_categorie); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
     }
 
     /**

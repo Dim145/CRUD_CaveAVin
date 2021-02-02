@@ -2,7 +2,7 @@
 
 class Categorie implements DataBaseObject
 {
-    private int    $id_categorie;
+    private int $id_categorie;
     private string $robe_bouteille;
     private string $sucrage_bouteille;
     private string $type_bouteille;
@@ -14,35 +14,57 @@ class Categorie implements DataBaseObject
     // Valeurs de $type_boutille :
     public const types = ['Vin tranquille', 'Vin effervescent', 'Vin doux naturel', 'Vin cuit'];
 
-    public function set_id_categorie($id_categorie) { $this->id_categorie = $id_categorie; }
-    public function get_id_categorie():int          { return $this->id_categorie; }
+    public function set_id_categorie($id_categorie)
+    {
+        $this->id_categorie = $id_categorie;
+    }
+
+    public function get_id_categorie(): int
+    {
+        return $this->id_categorie;
+    }
 
 
-    public function set_robe_bouteille($robe_bouteille) {
-        if(in_array($robe_bouteille, self::robes))
+    public function set_robe_bouteille($robe_bouteille)
+    {
+        if (in_array($robe_bouteille, self::robes))
             $this->robe_bouteille = $robe_bouteille;
         else;// TODO throw
     }
-    public function get_robe_bouteille():string { return $this->robe_bouteille; }
+
+    public function get_robe_bouteille(): string
+    {
+        return $this->robe_bouteille;
+    }
 
 
-    public function set_sucrage_bouteille($sucrage_bouteille) {
-        if(in_array($sucrage_bouteille, self::sucrages))
+    public function set_sucrage_bouteille($sucrage_bouteille)
+    {
+        if (in_array($sucrage_bouteille, self::sucrages))
             $this->sucrage_bouteille = $sucrage_bouteille;
         else;// TODO throw
     }
-    public function get_sucrage_bouteille():string { return $this->sucrage_bouteille; }
 
-    public function set_type_bouteille($type_bouteille) {
-        if(in_array($type_bouteille, self::types))
+    public function get_sucrage_bouteille(): string
+    {
+        return $this->sucrage_bouteille;
+    }
+
+    public function set_type_bouteille($type_bouteille)
+    {
+        if (in_array($type_bouteille, self::types))
             $this->type_bouteille = $type_bouteille;
         else;// TODO throw
     }
-    public function get_type_bouteille():string { return $this->type_bouteille; }
 
-    public function __toString():string
+    public function get_type_bouteille(): string
     {
-        return "id_categorie : ".$this->id_categorie."  |  robe_bouteille : ".$this->robe_bouteille."  |  sucrage_bouteille : ".$this->sucrage_bouteille."  |  type_bouteille : ".$this->type_bouteille;
+        return $this->type_bouteille;
+    }
+
+    public function __toString(): string
+    {
+        return "id_categorie : " . $this->id_categorie . "  |  robe_bouteille : " . $this->robe_bouteille . "  |  sucrage_bouteille : " . $this->sucrage_bouteille . "  |  type_bouteille : " . $this->type_bouteille;
     }
 
     function saveInDB(): void
