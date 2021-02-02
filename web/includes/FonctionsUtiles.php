@@ -1,7 +1,9 @@
 <?php
+    require_once "../classes/DataBaseObject.php";
     require_once "../classes/bouteille.php";
     require_once "../classes/appellation.php";
     require_once "../classes/categorie.php";
+    require_once "../classes/oenologue.php";
 
     function connexionBD(): PDO
     {
@@ -11,7 +13,7 @@
     function getBouteille( int $id_bouteille ): Bouteille
     {
         $bdd = connexionBD();
-        $reponse = $bdd->query("SELECT * FROM bouteille where id_bouteille = " . $id_bouteille);
+        $reponse = $bdd->query("SELECT * FROM bouteille where id_bouteille = $id_bouteille");
 
         $bouteille = $reponse->fetchObject(Bouteille::class );
         $bouteille->setObjects();
@@ -22,7 +24,7 @@
     function getAppellation( int $id_appellation ): Appellation
     {
         $bdd = connexionBD();
-        $reponse = $bdd->query("SELECT * FROM appellation where id_appellation = " . $id_appellation);
+        $reponse = $bdd->query("SELECT * FROM appellation where id_appellation = $id_appellation");
 
         return $reponse->fetchObject(Appellation::class );
     }
@@ -30,9 +32,18 @@
     function getCategorie( int $id_categorie ): Categorie
     {
         $bdd = connexionBD();
-        $reponse = $bdd->query("SELECT * FROM categorie where id_categorie = " . $id_categorie);
+        $reponse = $bdd->query("SELECT * FROM categorie where id_categorie = $id_categorie");
 
         return $reponse->fetchObject(Categorie::class );
+    }
+
+    function getOenologue( int $id_oenologue ): Oenologue
+    {
+        $bdd = connexionBD();
+
+        $reponse = $bdd->query("SELECT * FROM oenologue WHERE id_oenologue = $id_oenologue");
+
+        return $reponse->fetchObject(Oenologue::class);
     }
 
     echo getBouteille(1);

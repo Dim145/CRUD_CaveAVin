@@ -1,6 +1,6 @@
 <?php
 
-class Categorie
+class Categorie implements DataBaseObject
 {
     private int    $id_categorie;
     private string $robe_bouteille;
@@ -43,6 +43,16 @@ class Categorie
     public function __toString():string
     {
         return "id_categorie : ".$this->id_categorie."  |  robe_bouteille : ".$this->robe_bouteille."  |  sucrage_bouteille : ".$this->sucrage_bouteille."  |  type_bouteille : ".$this->type_bouteille;
+    }
+
+    function saveInDB(): void
+    {
+        // TODO: Implement saveInDB() method.
+    }
+
+    function setObjects(): void
+    {
+        // TODO: Implement setObjects() method.
     }
 }
 

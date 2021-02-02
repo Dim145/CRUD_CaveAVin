@@ -1,6 +1,6 @@
 <?php
 
-class Bouteille
+class Bouteille implements DatabaseObject
 {
     private int    $id_bouteille;
     private string $nom_bouteille;
@@ -129,7 +129,7 @@ class Bouteille
     {
         $this->id_appellation = $id_appellation;
 
-        $this->appellation = getAppellation($id_appellation);
+        $this->appellation = getAppellation($id_appellation); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
     }
 
     /**
@@ -147,7 +147,7 @@ class Bouteille
     {
         $this->id_categorie = $id_categorie;
 
-        $this->categorie = getCategorie($id_categorie);
+        $this->categorie = getCategorie($id_categorie); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
     }
 
     /**
@@ -179,5 +179,10 @@ class Bouteille
                "id_appel: "  . $this->id_appellation      . "<br/><br/>" .
                 $this->appellation->__toString()          . "<br/>" .
                 $this->categorie->__toString();
+    }
+
+    function saveInDB(): void
+    {
+        // TODO: Implement saveInDB() method.
     }
 }

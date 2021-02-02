@@ -1,6 +1,6 @@
 <?php
 
-class Appellation
+class Appellation implements DataBaseObject
 {
     private int    $id_appellation;
     private string $nom_appellation;
@@ -18,6 +18,16 @@ class Appellation
     public function __toString():string
     {
        return "id_appellation : ".$this->id_appellation."  |  nom_appellation : ".$this->nom_appellation."  |  categorie_appellation : ".$this->categorie_appellation;
+    }
+
+    function saveInDB(): void
+    {
+        // TODO: Implement saveInDB() method.
+    }
+
+    function setObjects(): void
+    {
+        // TODO: Implement setObjects() method.
     }
 }
 
