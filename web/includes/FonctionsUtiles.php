@@ -18,7 +18,7 @@ class FonctionsUtiles
         return self::$bdd;
     }
 
-    public static function closeBDD()
+    public static function closeBDD(): void
     {
         self::$bdd->commit();
         self::$bdd = null;
