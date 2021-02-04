@@ -1,6 +1,6 @@
 <?php
 
-class Appellation implements DataBaseObject
+class Appellation extends DataBaseObject
 {
     private int $id_appellation;
     private string $nom_appellation;
@@ -49,6 +49,18 @@ class Appellation implements DataBaseObject
     function setObjects(): void
     {
         // TODO: Implement setObjects() method.
+    }
+
+    public function getColumsName(): array
+    {
+        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+
+        $colums = array();
+
+        foreach ( $allAtribute as $attribute )
+            array_push($colums, $attribute->getName());
+
+        return $colums;
     }
 }
 

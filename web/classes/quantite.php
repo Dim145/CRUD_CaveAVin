@@ -1,6 +1,6 @@
 <?php
 
-class Quantite implements DataBaseObject
+class Quantite extends DataBaseObject
 {
 
     function saveInDB(): void
@@ -16,5 +16,17 @@ class Quantite implements DataBaseObject
     function __toString(): string
     {
         // TODO: Implement __toString() method.
+    }
+
+    public function getColumsName(): array
+    {
+        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+
+        $colums = array();
+
+        foreach ( $allAtribute as $attribute )
+            array_push($colums, $attribute->getName());
+
+        return $colums;
     }
 }

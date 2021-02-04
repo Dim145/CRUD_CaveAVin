@@ -1,6 +1,6 @@
 <?php
 
-class Categorie implements DataBaseObject
+class Categorie extends DataBaseObject
 {
     private int $id_categorie;
     private string $robe_bouteille;
@@ -75,6 +75,18 @@ class Categorie implements DataBaseObject
     function setObjects(): void
     {
         // TODO: Implement setObjects() method.
+    }
+
+    public function getColumsName(): array
+    {
+        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+
+        $colums = array();
+
+        foreach ( $allAtribute as $attribute )
+            array_push($colums, $attribute->getName());
+
+        return $colums;
     }
 }
 

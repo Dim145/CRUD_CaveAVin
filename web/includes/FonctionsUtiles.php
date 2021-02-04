@@ -82,6 +82,18 @@ class FonctionsUtiles
 
         return $reponse->fetchObject(Degustation::class);
     }
+
+    public function getHTMLTab( DataBaseObject $object ): string
+    {
+        $sRet = "";
+
+        foreach ( $object->getColumsValues() as $name => $value )
+        {
+            // ect...
+        }
+
+        return $sRet;
+    }
 }
 
-    echo FonctionsUtiles::getBouteille(1);
+    print_r(FonctionsUtiles::getBouteille(1)->getColumsValues());

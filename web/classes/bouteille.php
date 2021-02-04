@@ -1,6 +1,6 @@
 <?php
 
-class Bouteille implements DatabaseObject
+class Bouteille extends DatabaseObject
 {
     private int    $id_bouteille;
     private string $nom_bouteille;
@@ -13,8 +13,8 @@ class Bouteille implements DatabaseObject
     // Valeurs de $volume_bouteille :
     public const volumes = [37.5, 75, 150, 300, 500, 600, 900, 1200, 1500, 1800];
 
-    private Appellation $appellation;
-    private Categorie   $categorie;
+    protected Appellation $appellation;
+    protected Categorie   $categorie;
 
     public function setObjects(): void
     {
@@ -181,8 +181,20 @@ class Bouteille implements DatabaseObject
                 $this->categorie->__toString();
     }
 
-    function saveInDB(): void
+    public function saveInDB(): void
     {
         // TODO: Implement saveInDB() method.
+    }
+
+    public function getColumsName(): array
+    {
+        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+
+        $colums = array();
+
+        foreach ( $allAtribute as $attribute )
+            array_push($colums, $attribute->getName());
+
+        return $colums;
     }
 }
