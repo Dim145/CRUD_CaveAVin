@@ -64,7 +64,7 @@ class Categorie extends DataBaseObject
 
     public function __toString(): string
     {
-        return $this->id_categorie . " " . $this->robe_bouteille . " " . $this->sucrage_bouteille . " " . $this->type_bouteille . "<br/>";
+        return "<tr><td>" . $this->id_categorie . "</td><td>" . $this->robe_bouteille . "</td><td>" . $this->sucrage_bouteille . "</td><td>" . $this->type_bouteille . "</td></tr>";
     }
 
     function saveInDB(): void

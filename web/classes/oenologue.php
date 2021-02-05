@@ -27,7 +27,7 @@ class Oenologue extends DataBaseObject
 
     public function __toString(): string
     {
-        return "id_oenologue : " . $this->id_oenologue . "  |  nom_oenologue : " . $this->nom_oenologue;
+        return "<tr><td>" . $this->id_oenologue . "</td><td>" . $this->nom_oenologue . "</td></tr>";
     }
 
     function saveInDB(): void

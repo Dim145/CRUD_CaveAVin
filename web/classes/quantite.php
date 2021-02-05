@@ -2,20 +2,21 @@
 
 class Quantite extends DataBaseObject
 {
+    private string $nom_bouteille;
+    private int    $volume_bouteille;
+    private int    $millesime_bouteille;
+    private int    $qte_bouteille;
+
 
     function saveInDB(): void
     {
         // TODO: Implement saveInDB() method.
     }
 
-    function setObjects(): void
-    {
-        // TODO: Implement setObjects() method.
-    }
-
     function __toString(): string
     {
-        // TODO: Implement __toString() method.
+        return "<tr><td>" . $this->nom_bouteille       . "</td><td>" . $this->volume_bouteille . "</td><td>"
+                          . $this->millesime_bouteille . "</td><td>" . $this->qte_bouteille    . "</td></tr>";
     }
 
     public function getColumsName(): array
