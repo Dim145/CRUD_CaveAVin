@@ -91,7 +91,7 @@ class FonctionsUtiles
         {
             return self::getAllFromClass((new ReflectionClass($className)));
         }
-        catch (ReflectionException)
+        catch (ReflectionException $e)
         {
             return array();
         }

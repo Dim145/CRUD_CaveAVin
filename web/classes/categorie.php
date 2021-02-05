@@ -2,7 +2,7 @@
 
 class Categorie extends DataBaseObject
 {
-    private int $id_categorie;
+    private int    $id_categorie;
     private string $robe_bouteille;
     private string $sucrage_bouteille;
     private string $type_bouteille;
@@ -29,7 +29,8 @@ class Categorie extends DataBaseObject
     {
         if (in_array($robe_bouteille, self::robes))
             $this->robe_bouteille = $robe_bouteille;
-        else;// TODO throw
+        else
+            throw new Exception("valeur de robe invalide");
     }
 
     public function get_robe_bouteille(): string
@@ -42,7 +43,8 @@ class Categorie extends DataBaseObject
     {
         if (in_array($sucrage_bouteille, self::sucrages))
             $this->sucrage_bouteille = $sucrage_bouteille;
-        else;// TODO throw
+        else
+            throw new Exception("Valeur de sucrage invalide");
     }
 
     public function get_sucrage_bouteille(): string
@@ -54,7 +56,8 @@ class Categorie extends DataBaseObject
     {
         if (in_array($type_bouteille, self::types))
             $this->type_bouteille = $type_bouteille;
-        else;// TODO throw
+        else
+            throw new Exception("Type De bouteille invalide");
     }
 
     public function get_type_bouteille(): string
@@ -74,7 +77,7 @@ class Categorie extends DataBaseObject
 
     function setObjects(): void
     {
-        // TODO: Implement setObjects() method.
+        // Ne fais rien car pas d'objets dans categories
     }
 
     public function getColumsName(): array
