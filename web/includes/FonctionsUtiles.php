@@ -7,10 +7,17 @@
     require_once "../classes/categorie.php";
     require_once "../classes/oenologue.php";
 
+/**
+ * Class FonctionsUtiles
+ */
 class FonctionsUtiles
 {
     private static ?PDO $bdd = null;
 
+    /**
+     * Retourne une PDO déjà instanciée ou en instancie une avant de la retourner
+     * @return PDO L'instance actuelle de PDO
+     */
     public static function getBDD(): PDO
     {
         if( self::$bdd == null ) self::$bdd = self::connexionBD();
@@ -18,17 +25,28 @@ class FonctionsUtiles
         return self::$bdd;
     }
 
+    /**
+     * Ferme la PDO
+     */
     public static function closeBDD(): void
     {
         self::$bdd->commit();
         self::$bdd = null;
     }
 
+    /**
+     * Connexion a la base de donnée
+     * @return PDO L'instance de PDO
+     */
     public static function connexionBD(): PDO
     {
         return new PDO('pgsql:host=postgresql-cavevin.alwaysdata.net;dbname=cavevin_base1', 'cavevin', 'iYMYpR7X@X@$qPDN', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
 
+    /**
+     * @param int $id_bouteille L'identifiant de la bouteille voulue
+     * @return Bouteille Objet de type Bouteille
+     */
     public static function getBouteille(int $id_bouteille): Bouteille
     {
         $bdd = self::getBDD();
@@ -40,6 +58,10 @@ class FonctionsUtiles
         return $bouteille;
     }
 
+    /**
+     * @param int $id_appellation L'identifiant de l'appellation voulue
+     * @return Appellation Objet de type Appellation
+     */
     public static function getAppellation(int $id_appellation): Appellation
     {
         $bdd = self::getBDD();
@@ -48,6 +70,10 @@ class FonctionsUtiles
         return $reponse->fetchObject(Appellation::class);
     }
 
+    /**
+     * @param int $id_categorie L'identifiant de la catégorie voulue
+     * @return Categorie Objet de type Categorie
+     */
     public static function getCategorie(int $id_categorie): Categorie
     {
         $bdd = self::getBDD();
@@ -56,6 +82,10 @@ class FonctionsUtiles
         return $reponse->fetchObject(Categorie::class);
     }
 
+    /**
+     * @param int $id_oenologue L'identifiant de l'oenologue voulue
+     * @return Oenologue Objet de type Oenologue
+     */
     public static function getOenologue(int $id_oenologue): Oenologue
     {
         $bdd = self::getBDD();
@@ -65,6 +95,10 @@ class FonctionsUtiles
         return $reponse->fetchObject(Oenologue::class);
     }
 
+    /**
+     * @param int $id_degustation L'identifiant de la dégustation voulue
+     * @return Degustation Objet de type Dégustation
+     */
     public static function getDegustation(int $id_degustation): Degustation
     {
         $bdd = self::getBDD();
@@ -74,6 +108,10 @@ class FonctionsUtiles
         return $reponse->fetchObject(Degustation::class);
     }
 
+    /**
+     * @param int $id_quantite
+     * @return Quantite Objet de type Quantité
+     */
     public static function getQuantite(int $id_quantite): Quantite
     {
         $bdd = self::getBDD();
@@ -83,6 +121,11 @@ class FonctionsUtiles
         return $reponse->fetchObject(Degustation::class);
     }
 
+    /**
+     * Retourne un tableau affichant l'objet en paramètre
+     * @param DataBaseObject $object Objet a afficher
+     * @return string chaine d'affichage
+     */
     public function getHTMLTab( DataBaseObject $object ): string
     {
         $sRet = "";

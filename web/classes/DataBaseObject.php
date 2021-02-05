@@ -1,6 +1,10 @@
 <?php
 
-
+/**
+ * Class DataBaseObject
+ * Objet abstrait qui permettra de condenser le code dans le but d'afficher un DataBaseObject
+ * et non plus un objet précis
+ */
 abstract class DataBaseObject
 {
     private ?ReflectionClass $reflexion = null;
