@@ -3,26 +3,16 @@
     require_once "../classes/appellation.php";
     require_once "../includes/FonctionsUtiles.php";
 
-    FonctionsUtiles::getDebutHTML("Test Appellation");
+    echo FonctionsUtiles::getDebutHTML("Test Appellation");
     $pdo = FonctionsUtiles::getBDD();
 
-
-    $requete = $pdo->prepare("select * from " . $_GET['table']);
-    $requete->execute();
-
-    $tab = FonctionsUtiles::faireFetch($_GET['table'], $requete);
+    if( !isset($_GET['table'])) die();
 
     echo("<table>");
-    while($tab != null)
-    {
-        echo($tab);
-        $tab = FonctionsUtiles::faireFetch($_GET['table'], $requete);
-    }
+    $tab = FonctionsUtiles::getAllFromClassName($_GET['table']);
+    foreach ( $tab as $obj ) echo $obj;
     echo("</table>");
 
-
-
-    FonctionsUtiles::getBDD();
-    FonctionsUtiles::getFinHTML();
+    echo FonctionsUtiles::getFinHTML();
 
 ?>

@@ -43,30 +43,57 @@ class FonctionsUtiles
     /**
      * Fais un fetch en fonction de la classe voulue en paramètre
      * @param string $get classe visée
-     * @return mixed Objet qui correspond au fetch
+     * @return DataBaseObject|null Objet qui correspond au fetch
      */
-    public static function faireFetch(string $get, PDOStatement $requete)
+    public static function faireFetch(string $get, PDOStatement $requete): ?DataBaseObject
     {
-        if($get == "appellation")
-            return $requete->fetchObject(Appellation::class);
-        if($get == "bouteille")
+        $ref = new ReflectionClass($get);
+        $obj = $requete->fetchObject($ref->getName());
+
+        if( $obj == false ) return null;
+
+        $obj->setObjects();
+
+        return $obj;
+    }
+
+    /**
+     * Récupère toutes les instance d'une class dans la base de donnée
+     * @param ReflectionClass $get classe visée
+     * @return DataBaseObject[] tableau d'objet correpondant
+     */
+    public static function getAllFromClass( ReflectionClass $class ): array
+    {
+        $bdd = self::getBDD();
+
+        $requete = $bdd->query("SELECT * FROM $class->name");
+
+        $tab = array();
+
+        while( ($obj = $requete->fetchObject($class->getName())) != null )
         {
-            $obj = $requete->fetchObject(Bouteille::class);
             $obj->setObjects();
-            return $obj;
+            array_push($tab, $obj);
         }
-        if($get == "categorie")
-            return $requete->fetchObject(Categorie::class);
-        if($get == "degustation")
+
+        return $tab;
+    }
+
+    /**
+     * Récupère toutes les instance d'une class dans la base de donnée selon son nom
+     * @param string $get nom de la classe visée
+     * @return DataBaseObject[] tableau d'objet correpondant
+     */
+    public static function getAllFromClassName( string $class ): array
+    {
+        try
         {
-            $obj = $requete->fetchObject(Degustation::class);
-            $obj->setObjects();
-            return $obj;
+            return self::getAllFromClass((new ReflectionClass($class)));
         }
-        if($get == "oenologue")
-            return $requete->fetchObject(Oenologue::class);
-        if($get == "quantite")
-            return $requete->fetchObject(Quantite::class);
+        catch (ReflectionException $e)
+        {
+            return array();
+        }
     }
 
     /**
