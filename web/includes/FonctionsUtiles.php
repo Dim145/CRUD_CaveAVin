@@ -39,6 +39,36 @@ class FonctionsUtiles
             </html>";
     }
 
+
+    /**
+     * Fais un fetch en fonction de la classe voulue en paramètre
+     * @param string $get classe visée
+     * @return mixed Objet qui correspond au fetch
+     */
+    public static function faireFetch(string $get, PDOStatement $requete)
+    {
+        if($get == "appellation")
+            return $requete->fetchObject(Appellation::class);
+        if($get == "bouteille")
+        {
+            $obj = $requete->fetchObject(Bouteille::class);
+            $obj->setObjects();
+            return $obj;
+        }
+        if($get == "categorie")
+            return $requete->fetchObject(Categorie::class);
+        if($get == "degustation")
+        {
+            $obj = $requete->fetchObject(Degustation::class);
+            $obj->setObjects();
+            return $obj;
+        }
+        if($get == "oenologue")
+            return $requete->fetchObject(Oenologue::class);
+        if($get == "quantite")
+            return $requete->fetchObject(Quantite::class);
+    }
+
     /**
      * Retourne une PDO déjà instanciée ou en instancie une avant de la retourner
      * @return PDO L'instance actuelle de PDO

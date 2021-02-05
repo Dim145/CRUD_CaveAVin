@@ -2,17 +2,19 @@
 
 class Degustation extends DatabaseObject
 {
-    private int      $id_degustation;
-    private int      $note_degustation;
-    private DateTime $date_degustation;
-    private int      $id_bouteille;
-    private int      $id_oenologue;
+    private int    $id_degustation;
+    private int    $note_degustation;
+    private string $date_degustation;
+    private int    $id_bouteille;
+    private int    $id_oenologue;
 
+    protected DateTime  $date;
     protected Bouteille $bouteille;
     protected Oenologue $oenologue;
 
     public function setObjects(): void
     {
+        $this->date      = new DateTime($this->date_degustation);
         $this->bouteille = FonctionsUtiles::getBouteille($this->id_bouteille);
         $this->oenologue = FonctionsUtiles::getOenologue($this->id_oenologue);
     }
@@ -24,9 +26,9 @@ class Degustation extends DatabaseObject
 
     function __toString(): string
     {
-        "<tr><td>" . $this->id_degustation   . "</td><td>" . $this->note_degustation . "</td><td>"
-                   . $this->date_degustation . "</td><td>" . $this->id_bouteille     . "</td><td>"
-                   . $this->id_oenologue     . "</td></tr>";
+        return "<tr><td>" . $this->id_degustation   . "</td><td>" . $this->note_degustation . "</td><td>"
+                          . $this->date_degustation . "</td><td>" . $this->id_bouteille     . "</td><td>"
+                          . $this->id_oenologue     . "</td></tr>";
     }
 
     public function getColumsName(): array

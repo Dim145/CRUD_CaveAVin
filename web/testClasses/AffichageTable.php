@@ -7,16 +7,16 @@
     $pdo = FonctionsUtiles::getBDD();
 
 
-    $requete = $pdo->prepare("select * from Appellation");
+    $requete = $pdo->prepare("select * from " . $_GET['table']);
     $requete->execute();
 
-    $tab = $requete->fetchObject(Appellation::class);
+    $tab = FonctionsUtiles::faireFetch($_GET['table'], $requete);
 
     echo("<table>");
     while($tab != null)
     {
         echo($tab);
-        $tab = $requete->fetchObject(Appellation::class);
+        $tab = FonctionsUtiles::faireFetch($_GET['table'], $requete);
     }
     echo("</table>");
 
