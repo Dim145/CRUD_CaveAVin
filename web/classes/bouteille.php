@@ -177,8 +177,8 @@ class Bouteille extends DatabaseObject
                              $this->prix_bouteille            . "</td><td>" .
                              $this->id_categorie              . "</td><td>" .
                              $this->id_appellation            . "</td><td>" .
-                             $this->appellation->__toString() . "</td><td>" .
-                             $this->categorie->__toString()   . "</td></tr>";
+                             $this->appellation->get_nom_appellation() . "</td><td>" .
+                             $this->categorie->get_robe_bouteille()   . "</td></tr>";
     }
 
     public function saveInDB(): void
