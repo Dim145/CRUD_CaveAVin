@@ -12,6 +12,8 @@ class Quantite extends DataBaseObject
     {
         // TODO: Implement saveInDB() method.
     }
+    function setObjects(): void
+    {}
 
     function __toString(): string
     {
