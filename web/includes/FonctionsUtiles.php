@@ -1,5 +1,5 @@
 <?php
-    require_once "connexionPerso.php";
+    require_once "../../connexionPerso.php";
     require_once "../classes/DataBaseObject.php";
     require_once "../classes/degustation.php";
     require_once "../classes/quantite.php";
