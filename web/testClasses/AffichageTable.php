@@ -11,7 +11,7 @@
     // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
     // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
     echo("<table>");
-    $tab = FonctionsUtiles::getAllFromClassName($_GET['table']);
+    $tab = FonctionsUtiles::getAllFromClassName(htmlspecialchars($_GET['table']));
     foreach ( $tab as $obj ) echo $obj;
     echo("</table>");
 
