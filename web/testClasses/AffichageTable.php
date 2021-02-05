@@ -8,6 +8,8 @@
 
     if( !isset($_GET['table'])) die();
 
+    // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
+    // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
     echo("<table>");
     $tab = FonctionsUtiles::getAllFromClassName($_GET['table']);
     foreach ( $tab as $obj ) echo $obj;

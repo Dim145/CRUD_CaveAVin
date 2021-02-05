@@ -21,7 +21,7 @@ class FonctionsUtiles
      */
     public static function getDebutHTML(string $titre):string
     {
-        return "<html>
+        return "<html lang=\"fr\">
                     <head>
                         <title>$titre</title>
                         <link href='../style/style.css' rel='stylesheet' type='text/css'/>
@@ -59,7 +59,7 @@ class FonctionsUtiles
 
     /**
      * Récupère toutes les instance d'une class dans la base de donnée
-     * @param ReflectionClass $get classe visée
+     * @param ReflectionClass $class classe visée
      * @return DataBaseObject[] tableau d'objet correpondant
      */
     public static function getAllFromClass( ReflectionClass $class ): array
@@ -81,16 +81,16 @@ class FonctionsUtiles
 
     /**
      * Récupère toutes les instance d'une class dans la base de donnée selon son nom
-     * @param string $get nom de la classe visée
+     * @param string $className nom de la classe visée
      * @return DataBaseObject[] tableau d'objet correpondant
      */
-    public static function getAllFromClassName( string $class ): array
+    public static function getAllFromClassName( string $className ): array
     {
         try
         {
-            return self::getAllFromClass((new ReflectionClass($class)));
+            return self::getAllFromClass((new ReflectionClass($className)));
         }
-        catch (ReflectionException $e)
+        catch (ReflectionException)
         {
             return array();
         }
