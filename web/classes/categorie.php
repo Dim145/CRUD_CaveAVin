@@ -62,11 +62,6 @@ class Categorie extends DataBaseObject
         return $this->type_bouteille;
     }
 
-    public function __toString(): string
-    {
-        return "<tr><td>" . $this->robe_bouteille . "</td><td>" . $this->sucrage_bouteille . "</td><td>" . $this->type_bouteille . "</td></tr>";
-    }
-
     function saveInDB(): void
     {
         // TODO: Implement saveInDB() method.
@@ -87,6 +82,11 @@ class Categorie extends DataBaseObject
             array_push($colums, $attribute->getName());
 
         return $colums;
+    }
+
+    public function __toString(): string
+    {
+        return "<tr><td>" . $this->robe_bouteille . "</td><td>" . $this->sucrage_bouteille . "</td><td>" . $this->type_bouteille . "</td></tr>";
     }
 }
 

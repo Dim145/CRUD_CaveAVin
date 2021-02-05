@@ -25,11 +25,6 @@ class Oenologue extends DataBaseObject
         $this->nom_oenologue = $nom_oenologue;
     }
 
-    public function __toString(): string
-    {
-        return "<tr><td>" . $this->nom_oenologue . "</td></tr>";
-    }
-
     function saveInDB(): void
     {
         // TODO: Implement saveInDB() method.
@@ -50,5 +45,10 @@ class Oenologue extends DataBaseObject
             array_push($colums, $attribute->getName());
 
         return $colums;
+    }
+
+    public function __toString(): string
+    {
+        return "<tr><td>" . $this->nom_oenologue . "</td></tr>";
     }
 }

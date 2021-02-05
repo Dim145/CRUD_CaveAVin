@@ -87,8 +87,6 @@ class Quantite extends DataBaseObject
         $this->qte_bouteille = $qte_bouteille;
     }
 
-
-
     function setObjects(): void
     {}
 
