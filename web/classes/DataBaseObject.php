@@ -17,7 +17,7 @@ abstract class DataBaseObject
 
     protected function getReflexion(): ReflectionClass
     {
-        if( $this->reflexion == null ) $this->reflexion = new ReflectionClass(objectOrClass: $this);
+        if( $this->reflexion == null ) $this->reflexion = new ReflectionClass($this);
 
         return $this->reflexion;
     }

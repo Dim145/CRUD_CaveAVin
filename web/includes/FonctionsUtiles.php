@@ -15,6 +15,31 @@ class FonctionsUtiles
     private static ?PDO $bdd = null;
 
     /**
+     * Crée le debut de la page HTML
+     * @param string $titre Le titre de la page
+     * @return string Le contenu de la page
+     */
+    public static function getDebutHTML(string $titre):string
+    {
+        return "<html>
+                    <head>
+                        <title>$titre</title>
+                        <link href='../style/style.css' rel='stylesheet' type='text/css'/>
+                    </head>
+                    <body>";
+    }
+
+    /**
+     * crée la fin de la page HTML
+     * @return string Le contenu de la page
+     */
+    public static function getFinHTML():string
+    {
+        return "</body>
+            </html>";
+    }
+
+    /**
      * Retourne une PDO déjà instanciée ou en instancie une avant de la retourner
      * @return PDO L'instance actuelle de PDO
      */
@@ -139,4 +164,4 @@ class FonctionsUtiles
     }
 }
 
-    print_r(FonctionsUtiles::getBouteille(1)->getColumsValues());
+    //print_r(FonctionsUtiles::getBouteille(1)->getColumsValues());

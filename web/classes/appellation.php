@@ -38,7 +38,7 @@ class Appellation extends DataBaseObject
 
     public function __toString(): string
     {
-        return "id_appellation : " . $this->id_appellation . "  |  nom_appellation : " . $this->nom_appellation . "  |  categorie_appellation : " . $this->categorie_appellation;
+        return "<tr><td>" . $this->id_appellation . "</td><td>" . $this->nom_appellation . "</td><td>" . $this->categorie_appellation . "</td></tr>";
     }
 
     function saveInDB(): void
