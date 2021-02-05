@@ -4,7 +4,6 @@
     require_once "../includes/FonctionsUtiles.php";
 
     echo FonctionsUtiles::getDebutHTML("Test Appellation");
-    $pdo = FonctionsUtiles::getBDD();
 
     if( !isset($_GET['table'])) die();
 

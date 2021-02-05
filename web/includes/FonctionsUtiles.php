@@ -1,4 +1,5 @@
 <?php
+    require_once "connexionPerso.php";
     require_once "../classes/DataBaseObject.php";
     require_once "../classes/degustation.php";
     require_once "../classes/quantite.php";
@@ -122,7 +123,7 @@ class FonctionsUtiles
      */
     public static function connexionBD(): PDO
     {
-        return new PDO('pgsql:host=postgresql-cavevin.alwaysdata.net;dbname=cavevin_base1', 'cavevin', 'iYMYpR7X@X@$qPDN', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        return connexionBD();
     }
 
     /**
