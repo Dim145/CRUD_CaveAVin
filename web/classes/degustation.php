@@ -26,8 +26,8 @@ class Degustation extends DatabaseObject
 
     function __toString(): string
     {
-        return "<tr><td>" . $this->id_degustation   . "</td><td>" . $this->note_degustation             . "</td><td>"
-                          . $this->date_degustation . "</td><td>" . $this->bouteille->getNomBouteille() . "</td><td>"
+        return "<tr><td>" . $this->note_degustation . "</td><td>" . $this->date_degustation . "</td><td>"
+                          . $this->bouteille->getNomBouteille()   . "</td><td>"
                           . $this->oenologue->get_nom_oenologue() . "</td></tr>";
     }
 
