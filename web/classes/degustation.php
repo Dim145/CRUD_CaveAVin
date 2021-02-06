@@ -12,6 +12,91 @@ class Degustation extends DatabaseObject
     protected Bouteille $bouteille;
     protected Oenologue $oenologue;
 
+    /**
+     * @return int
+     */
+    public function getIdDegustation(): int
+    {
+        return $this->id_degustation;
+    }
+
+    /**
+     * @param int $id_degustation
+     */
+    public function setIdDegustation(int $id_degustation): void
+    {
+        $this->id_degustation = $id_degustation;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNoteDegustation(): int
+    {
+        return $this->note_degustation;
+    }
+
+    /**
+     * @param int $note_degustation
+     */
+    public function setNoteDegustation(int $note_degustation): void
+    {
+        if($note_degustation >=0 && $note_degustation <=20)
+            $this->note_degustation = $note_degustation;
+        else
+            throw new Exception("La note n'est pas comprise entre 0 et 20");
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateDegustation(): string
+    {
+        return $this->date_degustation;
+    }
+
+    /**
+     * @param string $date_degustation
+     */
+    public function setDateDegustation(string $date_degustation): void
+    {
+        $this->date_degustation = $date_degustation;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdBouteille(): int
+    {
+        return $this->id_bouteille;
+    }
+
+    /**
+     * @param int $id_bouteille
+     */
+    public function setIdBouteille(int $id_bouteille): void
+    {
+        $this->id_bouteille = $id_bouteille;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdOenologue(): int
+    {
+        return $this->id_oenologue;
+    }
+
+    /**
+     * @param int $id_oenologue
+     */
+    public function setIdOenologue(int $id_oenologue): void
+    {
+        $this->id_oenologue = $id_oenologue;
+    }
+
+
+
     public function setObjects(): void
     {
         $this->date      = new DateTime($this->date_degustation);
@@ -24,13 +109,6 @@ class Degustation extends DatabaseObject
         // TODO: Implement saveInDB() method.
     }
 
-    function __toString(): string
-    {
-        return "<tr><td>" . $this->id_degustation   . "</td><td>" . $this->note_degustation             . "</td><td>"
-                          . $this->date_degustation . "</td><td>" . $this->bouteille->getNomBouteille() . "</td><td>"
-                          . $this->oenologue->get_nom_oenologue() . "</td></tr>";
-    }
-
     public function getColumsName(): array
     {
         $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
@@ -41,5 +119,12 @@ class Degustation extends DatabaseObject
             array_push($colums, $attribute->getName());
 
         return $colums;
+    }
+
+    function __toString(): string
+    {
+        return "<tr><td>" . $this->note_degustation . "</td><td>" . $this->date_degustation . "</td><td>"
+            . $this->bouteille->getNomBouteille()   . "</td><td>"
+            . $this->oenologue->get_nom_oenologue() . "</td></tr>";
     }
 }

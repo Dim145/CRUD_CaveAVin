@@ -168,19 +168,6 @@ class Bouteille extends DatabaseObject
         $this->id_appellation = $appellation->get_id_appellation();
     }
 
-    public function __toString(): string
-    {
-        return  "<tr><td>" . $this->id_bouteille              . "</td><td>" .
-                             $this->nom_bouteille             . "</td><td>" .
-                             $this->volume_bouteille          . "</td><td>" .
-                             $this->millesime_bouteille       . "</td><td>" .
-                             $this->prix_bouteille            . "</td><td>" .
-                             $this->id_categorie              . "</td><td>" .
-                             $this->id_appellation            . "</td><td>" .
-                             $this->appellation->get_nom_appellation() . "</td><td>" .
-                             $this->categorie->get_robe_bouteille()   . "</td></tr>";
-    }
-
     public function saveInDB(): void
     {
         // TODO: Implement saveInDB() method.
@@ -196,5 +183,17 @@ class Bouteille extends DatabaseObject
             array_push($colums, $attribute->getName());
 
         return $colums;
+    }
+
+    public function __toString(): string
+    {
+        return  "<tr><td>" . $this->nom_bouteille             . "</td><td>" .
+            $this->volume_bouteille          . "</td><td>" .
+            $this->millesime_bouteille       . "</td><td>" .
+            $this->prix_bouteille            . "</td><td>" .
+            $this->id_categorie              . "</td><td>" .
+            $this->id_appellation            . "</td><td>" .
+            $this->appellation->get_nom_appellation() . "</td><td>" .
+            $this->categorie->get_robe_bouteille()   . "</td></tr>";
     }
 }
