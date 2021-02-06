@@ -40,24 +40,6 @@ class FonctionsUtiles
             </html>";
     }
 
-
-    /**
-     * Fais un fetch en fonction de la classe voulue en paramètre
-     * @param string $get classe visée
-     * @return DataBaseObject|null Objet qui correspond au fetch
-     */
-    public static function faireFetch(string $get, PDOStatement $requete): ?DataBaseObject
-    {
-        $ref = new ReflectionClass($get);
-        $obj = $requete->fetchObject($ref->getName());
-
-        if( $obj == false ) return null;
-
-        $obj->setObjects();
-
-        return $obj;
-    }
-
     /**
      * Récupère toutes les instance d'une class dans la base de donnée
      * @param ReflectionClass $class classe visée
@@ -203,23 +185,4 @@ class FonctionsUtiles
 
         return $reponse->fetchObject(Degustation::class);
     }
-
-    /**
-     * Retourne un tableau affichant l'objet en paramètre
-     * @param DataBaseObject $object Objet a afficher
-     * @return string chaine d'affichage
-     */
-    public function getHTMLTab( DataBaseObject $object ): string
-    {
-        $sRet = "";
-
-        foreach ( $object->getColumsValues() as $name => $value )
-        {
-            // ect...
-        }
-
-        return $sRet;
-    }
 }
-
-    //print_r(FonctionsUtiles::getBouteille(1)->getColumsValues());

@@ -88,9 +88,11 @@ class Quantite extends DataBaseObject
     }
 
     function setObjects(): void
-    {}
+    {
+        // Ne fais rien car pas d'objets dans categories
+    }
 
-    public function getColumsName(): array
+    public function getColumsName( bool $includeSubObjects ): array
     {
         $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
 

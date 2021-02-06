@@ -7,8 +7,8 @@ class Degustation extends DatabaseObject
     private string $date_degustation;
     private int    $id_bouteille;
     private int    $id_oenologue;
-
     protected DateTime  $date;
+
     protected Bouteille $bouteille;
     protected Oenologue $oenologue;
 
@@ -109,7 +109,7 @@ class Degustation extends DatabaseObject
         // TODO: Implement saveInDB() method.
     }
 
-    public function getColumsName(): array
+    public function getColumsName( bool $includeSubObjects ): array
     {
         $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
 
@@ -117,6 +117,12 @@ class Degustation extends DatabaseObject
 
         foreach ( $allAtribute as $attribute )
             array_push($colums, $attribute->getName());
+
+        if( $includeSubObjects )
+        {
+            array_push($colums, $this->bouteille->getColumsName(false)[1]); // second attribut = plus important apres l'id
+            array_push($colums, $this->oenologue->getColumsName(false)[1]);
+        }
 
         return $colums;
     }

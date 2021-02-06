@@ -9,9 +9,9 @@ abstract class DataBaseObject
 {
     private ?ReflectionClass $reflexion = null;
 
-    public abstract function getColumsName(): array; // abstract = Important pour filtrer les nom de colums selon la class si besoin
+    public abstract function getColumsName( bool $includeSubObjects ): array; // abstract = Important pour filtrer les nom de colums selon la class si besoin
 
-    public abstract function saveInDB(): void;
+    public abstract function saveInDB()  : void;
     public abstract function setObjects(): void;
     public abstract function __toString(): string;
 
