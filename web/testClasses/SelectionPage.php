@@ -1,7 +1,7 @@
 <?php
     include_once "../includes/FonctionsUtiles.php";
 
-    FonctionsUtiles::getDebutHTML("Accueil");
+    echo FonctionsUtiles::getDebutHTML("Accueil");
 
     echo "<center><h1>Que voulez vous faire?</h1></center>";
     echo "<table>";
@@ -37,5 +37,5 @@
     echo "</tr>";
     echo "</table>";
 
-    FonctionsUtiles::getFinHTML();
+    echo FonctionsUtiles::getFinHTML();
 ?>

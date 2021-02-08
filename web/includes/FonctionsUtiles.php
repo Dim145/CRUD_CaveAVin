@@ -8,6 +8,8 @@
     require_once "../classes/categorie.php";
     require_once "../classes/oenologue.php";
 
+    require_once "../classes/DataBaseObjectIterator.php";
+
 /**
  * Class FonctionsUtiles
  */
@@ -185,4 +187,33 @@ class FonctionsUtiles
 
         return $reponse->fetchObject(Degustation::class);
     }
+
+    public static function getNbInstanceOf( string $class ): int
+    {
+        try
+        {
+            $refClass = new ReflectionClass($class);
+
+            $bdd = self::getBDD();
+
+            $reponse = $bdd->query("SELECT MAX(id_$refClass->name) FROM $refClass->name");
+
+            return $reponse->fetch()[0];
+        }
+        catch (Exception $e)
+        {
+            echo "Error: " . $e;
+
+            return 0;
+        }
+    }
+}
+
+$iterator = new DataBaseObjectIterator(Bouteille::class);
+
+echo "test: " . $iterator->count() . "<br/>";
+foreach ($iterator as $bouteille)
+{
+    $bouteille->setObjects();
+    echo $bouteille;
 }

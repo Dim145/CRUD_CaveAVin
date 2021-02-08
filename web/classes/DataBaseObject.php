@@ -24,12 +24,12 @@ abstract class DataBaseObject
 
     public function getNbColums(): int
     {
-        return count($this->getColumsName());
+        return count($this->getColumsName(false));
     }
 
     public function getColumsValues(): array
     {
-        $comlumsName = $this->getColumsName();
+        $comlumsName = $this->getColumsName(false);
 
         $colums = array();
 
