@@ -197,10 +197,12 @@ class Bouteille extends DatabaseObject
 
     public function __toString(): string
     {
-        return  "<tr><td>" . $this->nom_bouteille             . "</td><td>" .
-            $this->volume_bouteille          . "</td><td>" .
-            $this->millesime_bouteille       . "</td><td>" .
-            $this->prix_bouteille            . "</td><td>" .
+        return  "<td>" . $this->nom_bouteille . "</td><td>" .
+            $this->volume_bouteille           . "</td><td>" .
+            $this->millesime_bouteille        . "</td><td>" .
+            $this->prix_bouteille             . "</td><td>" .
+            $this->id_categorie               . "</td><td>" .
+            $this->id_appellation             . "</td><td>" .
             $this->appellation->get_nom_appellation() . "</td><td>" .
             $this->categorie->get_robe_bouteille()   . "</td></tr>";
     }

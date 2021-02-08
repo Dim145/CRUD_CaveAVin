@@ -106,7 +106,9 @@ class Quantite extends DataBaseObject
 
     function __toString(): string
     {
-        return "<tr><td>" . $this->nom_bouteille       . "</td><td>" . $this->volume_bouteille . "</td><td>"
-            . $this->millesime_bouteille . "</td><td>" . $this->qte_bouteille    . "</td></tr>";
+        return "<td>" . $this->nom_bouteille       . "</td><td>"
+            . $this->volume_bouteille              . "</td><td>"
+            . $this->millesime_bouteille           . "</td><td>"
+            . $this->qte_bouteille                 . "</td>";
     }
 }
