@@ -20,7 +20,7 @@ class DataBaseObjectIterator implements Iterator, Countable
     /**
      * Retourne un objet de la base de données ou une valeur null.
      * Attention, une valeur null n'est pas equivalent a une erreur.
-     * Si dans la base, on as l'id 20 puis 22, l'itérateur va renvoyer null sur l'id 21.
+     * Si dans la base, on as l'id 20 puis 22, l'iterateur va renvoyer null sur l'id 21.
      * Mais on pourras passer a la suite.
      *
      * @return DataBaseObject or null
