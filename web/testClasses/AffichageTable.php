@@ -5,27 +5,36 @@
 
     echo FonctionsUtiles::getDebutHTML("Test Appellation");
 
-    if( !isset($_GET['table'])) die();
+    if(!isset($_GET['table'])) die();
 
-    // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
-    // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
-    echo("<table>");
-    $tab = FonctionsUtiles::getAllFromClassName(htmlspecialchars($_GET['table']));
-    foreach ( $tab as $obj )
+    if(!isset($_POST['actionSurTuple']))
     {
-        echo "<tr>";
-        echo $obj;
-        if($_GET['action'] == 'modifier')
+        // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
+        // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
+        echo("<table>");
+        $tab = FonctionsUtiles::getAllFromClassName(htmlspecialchars($_GET['table']));
+        $i = 1;
+        foreach ( $tab as $obj )
         {
-            echo "<form action=".$_SERVER['PHP_SELF']." method='POST'>";
-            echo    "<td><input type='SUBMIT' name='ActionSurTuple' value='Modifier'/></td>";
-            echo    "<td><input type='SUBMIT' name='ActionSurTuple' value='Supprimer'/></td>";
-            echo "</form>";
+            echo "<tr>";
+            echo $obj;
+            if($_GET['action'] == 'modifier')
+            {
+                echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
+                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Modifier' /></td>";
+                echo    "<input     type='HIDDEN' name='ligne'          value='".$i."'   />";
+                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Supprimer'/></td>";
+                echo "</form>";
+            }
+            $i++;
+            echo "</tr>";
         }
-        echo "</tr>";
+        echo("</table>");
     }
-    echo("</table>");
-
+    else
+    {
+        echo $_POST['actionSurTuple'].$_POST['ligne'];
+    }
     echo FonctionsUtiles::getFinHTML();
 
 ?>
