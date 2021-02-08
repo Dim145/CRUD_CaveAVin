@@ -209,11 +209,11 @@ class FonctionsUtiles
     }
 }
 
-$iterator = new DataBaseObjectIterator(Bouteille::class);
+/*$iterator = new DataBaseObjectIterator(Bouteille::class);
 
 echo "test: " . $iterator->count() . "<br/>";
 foreach ($iterator as $bouteille)
 {
     $bouteille->setObjects();
     echo $bouteille;
-}
+}*/
