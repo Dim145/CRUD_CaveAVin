@@ -112,14 +112,18 @@ class FonctionsUtiles
 
     /**
      * @param int $id_bouteille L'identifiant de la bouteille voulue
-     * @return Bouteille Objet de type Bouteille
+     * @return Bouteille|null Objet de type Bouteille
      */
-    public static function getBouteille(int $id_bouteille): Bouteille
+    public static function getBouteille(int $id_bouteille): ?Bouteille
     {
         $bdd = self::getBDD();
         $reponse = $bdd->query("SELECT * FROM bouteille where id_bouteille = $id_bouteille");
 
         $bouteille = $reponse->fetchObject(Bouteille::class);
+
+        if( $bouteille === false )
+            return null;
+
         $bouteille->setObjects();
 
         return $bouteille;
@@ -127,65 +131,73 @@ class FonctionsUtiles
 
     /**
      * @param int $id_appellation L'identifiant de l'appellation voulue
-     * @return Appellation Objet de type Appellation
+     * @return Appellation|null Objet de type Appellation
      */
-    public static function getAppellation(int $id_appellation): Appellation
+    public static function getAppellation(int $id_appellation): ?Appellation
     {
         $bdd = self::getBDD();
         $reponse = $bdd->query("SELECT * FROM appellation where id_appellation = $id_appellation");
 
-        return $reponse->fetchObject(Appellation::class);
+        $obj = $reponse->fetchObject(Appellation::class);
+
+        return $obj === false ? null : $obj;
     }
 
     /**
      * @param int $id_categorie L'identifiant de la catégorie voulue
-     * @return Categorie Objet de type Categorie
+     * @return Categorie|null Objet de type Categorie
      */
-    public static function getCategorie(int $id_categorie): Categorie
+    public static function getCategorie(int $id_categorie): ?Categorie
     {
         $bdd = self::getBDD();
         $reponse = $bdd->query("SELECT * FROM categorie where id_categorie = $id_categorie");
 
-        return $reponse->fetchObject(Categorie::class);
+        $obj = $reponse->fetchObject(Categorie::class);
+
+        return $obj === false ? null : $obj;
     }
 
     /**
      * @param int $id_oenologue L'identifiant de l'oenologue voulue
-     * @return Oenologue Objet de type Oenologue
+     * @return Oenologue|null Objet de type Oenologue
      */
-    public static function getOenologue(int $id_oenologue): Oenologue
+    public static function getOenologue(int $id_oenologue): ?Oenologue
     {
         $bdd = self::getBDD();
 
         $reponse = $bdd->query("SELECT * FROM oenologue WHERE id_oenologue = $id_oenologue");
 
-        return $reponse->fetchObject(Oenologue::class);
+        $obj = $reponse->fetchObject(Oenologue::class);
+
+        return $obj === false ? null : $obj;
     }
 
     /**
      * @param int $id_degustation L'identifiant de la dégustation voulue
-     * @return Degustation Objet de type Dégustation
+     * @return Degustation|null Objet de type Dégustation
      */
-    public static function getDegustation(int $id_degustation): Degustation
+    public static function getDegustation(int $id_degustation): ?Degustation
     {
         $bdd = self::getBDD();
 
         $reponse = $bdd->query("SELECT * FROM degustation WHERE id_degustation = $id_degustation");
 
-        return $reponse->fetchObject(Degustation::class);
+        $obj = $reponse->fetchObject(Degustation::class);
+        return $obj === false ? null : $obj;
     }
 
     /**
      * @param int $id_quantite
-     * @return Quantite Objet de type Quantité
+     * @return Quantite|null Objet de type Quantité
      */
-    public static function getQuantite(int $id_quantite): Quantite
+    public static function getQuantite(int $id_quantite): ?Quantite
     {
         $bdd = self::getBDD();
 
         $reponse = $bdd->query("SELECT * FROM quantite WHERE id_quantite = $id_quantite");
 
-        return $reponse->fetchObject(Degustation::class);
+        $obj = $reponse->fetchObject(Degustation::class);
+        return $obj === false ? null : $obj;
     }
 
     public static function getNbInstanceOf( string $class ): int
@@ -207,9 +219,42 @@ class FonctionsUtiles
             return 0;
         }
     }
+
+    public static function supprimer( DataBaseObject $obj ): bool
+    {
+        if( is_a($obj, Quantite::class) )
+            throw new Exception("Une méthode spécial doit etre utilisé pour quantité car elle n'as pas d'id");
+
+        $bdd = self::getBDD();
+
+        $arraysColumnsName = $obj->getColumsName(false);
+        $res = $bdd->exec("DELETE FROM " . $obj::class . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
+
+        return $res;
+    }
+
+    public static function supprimerQuantite( Quantite $qte ):bool
+    {
+        $bdd = self::getBDD();
+
+        $arrayColumsvalue  = $qte->getColumsValues();
+
+        $str = "DELETE FROM " . $qte::class . " WHERE ";
+
+        foreach ( $arrayColumsvalue as $key => $value )
+            $str .= $key . " = " . (is_string($value) ? "'$value'" : $value) . " AND ";
+
+        $str = substr($str, 0, strlen($str) - 5); // enleve le dernier and
+
+        echo $str;
+
+        $res = $bdd->exec($str);
+
+        return $res;
+    }
 }
 
-/*$iterator = new DataBaseObjectIterator(Bouteille::class);
+/*$iterator = new DataBaseObjectIterator(Appellation::class);
 
 echo "test: " . $iterator->count() . "<br/>";
 foreach ($iterator as $bouteille)

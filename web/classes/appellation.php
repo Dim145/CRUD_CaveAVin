@@ -11,7 +11,7 @@ class Appellation extends DataBaseObject
         return $this->id_appellation;
     }
 
-    public function set_id_appellation(string $id_appellation)
+    public function set_id_appellation(int $id_appellation)
     {
         $this->id_appellation = $id_appellation;
     }
@@ -31,9 +31,9 @@ class Appellation extends DataBaseObject
         return $this->categorie_appellation;
     }
 
-    public function set_categorie_appellation(string $id_appellation)
+    public function set_categorie_appellation(string $categorie_appellation)
     {
-        $this->id_appellation = $id_appellation;
+        $this->categorie_appellation = $categorie_appellation;
     }
 
     function saveInDB(): void

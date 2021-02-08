@@ -23,6 +23,31 @@ abstract class DataBaseObject
         return $this->reflexion;
     }
 
+    /**
+     * Permet d'initialisé les attributs dans le cas de la création vierge d'une objet.
+     * @throws ReflectionException
+     */
+    public function initAllVariables(): void
+    {
+        $comlumsName = $this->getColumsName(false);
+
+        foreach ( $comlumsName as $colName )
+        {
+            $attribute = $this->getReflexion()->getProperty($colName);
+
+            $isPrivate = false;
+            if ($attribute->isPrivate())
+            {
+                $attribute->setAccessible(true);
+                $isPrivate = true;
+            }
+
+            $attribute->setValue($this, $attribute->getType()->allowsNull() ? null : 0);
+
+            if ($isPrivate) $attribute->setAccessible(false);
+        }
+    }
+
     public function getNbColums(): int
     {
         return count($this->getColumsName(false));
