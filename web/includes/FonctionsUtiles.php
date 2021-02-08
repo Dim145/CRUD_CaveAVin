@@ -196,7 +196,7 @@ class FonctionsUtiles
 
             $bdd = self::getBDD();
 
-            $reponse = $bdd->query("SELECT MAX(id_$refClass->name) FROM $refClass->name");
+            $reponse = $bdd->query("SELECT count(id_$refClass->name) FROM $refClass->name");
 
             return $reponse->fetch()[0];
         }

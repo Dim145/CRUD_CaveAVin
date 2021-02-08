@@ -3,39 +3,33 @@
 
 class DataBaseObjectIterator implements Iterator, Countable
 {
-    private int $currentId;
+    private ?DataBaseObject  $current;
     private ReflectionClass $class;
 
     private int $count; // stockage dans un objets pour eviter un nb de requetes trop grand a la base de donnée
     // une methode pour refresh ce nb seras implémenter.
 
+    private PDOStatement $statement;
+
     public function __construct( string $class )
     {
-        $this->currentId = 0;
         $this->class     = new ReflectionClass($class);
 
         $this->count = -1;
+
+        $bdd = FonctionsUtiles::getBDD();
+        $this->statement = $bdd->query("SELECT * FROM $class");
+
+        $this->next();
     }
 
     /**
-     * Retourne un objet de la base de données ou une valeur null.
-     * Attention, une valeur null n'est pas equivalent a une erreur.
-     * Si dans la base, on as l'id 20 puis 22, l'iterateur va renvoyer null sur l'id 21.
-     * Mais on pourras passer a la suite.
-     *
-     * @return DataBaseObject or null
+     * @return DataBaseObject
      * @inheritDoc
      */
-    public function current(): ?DataBaseObject
+    public function current(): DataBaseObject
     {
-        $bdd = FonctionsUtiles::getBDD();
-        $reponse = $bdd->query("SELECT * FROM " . $this->class->name . " where id_" . $this->class->name . " = $this->currentId");
-
-        $object = $reponse->fetchObject($this->class->getName());
-
-        if( $object === false ) return null;
-
-        return $object;
+        return $this->current;
     }
 
     /**
@@ -43,7 +37,10 @@ class DataBaseObjectIterator implements Iterator, Countable
      */
     public function next(): void
     {
-        $this->currentId++;
+        $tmp = $this->statement->fetchObject($this->class->getName());
+
+        if( $tmp === false ) $this->current = null;
+        else                 $this->current = $tmp;
     }
 
     /**
@@ -51,7 +48,7 @@ class DataBaseObjectIterator implements Iterator, Countable
      */
     public function key(): int
     {
-        return $this->currentId;
+        return $this->current->getColumsValues()[$this->current->getColumsValues()[0]]; // 1 = id
     }
 
     /**
@@ -59,7 +56,7 @@ class DataBaseObjectIterator implements Iterator, Countable
      */
     public function valid(): bool
     {
-        return $this->currentId < $this->count() && $this->currentId > 0;
+        return $this->current != null;
     }
 
     /**
@@ -67,7 +64,8 @@ class DataBaseObjectIterator implements Iterator, Countable
      */
     public function rewind(): void
     {
-        $this->currentId = 1;
+        $bdd = FonctionsUtiles::getBDD();
+        $this->statement = $bdd->query("SELECT * FROM " . $this->class->getName());
     }
 
     public function count()
