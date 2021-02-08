@@ -36,11 +36,6 @@ class Appellation extends DataBaseObject
         $this->categorie_appellation = $categorie_appellation;
     }
 
-    function saveInDB(): void
-    {
-        // TODO: Implement saveInDB() method.
-    }
-
     function setObjects(): void
     {
         // Ne fais rien car pas d'objets dans categories
