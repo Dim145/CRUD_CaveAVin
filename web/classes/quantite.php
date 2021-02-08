@@ -12,7 +12,7 @@ class Quantite extends DataBaseObject
 
     function saveInDB(): void
     {
-        // TODO: Implement saveInDB() method.
+        // TODO: Implement saveInDB() for quantite => special
     }
 
     /**

@@ -25,11 +25,6 @@ class Oenologue extends DataBaseObject
         $this->nom_oenologue = $nom_oenologue;
     }
 
-    function saveInDB(): void
-    {
-        // TODO: Implement saveInDB() method.
-    }
-
     function setObjects(): void
     {
         // Ne fais rien car pas d'objets dans categories

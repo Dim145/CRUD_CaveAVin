@@ -168,11 +168,6 @@ class Bouteille extends DatabaseObject
         $this->id_appellation = $appellation->get_id_appellation();
     }
 
-    public function saveInDB(): void
-    {
-        // TODO: Implement saveInDB() method.
-    }
-
     /**
      * @param bool $includeSubObjects
      * @return string[]

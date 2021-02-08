@@ -104,11 +104,6 @@ class Degustation extends DatabaseObject
         $this->oenologue = FonctionsUtiles::getOenologue($this->id_oenologue);
     }
 
-    function saveInDB(): void
-    {
-        // TODO: Implement saveInDB() method.
-    }
-
     public function getColumsName( bool $includeSubObjects ): array
     {
         $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);

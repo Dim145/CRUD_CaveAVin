@@ -65,11 +65,6 @@ class Categorie extends DataBaseObject
         return $this->type_bouteille;
     }
 
-    function saveInDB(): void
-    {
-        // TODO: Implement saveInDB() method.
-    }
-
     function setObjects(): void
     {
         // Ne fais rien car pas d'objets dans categories
