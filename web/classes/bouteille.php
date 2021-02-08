@@ -202,6 +202,14 @@ class Bouteille extends DatabaseObject
             $this->millesime_bouteille        . "</td><td>" .
             $this->prix_bouteille             . "</td><td>" .
             $this->appellation->get_nom_appellation() . "</td><td>" .
-            $this->categorie->get_robe_bouteille()   . "</td>";
+            $this->categorie->get_robe_bouteille()    . "</td>";
+    }
+
+    public function toStringPageCreer(): string
+    {
+        return "<tr><td>nom_bouteille         </td><td>"." : "."<input type='text' name='nom_bouteille'         value='' /></td></tr>" .
+               "<tr><td>volume_bouteille      </td><td>"." : "."<input type='text' name='volume_bouteille'      value='' pattern='(37.5|75|150|300|500|600|900|1200|1500|1800)'/></td></tr>" .
+               "<tr><td>millesime_bouteille   </td><td>"." : "."<input type='text' name='millesime_bouteille'   value='' pattern='[1-9]|2099'   /></td></tr>" .
+               "<tr><td>prix_bouteille        </td><td>"." : "."<input type='text' name='prix_bouteille'        value='' pattern='^\d+(.\d{1,2})?$'/></td></tr>";
     }
 }

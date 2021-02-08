@@ -58,10 +58,23 @@
         }
         else
         {
+            echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
+
             if(isset($_POST['ligne']))
                 echo "Modification : ".$_POST['actionSurTuple'].$_POST['ligne'];
             else
-                echo "Création : ".$_POST['actionSurTuple'];
+            {
+                $instance = new ReflectionClass($_GET['table']);
+                $obj      = $instance->newInstance();
+
+                echo "<table>";
+                echo $obj->toStringPageCreer();
+                echo "<tr><td><input type='SUBMIT' name='Valider' value='OK'/></td></tr>";
+                echo "<table>";
+            }
+
+
+            echo "</form>";
         }
     }
     echo FonctionsUtiles::getFinHTML();

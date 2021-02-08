@@ -134,4 +134,10 @@ class Degustation extends DatabaseObject
             . $this->bouteille->getNomBouteille()   . "</td><td>"
             . $this->oenologue->get_nom_oenologue() . "</td>";
     }
+
+    public function toStringPageCreer(): string
+    {
+        return "<tr><td>note_degustation </td><td>"." : "."<input type='text' name='note_degustation'  value='' pattern='^((0|1)\d)|20 '/></td></tr>" .
+               "<tr><td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value='".date('Y-m-d')."' /></td></tr>";
+    }
 }

@@ -2,7 +2,7 @@
 
 class Appellation extends DataBaseObject
 {
-    private int $id_appellation;
+    private int    $id_appellation;
     private string $nom_appellation;
     private string $categorie_appellation;
 
@@ -36,11 +36,6 @@ class Appellation extends DataBaseObject
         $this->id_appellation = $id_appellation;
     }
 
-    public function __toString(): string
-    {
-        return "<td>" . $this->nom_appellation . "</td><td>" . $this->categorie_appellation . "</td>";
-    }
-
     function saveInDB(): void
     {
         // TODO: Implement saveInDB() method.
@@ -62,6 +57,16 @@ class Appellation extends DataBaseObject
 
         return $colums;
     }
-}
 
+    public function __toString(): string
+    {
+        return "<td>" . $this->nom_appellation . "</td><td>" . $this->categorie_appellation . "</td>";
+    }
+
+    public function toStringPageCreer(): string
+    {
+        return "<tr><td>nom_appellation       </td><td>"." : "."<input type='text' name='1' value='' /></td></tr>" .
+               "<tr><td>categorie_appellation </td><td>"." : "."<input type='text' name='2' value='' /></td></tr>";
+    }
+}
 ?>

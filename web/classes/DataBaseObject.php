@@ -14,6 +14,7 @@ abstract class DataBaseObject
     public abstract function saveInDB()  : void;
     public abstract function setObjects(): void;
     public abstract function __toString(): string;
+    public abstract function toStringPageCreer(): string;
 
     protected function getReflexion(): ReflectionClass
     {

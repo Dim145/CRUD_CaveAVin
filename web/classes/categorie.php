@@ -91,6 +91,13 @@ class Categorie extends DataBaseObject
     {
         return "<td>" . $this->robe_bouteille . "</td><td>" . $this->sucrage_bouteille . "</td><td>" . $this->type_bouteille . "</td>";
     }
+
+    public function toStringPageCreer(): string
+    {
+        return "<tr><td>robe_bouteille    </td><td>"." : "."<input type='text' name='1' value='' pattern='(Rouge|Blanc|Rosé)'/></td></tr>" .
+               "<tr><td>sucrage_bouteille </td><td>"." : "."<input type='text' name='2' value='' pattern='(Sec|Demi-sec|Moelleux|Liquoreux'/></td></tr>" .
+               "<tr><td>type_bouteille    </td><td>"." : "."<input type='text' name='3' value='' pattern='(Vin\stranquille|Vin\seffervesent|Vin\sdoux\snaturel|Vin\scuit)'/></td></tr>";
+    }
 }
 
 ?>

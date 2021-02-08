@@ -111,4 +111,9 @@ class Quantite extends DataBaseObject
             . $this->millesime_bouteille           . "</td><td>"
             . $this->qte_bouteille                 . "</td>";
     }
+
+    public function toStringPageCreer(): string
+    {
+        return "";
+    }
 }

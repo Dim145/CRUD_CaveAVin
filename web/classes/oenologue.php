@@ -49,6 +49,11 @@ class Oenologue extends DataBaseObject
 
     public function __toString(): string
     {
-        return "<td>" . $this->nom_oenologue . "</tr>";
+        return "<td>" . $this->nom_oenologue . "</td>";
+    }
+
+    public function toStringPageCreer(): string
+    {
+        return "<tr><td>nom_oenologue </td><td>"." : "."<input type='text' name='nom_oenologue' value='' /></td></tr>";
     }
 }
