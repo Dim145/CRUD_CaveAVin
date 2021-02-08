@@ -48,10 +48,10 @@ class Appellation extends DataBaseObject
 
     function setObjects(): void
     {
-        // TODO: Implement setObjects() method.
+        // Ne fais rien car pas d'objets dans categories
     }
 
-    public function getColumsName(): array
+    public function getColumsName( bool $includeSubObjects ): array
     {
         $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
 

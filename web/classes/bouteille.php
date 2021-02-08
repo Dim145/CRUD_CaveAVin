@@ -173,7 +173,11 @@ class Bouteille extends DatabaseObject
         // TODO: Implement saveInDB() method.
     }
 
-    public function getColumsName(): array
+    /**
+     * @param bool $includeSubObjects
+     * @return string[]
+     */
+    public function getColumsName( bool $includeSubObjects ): array
     {
         $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
 
@@ -181,6 +185,12 @@ class Bouteille extends DatabaseObject
 
         foreach ( $allAtribute as $attribute )
             array_push($colums, $attribute->getName());
+
+        if( $includeSubObjects )
+        {
+            array_push($colums, $this->appellation->getColumsName(false)[1]); // second attribut = plus important apres l'id
+            array_push($colums, $this->categorie->getColumsName(false)[1]);
+        }
 
         return $colums;
     }
@@ -194,6 +204,6 @@ class Bouteille extends DatabaseObject
             $this->id_categorie               . "</td><td>" .
             $this->id_appellation             . "</td><td>" .
             $this->appellation->get_nom_appellation() . "</td><td>" .
-            $this->categorie->get_robe_bouteille()   . "</td>";
+            $this->categorie->get_robe_bouteille()   . "</td></tr>";
     }
 }

@@ -8,6 +8,8 @@
     require_once "../classes/categorie.php";
     require_once "../classes/oenologue.php";
 
+    require_once "../classes/DataBaseObjectIterator.php";
+
 /**
  * Class FonctionsUtiles
  */
@@ -38,24 +40,6 @@ class FonctionsUtiles
     {
         return "</body>
             </html>";
-    }
-
-
-    /**
-     * Fais un fetch en fonction de la classe voulue en paramètre
-     * @param string $get classe visée
-     * @return DataBaseObject|null Objet qui correspond au fetch
-     */
-    public static function faireFetch(string $get, PDOStatement $requete): ?DataBaseObject
-    {
-        $ref = new ReflectionClass($get);
-        $obj = $requete->fetchObject($ref->getName());
-
-        if( $obj == false ) return null;
-
-        $obj->setObjects();
-
-        return $obj;
     }
 
     /**
@@ -91,7 +75,7 @@ class FonctionsUtiles
         {
             return self::getAllFromClass((new ReflectionClass($className)));
         }
-        catch (ReflectionException)
+        catch (ReflectionException $e)
         {
             return array();
         }
@@ -204,22 +188,32 @@ class FonctionsUtiles
         return $reponse->fetchObject(Degustation::class);
     }
 
-    /**
-     * Retourne un tableau affichant l'objet en paramètre
-     * @param DataBaseObject $object Objet a afficher
-     * @return string chaine d'affichage
-     */
-    public function getHTMLTab( DataBaseObject $object ): string
+    public static function getNbInstanceOf( string $class ): int
     {
-        $sRet = "";
-
-        foreach ( $object->getColumsValues() as $name => $value )
+        try
         {
-            // ect...
-        }
+            $refClass = new ReflectionClass($class);
 
-        return $sRet;
+            $bdd = self::getBDD();
+
+            $reponse = $bdd->query("SELECT MAX(id_$refClass->name) FROM $refClass->name");
+
+            return $reponse->fetch()[0];
+        }
+        catch (Exception $e)
+        {
+            echo "Error: " . $e;
+
+            return 0;
+        }
     }
 }
 
-    //print_r(FonctionsUtiles::getBouteille(1)->getColumsValues());
+$iterator = new DataBaseObjectIterator(Bouteille::class);
+
+echo "test: " . $iterator->count() . "<br/>";
+foreach ($iterator as $bouteille)
+{
+    $bouteille->setObjects();
+    echo $bouteille;
+}
