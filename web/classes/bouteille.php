@@ -208,8 +208,11 @@ class Bouteille extends DatabaseObject
     public function toStringPageCreer(): string
     {
         return "<tr><td>nom_bouteille         </td><td>"." : "."<input type='text' name='nom_bouteille'         value='' /></td></tr>" .
-               "<tr><td>volume_bouteille      </td><td>"." : "."<input type='text' name='volume_bouteille'      value='' pattern='(37.5|75|150|300|500|600|900|1200|1500|1800)'/></td></tr>" .
-               "<tr><td>millesime_bouteille   </td><td>"." : "."<input type='text' name='millesime_bouteille'   value='' pattern='[1-9]|2099'   /></td></tr>" .
-               "<tr><td>prix_bouteille        </td><td>"." : "."<input type='text' name='prix_bouteille'        value='' pattern='^\d+(.\d{1,2})?$'/></td></tr>";
+               "<tr><td>volume_bouteille      </td><td>"." : "."<input type='text' name='volume_bouteille'      value='' pattern='(37.5|75|150|300|500|600|900|1200|1500|1800)'
+                                                                      title='Doit être égale a 37.5,  75, 150, 300, 500, 600, 900, 1200, 1500 ou 1800'/></td></tr>" .
+               "<tr><td>millesime_bouteille   </td><td>"." : "."<input type='text' name='millesime_bouteille'   value='' pattern='[1-9]|2099'
+                                                                      title='Doit être entre 0 et 2099 compris'/></td></tr>" .
+               "<tr><td>prix_bouteille        </td><td>"." : "."<input type='text' name='prix_bouteille'        value='' pattern='^\d+(.\d{1,2})?$'
+                                                                      title='Doit être composé de chiffre et eventuellement de 2 chiffres apres le point'/></td></tr>";
     }
 }

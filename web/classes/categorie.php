@@ -94,9 +94,12 @@ class Categorie extends DataBaseObject
 
     public function toStringPageCreer(): string
     {
-        return "<tr><td>robe_bouteille    </td><td>"." : "."<input type='text' name='1' value='' pattern='(Rouge|Blanc|Rosé)'/></td></tr>" .
-               "<tr><td>sucrage_bouteille </td><td>"." : "."<input type='text' name='2' value='' pattern='(Sec|Demi-sec|Moelleux|Liquoreux'/></td></tr>" .
-               "<tr><td>type_bouteille    </td><td>"." : "."<input type='text' name='3' value='' pattern='(Vin\stranquille|Vin\seffervesent|Vin\sdoux\snaturel|Vin\scuit)'/></td></tr>";
+        return "<tr><td>robe_bouteille    </td><td>"." : "."<input type='text' name='1' value='' pattern='(Rouge|Blanc|Rosé)'
+                                                                  title='Doit être Rouge, Blanc ou Rosé'/></td></tr>" .
+               "<tr><td>sucrage_bouteille </td><td>"." : "."<input type='text' name='2' value='' pattern='(Sec|Demi-sec|Moelleux|Liquoreux'
+                                                                  title='Doit être Sec, Demi-sec, Moelleux, Liquoreux'/></td></tr>" .
+               "<tr><td>type_bouteille    </td><td>"." : "."<input type='text' name='3' value='' pattern='(Vin\stranquille|Vin\seffervesent|Vin\sdoux\snaturel|Vin\scuit)'
+                                                                  title='Doit être Vin tranquille, Vin effervesent, Vin doux naturel ou Vin cuit'/></td></tr>";
     }
 }
 
