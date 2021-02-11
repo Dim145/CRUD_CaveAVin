@@ -12,7 +12,30 @@ class Quantite extends DataBaseObject
 
     function saveInDB(): void
     {
-        // TODO: Implement saveInDB() for quantite => special
+        $bdd = FonctionsUtiles::getBDD();
+        $ref = $this->getReflexion();
+
+        $tabName  = $this->getColumsName(false);
+        $tabValue = $this->getColumsValues();
+
+        $statement = $bdd->prepare("SELECT * FROM quantite WHERE nom_bouteille = ? and volume_bouteille = ? and ".
+        "millesime_bouteille = ?");
+
+        $statement->execute(array($this->nom_bouteille, $this->volume_bouteille, $this->millesime_bouteille));
+
+        if( $statement->fetch() && $tabValue[$tabName[0]] > 0 ) // n'est pas un nouveaux
+        {
+            $statement = $bdd->prepare("UPDATE quantite SET qte_bouteille = $this->qte_bouteille WHERE nom_bouteille = ? and volume_bouteille = ? and ".
+                "millesime_bouteille = ?") ;
+
+            $statement->execute(array($this->nom_bouteille, $this->volume_bouteille, $this->millesime_bouteille));
+        }
+        else // est un nouveau
+        {
+            $str = "INSERT INTO quantite VALUES ( '$this->nom_bouteille', $this->volume_bouteille, $this->millesime_bouteille, $this->qte_bouteille )";
+
+            $bdd->exec($str);
+        }
     }
 
     /**
@@ -114,6 +137,17 @@ class Quantite extends DataBaseObject
 
     public function toStringPageForm(bool $isForModifier = false): string
     {
-        return "";
+        if( $isForModifier )
+        {
+            $bdd = FonctionsUtiles::getBDD();
+            $statement = $bdd->prepare("Select * from " . Bouteille::class . " WHERE nom_bouteille = ? AND ".
+            "volume_bouteille = ? AND millesime_bouteille = ?");
+
+            $statement->execute(array($this->nom_bouteille, $this->volume_bouteille, $this->millesime_bouteille));
+            $obj = $statement->fetchObject(Bouteille::class);
+        }
+
+        return "<tr><td>bouteille    </td><td> : " . FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td></tr>".
+               "<tr><td>qte bouteille </td><td> : <input type='number' name='qte_bouteille' value=\"".( $isForModifier ? $this->qte_bouteille : "")."\" /></td></tr>";
     }
 }

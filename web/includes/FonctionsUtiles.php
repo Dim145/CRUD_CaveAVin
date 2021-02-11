@@ -208,7 +208,7 @@ class FonctionsUtiles
 
             $bdd = self::getBDD();
 
-            $reponse = $bdd->query("SELECT count(id_$refClass->name) FROM $refClass->name");
+            $reponse = $bdd->query("SELECT count(*) FROM $refClass->name");
 
             return $reponse->fetch()[0];
         }
@@ -287,11 +287,17 @@ class FonctionsUtiles
     }
 }
 
-/*$iterator = new DataBaseObjectIterator(Appellation::class);
+$iterator = new DataBaseObjectIterator(Quantite::class);
+$quantite = new Quantite();
+$quantite->setNomBouteille("Nos Racines - Famille Raymond");
+$quantite->setMillesimeBouteille(2017);
+$quantite->setVolumeBouteille(75);
+$quantite->setQteBouteille(51);
+$quantite->saveInDB();
 
 echo "test: " . $iterator->count() . "<br/>";
 foreach ($iterator as $bouteille)
 {
     $bouteille->setObjects();
     echo $bouteille;
-}*/
+}

@@ -28,7 +28,6 @@ abstract class DataBaseObject
 
     /**
      * Permet d'initialisé les attributs dans le cas de la création vierge d'une objet.
-     * @throws ReflectionException
      */
     public function initAllVariables(): void
     {
