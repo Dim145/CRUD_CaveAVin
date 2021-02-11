@@ -12,6 +12,7 @@ abstract class DataBaseObject
     public abstract function getColumsName( bool $includeSubObjects ): array; // abstract = Important pour filtrer les nom de colums selon la class si besoin
     public abstract function setObjects(): void;
     public abstract function __toString(): string;
+    public abstract function getId();
 
     /**
      * @param bool $isForModifier pour savoir si c'est pour modifier ou creer un element

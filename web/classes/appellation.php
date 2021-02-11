@@ -60,8 +60,13 @@ class Appellation extends DataBaseObject
 
     public function toStringPageForm(bool $isForModifier = false): string
     {
-        return "<tr><td>nom_appellation       </td><td>"." : "."<input type='text' name='1' value='' /></td></tr>" .
-               "<tr><td>categorie_appellation </td><td>"." : "."<input type='text' name='2' value='' /></td></tr>";
+        return "<tr><td>nom_appellation       </td><td>"." : "."<input type='text' name='1' value=\"" . ( $isForModifier ? $this->nom_appellation       : "" ) . "\" /></td></tr>" .
+               "<tr><td>categorie_appellation </td><td>"." : "."<input type='text' name='2' value=\"" . ( $isForModifier ? $this->categorie_appellation : "" ) . "\" /></td></tr>";
+    }
+
+    public function getId()
+    {
+        return $this->get_id_appellation();
     }
 }
 ?>

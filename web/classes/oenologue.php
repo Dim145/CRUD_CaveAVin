@@ -42,6 +42,11 @@ class Oenologue extends DataBaseObject
         return $colums;
     }
 
+    public function getId()
+    {
+        return $this->get_id_oenologue();
+    }
+
     public function __toString(): string
     {
         return "<td>" . $this->nom_oenologue . "</td>";
@@ -49,6 +54,6 @@ class Oenologue extends DataBaseObject
 
     public function toStringPageForm(bool $isForModifier = false): string
     {
-        return "<tr><td>nom_oenologue </td><td>"." : "."<input type='text' name='nom_oenologue' value='' /></td></tr>";
+        return "<tr><td>nom_oenologue </td><td>"." : "."<input type='text' name='nom_oenologue' value=\"" . ( $isForModifier ? $this->nom_oenologue : "" ) . "\" /></td></tr>";
     }
 }

@@ -41,7 +41,7 @@
             {
                 echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
                 echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Modifier' /></td>";
-                echo    "<input     type='HIDDEN' name='ligne'          value='".$i."'   />";
+                echo    "<input     type='HIDDEN' name='ligne'          value='".$obj->getId()."'   />";
                 echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Supprimer'/></td>";
                 echo "</form>";
             }
@@ -61,7 +61,7 @@
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
 
             $instance = new ReflectionClass($_GET['table']);
-            $obj      = isset($_POST['ligne']) ? FonctionsUtiles::getBouteille($_POST['ligne']) : $instance->newInstance();
+            $obj      = isset($_POST['ligne']) ? FonctionsUtiles::getDataBaseObject($_GET['table'], $_POST['ligne']) : $instance->newInstance();
 
             echo "<table>";
             echo $obj->toStringPageForm(isset($_POST['ligne']));

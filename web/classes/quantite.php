@@ -38,6 +38,11 @@ class Quantite extends DataBaseObject
         }
     }
 
+    public function getId(): string
+    {
+        return $this->nom_bouteille . "," . $this->volume_bouteille . "," . $this->millesime_bouteille;
+    }
+
     /**
      * @return int
      */

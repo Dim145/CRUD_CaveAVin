@@ -22,6 +22,11 @@ class Bouteille extends DatabaseObject
         $this->categorie   = FonctionsUtiles::getCategorie($this->id_categorie);
     }
 
+    public function getId()
+    {
+        return $this->getIdBouteille();
+    }
+
     /**
      * @return int
      */

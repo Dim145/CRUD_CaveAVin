@@ -187,17 +187,42 @@ class FonctionsUtiles
     }
 
     /**
-     * @param int $id_quantite
+     * NE DEVRAIS PAS EXISTER. Mais comme la class Quantite ne possede pas
+     * d'attribut de type "id", nous ne pouvons pas utiliser la recursivité pour celle-ci.
+     *
+     * @param int $ids_quantite sous forme nom_bouteille,volume_bouteille,millesime_bouteille
      * @return Quantite|null Objet de type Quantité
      */
-    public static function getQuantite(int $id_quantite): ?Quantite
+    public static function getQuantite(string $ids_quantite): ?Quantite
     {
         $bdd = self::getBDD();
 
-        $reponse = $bdd->query("SELECT * FROM quantite WHERE id_quantite = $id_quantite");
+        $reponse = $bdd->prepare("SELECT * FROM quantite WHERE nom_bouteille = ? AND ".
+        "volume_bouteille = ? AND millesime_bouteille = ?");
+        $reponse->execute(explode(",", $ids_quantite));
 
-        $obj = $reponse->fetchObject(Degustation::class);
+        $obj = $reponse->fetchObject(Quantite::class);
         return $obj === false ? null : $obj;
+    }
+
+    /**
+     * @param string $objectClassName
+     * @param $id
+     * @return DataBaseObject|null
+     */
+    public static function getDataBaseObject(string $objectClassName, $id): ?DataBaseObject
+    {
+        switch ($objectClassName)
+        {
+            case Bouteille::class: return self::getBouteille($id);
+            case Appellation::class: return self::getAppellation($id);
+            case Categorie::class: return self::getCategorie($id);
+            case Degustation::class: return self::getDegustation($id);
+            case Oenologue::class: return self::getOenologue($id);
+            case Quantite::class: return self::getQuantite($id);
+
+            default: return null;
+        }
     }
 
     public static function getNbInstanceOf( string $class ): int
@@ -287,7 +312,7 @@ class FonctionsUtiles
     }
 }
 
-$iterator = new DataBaseObjectIterator(Quantite::class);
+/*$iterator = new DataBaseObjectIterator(Quantite::class);
 $quantite = new Quantite();
 $quantite->setNomBouteille("Nos Racines - Famille Raymond");
 $quantite->setMillesimeBouteille(2017);
@@ -300,4 +325,4 @@ foreach ($iterator as $bouteille)
 {
     $bouteille->setObjects();
     echo $bouteille;
-}
+}*/
