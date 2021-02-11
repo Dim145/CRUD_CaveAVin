@@ -208,6 +208,8 @@ class Bouteille extends DatabaseObject
                "<tr><td>millesime_bouteille   </td><td>"." : "."<input type='text' name='millesime_bouteille'   value='' pattern='[1-9]|2099'
                                                                       title='Doit être entre 0 et 2099 compris'/></td></tr>" .
                "<tr><td>prix_bouteille        </td><td>"." : "."<input type='text' name='prix_bouteille'        value='' pattern='^\d+(.\d{1,2})?$'
-                                                                      title='Doit être composé de chiffre et eventuellement de 2 chiffres apres le point'/></td></tr>";
+                                                                      title='Doit être composé de chiffre et eventuellement de 2 chiffres apres le point'/></td></tr>" .
+               "<tr><td>Appellation           </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Appellation::class), 2)."</td></tr>".
+               "<tr><td>Categorie             </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Categorie::class), 3)  ."</td></tr>";
     }
 }

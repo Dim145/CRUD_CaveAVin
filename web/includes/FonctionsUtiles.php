@@ -252,6 +252,37 @@ class FonctionsUtiles
 
         return $res;
     }
+
+    /**
+     * @param DataBaseObject[] $objects
+     * @param int $nbColumsDisplay
+     * @return string
+     */
+    public static function getHTMLListFor( array $objects, int $nbColumsDisplay = 1 ): string
+    {
+        if (count($objects) < 1   ) return "";
+        if( $nbColumsDisplay < 1  ) $nbColumsDisplay = 1;
+
+        $sRet = "<select name=\"".$objects[0]->getReflexion()->getName()."\">\n";
+
+        $tabColumsName = $objects[0]->getColumsName(false);
+
+        if ( $nbColumsDisplay > count($tabColumsName)-1 ) $nbColumsDisplay = count($tabColumsName)-1;
+
+        foreach ( $objects as $obj )
+        {
+            $tabValues = $obj->getColumsValues();
+
+            $sRet .= "\t<option value=\"" . $tabValues[$tabColumsName[0]] . "\">";
+
+            for ($cpt = 0; $cpt < $nbColumsDisplay; $cpt++ )
+                $sRet .= $tabValues[$tabColumsName[$cpt+1]] . ", ";
+
+            $sRet = substr($sRet, 0, strlen($sRet)-2) . "</option>\n";
+        }
+
+        return $sRet . "\n</select>";
+    }
 }
 
 /*$iterator = new DataBaseObjectIterator(Appellation::class);

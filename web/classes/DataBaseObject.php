@@ -14,7 +14,7 @@ abstract class DataBaseObject
     public abstract function __toString(): string;
     public abstract function toStringPageCreer(): string;
 
-    protected function getReflexion(): ReflectionClass
+    public function getReflexion(): ReflectionClass
     {
         if( $this->reflexion == null ) $this->reflexion = new ReflectionClass($this);
 
