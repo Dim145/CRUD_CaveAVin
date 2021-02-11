@@ -254,8 +254,9 @@ class FonctionsUtiles
     }
 
     /**
-     * @param DataBaseObject[] $objects
-     * @param int $nbColumsDisplay
+     * Renvoi une liste déroulante en HTML selon un tableau de DataBaseObject.
+     * @param DataBaseObject[] $objects Le tableau d'objets a afficher.
+     * @param int $nbColumsDisplay Le nombre de colonnes a afficher. 1 par défaut.
      * @return string
      */
     public static function getHTMLListFor( array $objects, int $nbColumsDisplay = 1 ): string
