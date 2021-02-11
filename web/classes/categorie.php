@@ -87,7 +87,7 @@ class Categorie extends DataBaseObject
         return "<td>" . $this->robe_bouteille . "</td><td>" . $this->sucrage_bouteille . "</td><td>" . $this->type_bouteille . "</td>";
     }
 
-    public function toStringPageCreer(): string
+    public function toStringPageForm(bool $isForModifier = false): string
     {
         return "<tr><td>robe_bouteille    </td><td>"." : "."<input type='text' name='1' value='' pattern='(Rouge|Blanc|Rosé)'
                                                                   title='Doit être Rouge, Blanc ou Rosé'/></td></tr>" .

@@ -60,19 +60,13 @@
         {
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
 
-            if(isset($_POST['ligne']))
-                echo "Modification : ".$_POST['actionSurTuple'].$_POST['ligne'];
-            else
-            {
-                $instance = new ReflectionClass($_GET['table']);
-                $obj      = $instance->newInstance();
+            $instance = new ReflectionClass($_GET['table']);
+            $obj      = isset($_POST['ligne']) ? FonctionsUtiles::getBouteille($_POST['ligne']) : $instance->newInstance();
 
-                echo "<table>";
-                echo $obj->toStringPageCreer();
-                echo "<tr><td><input type='SUBMIT' name='Valider' value='OK'/></td></tr>";
-                echo "<table>";
-            }
-
+            echo "<table>";
+            echo $obj->toStringPageForm(isset($_POST['ligne']));
+            echo "<tr><td><input type='SUBMIT' name='Valider' value='OK'/></td></tr>";
+            echo "<table>";
 
             echo "</form>";
         }

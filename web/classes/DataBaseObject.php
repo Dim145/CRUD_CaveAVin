@@ -12,7 +12,7 @@ abstract class DataBaseObject
     public abstract function getColumsName( bool $includeSubObjects ): array; // abstract = Important pour filtrer les nom de colums selon la class si besoin
     public abstract function setObjects(): void;
     public abstract function __toString(): string;
-    public abstract function toStringPageCreer(): string;
+    public abstract function toStringPageForm(bool $isForModifier = false): string;
 
     public function getReflexion(): ReflectionClass
     {
@@ -27,12 +27,10 @@ abstract class DataBaseObject
      */
     public function initAllVariables(): void
     {
-        $comlumsName = $this->getColumsName(false);
+        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
 
-        foreach ( $comlumsName as $colName )
+        foreach ( $allAtribute as $attribute )
         {
-            $attribute = $this->getReflexion()->getProperty($colName);
-
             $isPrivate = false;
             if ($attribute->isPrivate())
             {

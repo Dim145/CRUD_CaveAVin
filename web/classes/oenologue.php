@@ -47,7 +47,7 @@ class Oenologue extends DataBaseObject
         return "<td>" . $this->nom_oenologue . "</td>";
     }
 
-    public function toStringPageCreer(): string
+    public function toStringPageForm(bool $isForModifier = false): string
     {
         return "<tr><td>nom_oenologue </td><td>"." : "."<input type='text' name='nom_oenologue' value='' /></td></tr>";
     }

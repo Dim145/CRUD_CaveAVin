@@ -112,7 +112,7 @@ class Quantite extends DataBaseObject
             . $this->qte_bouteille                 . "</td>";
     }
 
-    public function toStringPageCreer(): string
+    public function toStringPageForm(bool $isForModifier = false): string
     {
         return "";
     }

@@ -257,9 +257,10 @@ class FonctionsUtiles
      * Renvoi une liste déroulante en HTML selon un tableau de DataBaseObject.
      * @param DataBaseObject[] $objects Le tableau d'objets a afficher.
      * @param int $nbColumsDisplay Le nombre de colonnes a afficher. 1 par défaut.
+     * @param int $currentIdSelected valeur selectionnée par default. -1 = aucune valeur de selectionnée
      * @return string
      */
-    public static function getHTMLListFor( array $objects, int $nbColumsDisplay = 1 ): string
+    public static function getHTMLListFor( array $objects, int $nbColumsDisplay = 1, int $currentIdSelected = -1 ): string
     {
         if (count($objects) < 1   ) return "";
         if( $nbColumsDisplay < 1  ) $nbColumsDisplay = 1;
@@ -274,7 +275,7 @@ class FonctionsUtiles
         {
             $tabValues = $obj->getColumsValues();
 
-            $sRet .= "\t<option value=\"" . $tabValues[$tabColumsName[0]] . "\">";
+            $sRet .= "\t<option value=\"" . $tabValues[$tabColumsName[0]] . "\"" . ($tabValues[$tabColumsName[0]] == $currentIdSelected ? "selected" : " ") . ">";
 
             for ($cpt = 0; $cpt < $nbColumsDisplay; $cpt++ )
                 $sRet .= $tabValues[$tabColumsName[$cpt+1]] . ", ";

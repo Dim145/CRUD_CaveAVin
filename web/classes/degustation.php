@@ -130,7 +130,7 @@ class Degustation extends DatabaseObject
             . $this->oenologue->get_nom_oenologue() . "</td>";
     }
 
-    public function toStringPageCreer(): string
+    public function toStringPageForm(bool $isForModifier = false): string
     {
         return "<tr><td>note_degustation </td><td>"." : "."<input type='text' name='note_degustation'  value='' pattern='^((0|1)\d)|20 '
                                                                  title='Doit être en 0 et 20 compris'/></td></tr>" .

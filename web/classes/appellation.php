@@ -58,7 +58,7 @@ class Appellation extends DataBaseObject
         return "<td>" . $this->nom_appellation . "</td><td>" . $this->categorie_appellation . "</td>";
     }
 
-    public function toStringPageCreer(): string
+    public function toStringPageForm(bool $isForModifier = false): string
     {
         return "<tr><td>nom_appellation       </td><td>"." : "."<input type='text' name='1' value='' /></td></tr>" .
                "<tr><td>categorie_appellation </td><td>"." : "."<input type='text' name='2' value='' /></td></tr>";
