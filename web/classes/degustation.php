@@ -134,6 +134,8 @@ class Degustation extends DatabaseObject
     {
         return "<tr><td>note_degustation </td><td>"." : "."<input type='text' name='note_degustation'  value='' pattern='^((0|1)\d)|20 '
                                                                  title='Doit être en 0 et 20 compris'/></td></tr>" .
-               "<tr><td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value='".date('Y-m-d')."' /></td></tr>";
+               "<tr><td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value='".date('Y-m-d')."' /></td></tr>".
+               "<tr><td>Bouteille        </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2)."</td></tr>".
+               "<tr><td>Oenologue        </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Oenologue::class), 2)."</td></tr>";
     }
 }

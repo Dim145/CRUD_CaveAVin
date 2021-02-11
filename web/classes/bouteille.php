@@ -4,9 +4,9 @@ class Bouteille extends DatabaseObject
 {
     private int    $id_bouteille;
     private string $nom_bouteille;
-    private float  $volume_bouteille;
     private int    $millesime_bouteille;
     private int    $prix_bouteille;
+    private float  $volume_bouteille;
     private int    $id_appellation;
     private int    $id_categorie;
 
