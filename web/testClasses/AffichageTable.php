@@ -7,7 +7,16 @@
 
     if( !isset($_GET['table'])) die();
 
-    if(!isset($_POST['actionSurTuple']))
+    try
+    {
+        new ReflectionClass(htmlspecialchars($_GET['table']));
+    }
+    catch (ReflectionException $e)
+    {
+        header("Location: SelectionPage.php");
+    }
+
+if(!isset($_POST['actionSurTuple']))
     {
         if($_GET['action'] == 'modifier')
         {
