@@ -7,13 +7,14 @@
 
     if( !isset($_GET['table'])) die();
 
+    $instance = null;
     try
     {
-        new ReflectionClass(htmlspecialchars($_GET['table']));
+        $instance = new ReflectionClass(htmlspecialchars($_GET['table'])); // test si la table donnée existe.
     }
     catch (ReflectionException $e)
     {
-        header("Location: SelectionPage.php");
+        header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
     }
 
 if(!isset($_POST['actionSurTuple']))
@@ -61,16 +62,16 @@ if(!isset($_POST['actionSurTuple']))
     }
     else
     {
-        $instance = new ReflectionClass($_GET['table']);
         $obj      = isset($_POST['ligne']) ? FonctionsUtiles::getDataBaseObject($_GET['table'], $_POST['ligne']) : $instance->newInstance();
 
         if($_POST['actionSurTuple'] == 'Supprimer')
         {
-            if( $instance->getName() == Quantite::class ) FonctionsUtiles::supprimerQuantite($obj);
-            else                                          FonctionsUtiles::supprimer($obj);
-
+            $obj->setObjects();
             echo "objet supprimer = <br/>";
             echo "<table><tr>" . $obj . "</tr></table>";
+
+            if( $instance->getName() == Quantite::class ) FonctionsUtiles::supprimerQuantite($obj);
+            else                                          FonctionsUtiles::supprimer($obj);
 
             header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
         }
