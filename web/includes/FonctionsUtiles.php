@@ -290,11 +290,11 @@ class FonctionsUtiles
         if (count($objects) < 1   ) return "";
         if( $nbColumsDisplay < 1  ) $nbColumsDisplay = 1;
 
-        $sRet = "<select name=\"".$objects[0]->getReflexion()->getName()."\">\n";
-
         $tabColumsName = $objects[0]->getColumsName(false);
 
         if ( $nbColumsDisplay > count($tabColumsName)-1 ) $nbColumsDisplay = count($tabColumsName)-1;
+
+        $sRet = "<select name=\"".$tabColumsName[0]."\">\n";
 
         foreach ( $objects as $obj )
         {

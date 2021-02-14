@@ -52,23 +52,58 @@
     }
     else
     {
-        if($_POST['actionSurTuple'] == 'supprimer')
+        $instance = new ReflectionClass($_GET['table']);
+        $obj      = isset($_POST['ligne']) ? FonctionsUtiles::getDataBaseObject($_GET['table'], $_POST['ligne']) : $instance->newInstance();
+
+        if($_POST['actionSurTuple'] == 'Supprimer')
         {
             echo "Suppression : ".$_POST['actionSurTuple'].$_POST['ligne'];
         }
-        else
+        else if( $_POST['actionSurTuple'] == 'Modifier' || $_POST['actionSurTuple'] == 'Creer' )
         {
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
 
-            $instance = new ReflectionClass($_GET['table']);
-            $obj      = isset($_POST['ligne']) ? FonctionsUtiles::getDataBaseObject($_GET['table'], $_POST['ligne']) : $instance->newInstance();
-
             echo "<table>";
             echo $obj->toStringPageForm(isset($_POST['ligne']));
-            echo "<tr><td><input type='SUBMIT' name='Valider' value='OK'/></td></tr>";
+            echo "<tr><td><input type='SUBMIT' name='actionSurTuple' value='Save'/></td></tr>";
             echo "<table>";
 
+            if( isset($_POST['ligne']) )
+                echo "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$_POST['ligne']."\"/>";
+
             echo "</form>";
+        }
+        else if( $_POST['actionSurTuple'] == 'Save' )
+        {
+            echo 'save obj...';
+
+            if( !isset($_POST['ligne']) ) // si c un nouveaux
+                $obj->initAllVariables(); // permet aussi de réinitialiser l'objet si il n'est pas "vide". -> ne devrais pas arriver
+
+            foreach ( $_POST as $key => $value )
+            {
+                if( $key != 'Save' && $key != 'actionSurTuple' && $key != 'ligne' )
+                {
+                    $properties = $instance->getProperty($key);
+                    $isAccessible = $properties->isPublic();
+
+                    if( !$isAccessible ) $properties->setAccessible(true);
+
+                    $properties->setValue($obj, $value);
+
+                    if( !$isAccessible ) $properties->setAccessible(false);
+                }
+            }
+
+            $obj->setObjects();
+            $obj->saveInDB();
+
+            echo "<br/>" . $obj . "<br/>" . $obj->getId();
+            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+        }
+        else
+        {
+            echo 'error';
         }
     }
     echo FonctionsUtiles::getFinHTML();
