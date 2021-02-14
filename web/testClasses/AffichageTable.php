@@ -57,7 +57,13 @@
 
         if($_POST['actionSurTuple'] == 'Supprimer')
         {
-            echo "Suppression : ".$_POST['actionSurTuple'].$_POST['ligne'];
+            if( $instance->getName() == Quantite::class ) FonctionsUtiles::supprimerQuantite($obj);
+            else                                          FonctionsUtiles::supprimer($obj);
+
+            echo "objet supprimer = <br/>";
+            echo "<table><tr>" . $obj . "</tr></table>";
+
+            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
         }
         else if( $_POST['actionSurTuple'] == 'Modifier' || $_POST['actionSurTuple'] == 'Creer' )
         {
@@ -98,7 +104,7 @@
             $obj->setObjects();
             $obj->saveInDB();
 
-            echo "<br/>" . $obj . "<br/>" . $obj->getId();
+            echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
             header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
         }
         else
