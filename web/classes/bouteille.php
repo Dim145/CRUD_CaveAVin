@@ -208,10 +208,10 @@ class Bouteille extends DatabaseObject
     public function toStringPageForm(bool $isForModifier = false ): string
     {
         return "<tr><td>nom_bouteille         </td><td>"." : "."<input type='text' name='nom_bouteille'         value=\"" . ($isForModifier ? $this->nom_bouteille : "") . "\" required/></td></tr>" .
-               "<tr><td>volume_bouteille      </td><td>"." : "."<input type='text' name='volume_bouteille'      value=\"" . ($isForModifier ? $this->volume_bouteille : "") . "\" required pattern='(?=37.5|75|150|300|500|600|900|1200|1500|1800){3,6}$)'
+               "<tr><td>volume_bouteille      </td><td>"." : "."<input type='text' name='volume_bouteille'      value=\"" . ($isForModifier ? $this->volume_bouteille : "") . "\" required pattern='^(37.5|75|150|300|500|600|900|1200|1500|1800)$'
                                                                       title='Doit être égale a 37.5,  75, 150, 300, 500, 600, 900, 1200, 1500 ou 1800'/></td></tr>" .
-               "<tr><td>millesime_bouteille   </td><td>"." : "."<input type='text' name='millesime_bouteille'   value=\"" . ($isForModifier ? $this->millesime_bouteille : "") . "\" required pattern='(?=(100)|(0)|([0-1]?[0-9]?[0-9]?[0-9]?)|([2][0][0-9][0-9]?))$(?=[3-6]\d)'
-                                                                      title='Doit être entre 0 et 2099 compris'/></td></tr>" .
+               "<tr><td>millesime_bouteille   </td><td>"." : "."<input type='text' name='millesime_bouteille'   value=\"" . ($isForModifier ? $this->millesime_bouteille : "") . "\" required pattern='^((100)|([0-1]?[0-9]?[0-9]?[0-9]?)|([2][0][0-9][0-9]?))$'
+                                                                      title='Doit être entre 0 et 2099 non compris'/></td></tr>" .
                "<tr><td>prix_bouteille        </td><td>"." : "."<input type='text' name='prix_bouteille'        value=\"" . ($isForModifier ? $this->prix_bouteille : "") . "\" required pattern='^\d+(.\d{1,2})?$'
                                                                       title='Doit être composé de chiffre et eventuellement de 2 chiffres apres le point'/></td></tr>" .
                "<tr><td>Appellation           </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Appellation::class), 2, $isForModifier ? $this->id_appellation : -1)."</td></tr>".
