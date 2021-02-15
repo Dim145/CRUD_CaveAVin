@@ -28,7 +28,7 @@
 
         // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
         // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
-        echo("<table>");
+        echo("<table class='vue'>");
         $tab = FonctionsUtiles::getAllFromClassName(htmlspecialchars($_GET['table']));
 
         if( count($tab) > 0 )
@@ -50,9 +50,9 @@
             if($_GET['action'] == 'modifier')
             {
                 echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
-                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/></td>";
+                echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/></center></td>";
                 echo    "<input     type='HIDDEN' name='ligne'          value='".$obj->getId()."'/>";
-                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/></td>";
+                echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/></center></center></td>";
                 echo "</form>";
             }
             $i++;
