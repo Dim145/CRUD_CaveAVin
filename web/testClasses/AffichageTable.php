@@ -22,7 +22,7 @@
         if($_GET['action'] == 'modifier')
         {
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
-            echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Creer' class='bouton boutonCreer'/></td>";
+            echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/></td>";
             echo "</form>";
         }
 
@@ -75,7 +75,7 @@
 
             header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
         }
-        else if( $_POST['actionSurTuple'] == 'Modifier' || $_POST['actionSurTuple'] == 'Creer' )
+        else if( $_POST['actionSurTuple'] == 'Modifier' || $_POST['actionSurTuple'] == 'Créer' )
         {
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
 

@@ -21,7 +21,7 @@ td:nth-child(6) { background: hsl(140, 99%, 50%); }
 
 .bouton
 {
-    border-radius: 10px 150px / 120px;
+    border-radius: 150px 25px / 150px;
     color: white;
     font-family: Consolas;
 }
