@@ -96,7 +96,7 @@
             echo "</form>";
             echo "</table></div>";
         }
-        else if( $_POST['actionSurTuple'] == 'Save' )
+        else if( $_POST['actionSurTuple'] == 'Confirmer' )
         {
             echo 'save obj...';
 
