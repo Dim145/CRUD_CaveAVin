@@ -145,7 +145,7 @@ class Quantite extends DataBaseObject
         if( $isForModifier )
         {
             $bdd = FonctionsUtiles::getBDD();
-            $statement = $bdd->prepare("Select * from " . Bouteille::class . " WHERE nom_bouteille = ? AND ".
+            $statement = $bdd->prepare("Select * from bouteille WHERE nom_bouteille = ? AND ".
             "volume_bouteille = ? AND millesime_bouteille = ?");
 
             $statement->execute(array($this->nom_bouteille, $this->volume_bouteille, $this->millesime_bouteille));
