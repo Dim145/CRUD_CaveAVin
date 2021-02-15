@@ -152,7 +152,8 @@ class Quantite extends DataBaseObject
             $obj = $statement->fetchObject(Bouteille::class);
         }
 
-        return "<tr><td>bouteille    </td><td> : " . FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td></tr>".
-               "<tr><td>qte bouteille </td><td> : <input type='number' name='qte_bouteille' value=\"".( $isForModifier ? $this->qte_bouteille : "")."\" /></td></tr>";
+        return "<tr><td>bouteille     </td><td> : " . FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td></tr>".
+               "<tr><td>qte bouteille </td><td> : <input type='number' name='qte_bouteille' value=\"".( $isForModifier ? $this->qte_bouteille : "")."\" required /></td></tr>";
+
     }
 }

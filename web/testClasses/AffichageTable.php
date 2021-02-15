@@ -17,7 +17,7 @@
         header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
     }
 
-if(!isset($_POST['actionSurTuple']))
+    if(!isset($_POST['actionSurTuple']))
     {
         if($_GET['action'] == 'modifier')
         {
@@ -51,7 +51,7 @@ if(!isset($_POST['actionSurTuple']))
             {
                 echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
                 echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Modifier' /></td>";
-                echo    "<input     type='HIDDEN' name='ligne'          value='".$obj->getId()."'   />";
+                echo    "<input     type='HIDDEN' name='ligne'          value='".$obj->getId()."'/>";
                 echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Supprimer'/></td>";
                 echo "</form>";
             }
@@ -62,7 +62,7 @@ if(!isset($_POST['actionSurTuple']))
     }
     else
     {
-        $obj      = isset($_POST['ligne']) ? FonctionsUtiles::getDataBaseObject($_GET['table'], $_POST['ligne']) : $instance->newInstance();
+        $obj = isset($_POST['ligne']) ? FonctionsUtiles::getDataBaseObject($_GET['table'], $_POST['ligne']) : $instance->newInstance();
 
         if($_POST['actionSurTuple'] == 'Supprimer')
         {

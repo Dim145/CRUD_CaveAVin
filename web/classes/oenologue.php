@@ -54,6 +54,6 @@ class Oenologue extends DataBaseObject
 
     public function toStringPageForm(bool $isForModifier = false): string
     {
-        return "<tr><td>nom_oenologue </td><td>"." : "."<input type='text' name='nom_oenologue' value=\"" . ( $isForModifier ? $this->nom_oenologue : "" ) . "\" /></td></tr>";
+        return "<tr><td>nom_oenologue </td><td>"." : "."<input type='text' name='nom_oenologue' value=\"" . ( $isForModifier ? $this->nom_oenologue : "" ) . "\" required /></td></tr>";
     }
 }

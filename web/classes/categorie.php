@@ -94,11 +94,11 @@ class Categorie extends DataBaseObject
 
     public function toStringPageForm(bool $isForModifier = false): string
     {
-        return "<tr><td>robe_bouteille    </td><td>"." : "."<input type='text' name='1' value=\"" . ( $isForModifier ? $this->robe_bouteille : "" ) . "\" pattern='(Rouge|Blanc|Rosé)'
+        return "<tr><td>robe_bouteille    </td><td>"." : "."<input type='text' name='1' value=\"" . ( $isForModifier ? $this->robe_bouteille : "" ) . "\" required pattern='(Rouge|Blanc|Rosé)'
                                                                   title='Doit être Rouge, Blanc ou Rosé'/></td></tr>" .
-               "<tr><td>sucrage_bouteille </td><td>"." : "."<input type='text' name='2' value=\"" . ( $isForModifier ? $this->sucrage_bouteille : "" ) . "\" pattern='(Sec|Demi-sec|Moelleux|Liquoreux'
+               "<tr><td>sucrage_bouteille </td><td>"." : "."<input type='text' name='2' value=\"" . ( $isForModifier ? $this->sucrage_bouteille : "" ) . "\" required pattern='(Sec|Demi-sec|Moelleux|Liquoreux'
                                                                   title='Doit être Sec, Demi-sec, Moelleux, Liquoreux'/></td></tr>" .
-               "<tr><td>type_bouteille    </td><td>"." : "."<input type='text' name='3' value=\"" . ( $isForModifier ? $this->type_bouteille : "" ) . "\" pattern='(Vin\stranquille|Vin\seffervesent|Vin\sdoux\snaturel|Vin\scuit)'
+               "<tr><td>type_bouteille    </td><td>"." : "."<input type='text' name='3' value=\"" . ( $isForModifier ? $this->type_bouteille : "" ) . "\" required pattern='(Vin\stranquille|Vin\seffervesent|Vin\sdoux\snaturel|Vin\scuit)'
                                                                   title='Doit être Vin tranquille, Vin effervesent, Vin doux naturel ou Vin cuit'/></td></tr>";
     }
 }
