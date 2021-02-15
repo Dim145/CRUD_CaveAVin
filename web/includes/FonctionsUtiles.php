@@ -39,7 +39,15 @@ class FonctionsUtiles
      */
     public static function getFinHTML():string
     {
-        return "<center
+        return "    <footer>
+                        <marquee scrolldelay=\"25\" width=\"80%\" direction=\"LEFT\">
+                            Boireau Florian | Dubois Dimitri | Mittelstaedt Arthur
+                        </marquee>
+                        <div class='droite'>
+                            ULHN
+                        </div>
+                    </footer>
+                <center
             </body>
         </html>";
     }
