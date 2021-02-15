@@ -22,7 +22,7 @@
         if($_GET['action'] == 'modifier')
         {
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
-            echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/></td>";
+            echo    "<input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
             echo "</form>";
         }
 
