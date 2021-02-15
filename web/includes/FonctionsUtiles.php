@@ -29,7 +29,10 @@ class FonctionsUtiles
                         <title>$titre</title>
                         <link href='../style/style.css' rel='stylesheet' type='text/css'/>
                     </head>
-                    <body>";
+                    <body>
+                        <form action='..'>
+                        <td><input type='SUBMIT' value='Menu' class='bouton boutonMenu'/></td>
+                        </form>";
     }
 
     /**

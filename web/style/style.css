@@ -1,7 +1,47 @@
+body
+{
+    font-family: Consolas;
+}
+
 table {
-    border-collapse: collapse; /* Les bordures du tableau seront collées (plus joli) */
+    border-collapse: collapse;
 }
 
 td, th {
-    border: 1px solid black;
+    border: 0.1rem solid black;
+    padding: 0.2rem;
+}
+
+td:nth-child(1) { background: hsl(90 , 50%, 50%); }
+td:nth-child(2) { background: hsl(100, 60%, 50%); }
+td:nth-child(3) { background: hsl(110, 70%, 50%); }
+td:nth-child(4) { background: hsl(120, 80%, 50%); }
+td:nth-child(5) { background: hsl(130, 90%, 50%); }
+td:nth-child(6) { background: hsl(140, 99%, 50%); }
+
+.bouton
+{
+    border-radius: 10px 150px / 120px;
+    color: white;
+    font-family: Consolas;
+}
+
+.boutonCreer
+{
+    background-color: darkgreen;
+}
+
+.boutonModifier
+{
+    background-color: darkorange;
+}
+
+.boutonSupprimer
+{
+    background-color: darkred;
+}
+
+.boutonMenu
+{
+    background-color: darkblue;
 }

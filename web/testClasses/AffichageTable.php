@@ -22,7 +22,7 @@
         if($_GET['action'] == 'modifier')
         {
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
-            echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Creer' /></td>";
+            echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Creer' class='bouton boutonCreer'/></td>";
             echo "</form>";
         }
 
@@ -50,9 +50,9 @@
             if($_GET['action'] == 'modifier')
             {
                 echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
-                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Modifier' /></td>";
+                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/></td>";
                 echo    "<input     type='HIDDEN' name='ligne'          value='".$obj->getId()."'/>";
-                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Supprimer'/></td>";
+                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/></td>";
                 echo "</form>";
             }
             $i++;
