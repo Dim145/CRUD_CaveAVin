@@ -7,6 +7,7 @@
 // a le même nom que le fichier dans lequel elle se trouve. (pas sensible a la case)
 
     echo "<center><h1>Que voulez vous faire?</h1></center>";
+    echo"<div class='fondTableau'>";
     echo "<table>";
 
     foreach ($allFiles as $fichier )
@@ -23,6 +24,7 @@
         echo "</tr>";
     }
     echo "</table>";
+    echo"</div>";
 
     echo FonctionsUtiles::getFinHTML();
 ?>

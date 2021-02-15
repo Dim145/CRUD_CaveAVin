@@ -10,9 +10,15 @@ table {
     border-collapse: collapse;
 }
 
-.vue
+.fondTableau
 {
-    width: 50%;
+    border-radius: 10px;
+    border: 1px solid;
+    display: table;
+    padding: 10px;
+    margin: 5;
+    background-color:#373f48; /* gris */
+    box-shadow: 5px 5px 5px #373f48;
 }
 
 td, th {

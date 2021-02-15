@@ -32,7 +32,8 @@
 
         // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
         // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
-        echo("<table class='vue'>");
+        echo"<div class='fondTableau'>
+                <table>";
         $tab = FonctionsUtiles::getAllFromClassName(htmlspecialchars($_GET['table']));
 
         if( count($tab) > 0 )
@@ -62,7 +63,8 @@
             $i++;
             echo "</tr>";
         }
-        echo("</table>");
+        echo"</table>
+            </div>";
     }
     else
     {
@@ -85,7 +87,7 @@
 
             echo "<table>";
             echo $obj->toStringPageForm(isset($_POST['ligne']));
-            echo "<tr><td><input type='SUBMIT' name='actionSurTuple' value='Save'/></td></tr>";
+            echo "<tr><td><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td></tr>";
             echo "<table>";
 
             if( isset($_POST['ligne']) )
