@@ -17,11 +17,15 @@
         header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
     }
 
+    echo "<form action='..' class='enLigne'>
+            <td><input type='SUBMIT' value='Menu' class='bouton boutonMenu'/></td>
+          </form>";
+
     if(!isset($_POST['actionSurTuple']))
     {
         if($_GET['action'] == 'modifier')
         {
-            echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
+            echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST' class='enLigne'/>";
             echo    "<input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
             echo "</form>";
         }
@@ -52,7 +56,7 @@
                 echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
                 echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/></center></td>";
                 echo    "<input     type='HIDDEN' name='ligne'          value='".$obj->getId()."'/>";
-                echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/></center></center></td>";
+                echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/></center></td>";
                 echo "</form>";
             }
             $i++;

@@ -1,6 +1,9 @@
+@import "compass/css3";
+
 body
 {
     font-family: Consolas;
+    background-color: darkslategrey;
 }
 
 table {
@@ -17,12 +20,19 @@ td, th {
     padding: 0.2rem;
 }
 
-td:nth-child(1) { background: hsl(90 , 50%, 50%); }
-td:nth-child(2) { background: hsl(100, 60%, 50%); }
-td:nth-child(3) { background: hsl(110, 70%, 50%); }
-td:nth-child(4) { background: hsl(120, 80%, 50%); }
-td:nth-child(5) { background: hsl(130, 90%, 50%); }
-td:nth-child(6) { background: hsl(140, 99%, 50%); }
+th
+{
+    background-color: seagreen;
+}
+/*Coloration du tableau, on s'arrete a 8 couleurs, etant le nombre max d'element*/
+td:nth-child(1)  { background: hsl(100, 30%, 50%); }
+td:nth-child(2)  { background: hsl(105, 40%, 50%); }
+td:nth-child(3)  { background: hsl(110, 50%, 50%); }
+td:nth-child(4)  { background: hsl(115, 60%, 50%); }
+td:nth-child(5)  { background: hsl(120, 70%, 50%); }
+td:nth-child(6)  { background: hsl(125, 80%, 50%); }
+td:nth-child(8)  { background: hsl(130, 90%, 50%); }
+td:nth-child(10) { background: hsl(135, 95%, 50%); }
 
 .bouton
 {
@@ -49,4 +59,11 @@ td:nth-child(6) { background: hsl(140, 99%, 50%); }
 .boutonMenu
 {
     background-color: darkblue;
+}
+
+.enLigne
+{
+    display: inline-block;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }

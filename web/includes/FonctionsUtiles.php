@@ -24,18 +24,13 @@ class FonctionsUtiles
      */
     public static function getDebutHTML(string $titre):string
     {
-        $str = "<html lang=\"fr\">
+        return "<html lang=\"fr\">
                     <head>
                         <title>$titre</title>
                         <link href='../style/style.css' rel='stylesheet' type='text/css'/>
                     </head>
                     <body>
                         <center>";
-        if($titre != "Accueil")
-            $str .= "<form action='..'>
-                        <td><input type='SUBMIT' value='Menu' class='bouton boutonMenu'/></td>
-                     </form>";
-        return $str;
     }
 
     /**
