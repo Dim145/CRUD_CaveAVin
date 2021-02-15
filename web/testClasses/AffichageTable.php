@@ -96,18 +96,31 @@
             if( !isset($_POST['ligne']) ) // si c un nouveaux
                 $obj->initAllVariables(); // permet aussi de réinitialiser l'objet si il n'est pas "vide". -> ne devrais pas arriver
 
-            foreach ( $_POST as $key => $value )
+            if( $instance->getName() == Quantite::class )
             {
-                if( $key != 'Save' && $key != 'actionSurTuple' && $key != 'ligne' )
+                $bouteille = FonctionsUtiles::getBouteille($_POST['id_bouteille']);
+
+                $obj->setVolumeBouteille($bouteille->getVolumeBouteille());
+                $obj->setMillesimeBouteille($bouteille->getMillesimeBouteille());
+                $obj->setNomBouteille($bouteille->getNomBouteille());
+
+                $obj->setQteBouteille($_POST['qte_bouteille']);
+            }
+            else
+            {
+                foreach ( $_POST as $key => $value )
                 {
-                    $properties = $instance->getProperty($key);
-                    $isAccessible = $properties->isPublic();
+                    if( $key != 'Save' && $key != 'actionSurTuple' && $key != 'ligne' )
+                    {
+                        $properties = $instance->getProperty($key);
+                        $isAccessible = $properties->isPublic();
 
-                    if( !$isAccessible ) $properties->setAccessible(true);
+                        if( !$isAccessible ) $properties->setAccessible(true);
 
-                    $properties->setValue($obj, $value);
+                        $properties->setValue($obj, $value);
 
-                    if( !$isAccessible ) $properties->setAccessible(false);
+                        if( !$isAccessible ) $properties->setAccessible(false);
+                    }
                 }
             }
 
