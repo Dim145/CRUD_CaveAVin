@@ -85,7 +85,7 @@
         {
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
 
-            echo "<table>";
+            echo "<div class='fondTableau'><table>";
             echo $obj->toStringPageForm(isset($_POST['ligne']));
             echo "<tr><td><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td></tr>";
             echo "<table>";
@@ -94,6 +94,7 @@
                 echo "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$_POST['ligne']."\"/>";
 
             echo "</form>";
+            echo "</table></div>";
         }
         else if( $_POST['actionSurTuple'] == 'Save' )
         {
