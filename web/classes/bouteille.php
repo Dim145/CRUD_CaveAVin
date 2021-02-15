@@ -164,6 +164,14 @@ class Bouteille extends DatabaseObject
     }
 
     /**
+     * @return Appellation
+     */
+    public function getCategorie() : categorie
+    {
+        return $this->Categorie;
+    }
+
+    /**
      * @param Appellation $appellation
      */
     public function setAppellation(Appellation $appellation): void

@@ -95,7 +95,13 @@ class Degustation extends DatabaseObject
         $this->id_oenologue = $id_oenologue;
     }
 
+    public function getBouteille() : bouteille{
+        return $this->bouteille;
+    }
 
+    public function getOenologue() : oenologue{
+        return $this->oenologue;
+    }
 
     public function setObjects(): void
     {

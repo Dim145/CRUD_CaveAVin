@@ -2,6 +2,7 @@
 
 class Appellation extends DataBaseObject
 {
+
     private int    $id_appellation;
     private string $nom_appellation;
     private string $categorie_appellation;
