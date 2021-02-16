@@ -3,8 +3,8 @@
 
     echo FonctionsUtiles::getDebutHTML("Accueil");
 
-    $allFiles = scandir("../classes"); // En partant du principe que les class
-// ont le même nom que le fichier dans lequel elle se trouve. (pas sensible a la case)
+    $allFiles = scandir("../Entite"); // En partant du principe que les classes
+    // ont le même nom que le fichier dans lequel elle se trouve. (pas sensible a la case)
 
     echo "<center><h1>Que voulez vous faire?</h1></center>";
     echo "<table>";

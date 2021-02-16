@@ -1,14 +1,14 @@
 <?php
     require_once "../connexionPerso.php";
-    require_once "../classes/DataBaseObject.php";
-    require_once "../classes/degustation.php";
-    require_once "../classes/quantite.php";
-    require_once "../classes/bouteille.php";
-    require_once "../classes/appellation.php";
-    require_once "../classes/categorie.php";
-    require_once "../classes/oenologue.php";
+    require_once "../Entite/DataBaseObject.php";
+    require_once "../Entite/degustation.php";
+    require_once "../Entite/quantite.php";
+    require_once "../Entite/bouteille.php";
+    require_once "../Entite/appellation.php";
+    require_once "../Entite/categorie.php";
+    require_once "../Entite/oenologue.php";
 
-    require_once "../classes/DataBaseObjectIterator.php";
+    require_once "../Entite/DataBaseObjectIterator.php";
 
 /**
  * Class FonctionsUtiles

@@ -1,6 +1,6 @@
 <?php
-    require_once "../classes/DataBaseObject.php";
-    require_once "../classes/appellation.php";
+    require_once "../Entite/DataBaseObject.php";
+    require_once "../Entite/appellation.php";
     require_once "../includes/FonctionsUtiles.php";
 
     echo FonctionsUtiles::getDebutHTML("Test Appellation");

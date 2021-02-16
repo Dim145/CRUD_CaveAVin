@@ -5,10 +5,10 @@ abstract class AbstractVueRelation
 {
     public function getDebutHTML(string $titre) : string {
         return
-            "<html lang=\"fr\">
+            ">
                     <head>
                         <title>$titre</title>
-                        <link href='../style/style.css' rel='stylesheet' type='text/css'/>
+                        <link href= rel='stylesheet' type='text/css'/>
                     </head>
                     <body>";
     }
