@@ -1,7 +1,105 @@
-table {
-    border-collapse: collapse; /* Les bordures du tableau seront collées (plus joli) */
+@import "compass/css3";
+
+/* Style de la page globale*/
+body
+{
+    font-family: Consolas;
+    background-color: darkslategrey;
 }
 
-td, th {
-    border: 1px solid black;
+/* Style commun des tableau */
+table {
+    border-collapse: collapse;
 }
+
+/* Style du div a l'arrière du tableau */
+.fondTableau
+{
+    border-radius: 10px;
+    border: 1px solid;
+    display: table;
+    padding: 10px;
+    margin: 5;
+    background-color:#373f48; /* gris */
+    box-shadow: 5px 5px 5px #373f48;
+}
+
+/* Lignes autour des cases de tableau */
+td, th {
+    border: 0.1rem solid black;
+    padding: 0.2rem;
+}
+
+/* Coloriation des titres de tableau */
+th
+{
+    background-color: seagreen;
+}
+
+/*Coloration du tableau, on s'arrete a 8 couleurs, etant le nombre max d'element*/
+td:nth-child(1)  { background: hsl(100, 30%, 50%); }
+td:nth-child(2)  { background: hsl(105, 40%, 50%); }
+td:nth-child(3)  { background: hsl(110, 50%, 50%); }
+td:nth-child(4)  { background: hsl(115, 60%, 50%); }
+td:nth-child(5)  { background: hsl(120, 70%, 50%); }
+td:nth-child(6)  { background: hsl(125, 80%, 50%); }
+td:nth-child(8)  { background: hsl(130, 90%, 50%); }
+td:nth-child(10) { background: hsl(135, 95%, 50%); }
+
+/* Style commun des boutons*/
+.bouton
+{
+    border-radius: 150px 25px / 150px;
+    color: white;
+    font-family: Consolas;
+}
+
+/* Couleur du bouton de Création */
+.boutonCreer
+{
+    background-color: darkgreen;
+}
+
+/* Couleur du bouton de Modification */
+.boutonModifier
+{
+    background-color: darkorange;
+}
+
+/* Couleur du bouton de Suppression */
+.boutonSupprimer
+{
+    background-color: darkred;
+}
+
+/* Couleur du bouton de Retour Menu */
+.boutonMenu
+{
+    background-color: darkblue;
+}
+
+/* Met les boutons en ligne */
+.enLigne
+{
+    display: inline-block;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+/* Met le pied en position fixe */
+footer
+{
+    position: fixed;
+    bottom: 0;
+    width: 99%;
+    background-color:#acbfcfff;
+}
+
+/* Affiche un texte en scrolling */
+marquee
+{
+    display: inline-block;
+    width: 93%;
+}
+
+.droite { float: right; }

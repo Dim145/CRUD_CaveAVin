@@ -17,18 +17,23 @@
         header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
     }
 
+    echo "<form action='..' class='enLigne'>
+            <td><input type='SUBMIT' value='Menu' class='bouton boutonMenu'/></td>
+          </form>";
+
     if(!isset($_POST['actionSurTuple']))
     {
         if($_GET['action'] == 'modifier')
         {
-            echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
-            echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Creer' /></td>";
+            echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST' class='enLigne'/>";
+            echo    "<input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
             echo "</form>";
         }
 
         // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
         // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
-        echo("<table>");
+        echo"<div class='fondTableau'>
+                <table>";
         $tab = FonctionsUtiles::getAllFromClassName(htmlspecialchars($_GET['table']));
 
         if( count($tab) > 0 )
@@ -50,15 +55,16 @@
             if($_GET['action'] == 'modifier')
             {
                 echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
-                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Modifier' /></td>";
+                echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/></center></td>";
                 echo    "<input     type='HIDDEN' name='ligne'          value='".$obj->getId()."'/>";
-                echo    "<td><input type='SUBMIT' name='actionSurTuple' value='Supprimer'/></td>";
+                echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/></center></td>";
                 echo "</form>";
             }
             $i++;
             echo "</tr>";
         }
-        echo("</table>");
+        echo"</table>
+            </div>";
     }
     else
     {
@@ -75,21 +81,22 @@
 
             header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
         }
-        else if( $_POST['actionSurTuple'] == 'Modifier' || $_POST['actionSurTuple'] == 'Creer' )
+        else if( $_POST['actionSurTuple'] == 'Modifier' || $_POST['actionSurTuple'] == 'Créer' )
         {
             echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
 
-            echo "<table>";
+            echo "<div class='fondTableau'><table>";
             echo $obj->toStringPageForm(isset($_POST['ligne']));
-            echo "<tr><td><input type='SUBMIT' name='actionSurTuple' value='Save'/></td></tr>";
+            echo "<tr><td><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td></tr>";
             echo "<table>";
 
             if( isset($_POST['ligne']) )
                 echo "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$_POST['ligne']."\"/>";
 
             echo "</form>";
+            echo "</table></div>";
         }
-        else if( $_POST['actionSurTuple'] == 'Save' )
+        else if( $_POST['actionSurTuple'] == 'Confirmer' )
         {
             echo 'save obj...';
 

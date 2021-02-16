@@ -29,7 +29,8 @@ class FonctionsUtiles
                         <title>$titre</title>
                         <link href='../style/style.css' rel='stylesheet' type='text/css'/>
                     </head>
-                    <body>";
+                    <body>
+                        <center>";
     }
 
     /**
@@ -38,8 +39,17 @@ class FonctionsUtiles
      */
     public static function getFinHTML():string
     {
-        return "</body>
-            </html>";
+        return "    <footer>
+                        <marquee scrolldelay=\"25\" width=\"80%\" direction=\"LEFT\">
+                            Boireau Florian | Dubois Dimitri | Mittelstaedt Arthur
+                        </marquee>
+                        <div class='droite'>
+                            ULHN
+                        </div>
+                    </footer>
+                <center
+            </body>
+        </html>";
     }
 
     /**
@@ -212,14 +222,14 @@ class FonctionsUtiles
      */
     public static function getDataBaseObject(string $objectClassName, $id): ?DataBaseObject
     {
-        switch ($objectClassName)
+        switch (strtolower($objectClassName))
         {
-            case Bouteille::class: return self::getBouteille($id);
-            case Appellation::class: return self::getAppellation($id);
-            case Categorie::class: return self::getCategorie($id);
-            case Degustation::class: return self::getDegustation($id);
-            case Oenologue::class: return self::getOenologue($id);
-            case Quantite::class: return self::getQuantite($id);
+            case strtolower(Bouteille::class): return self::getBouteille($id);
+            case strtolower(Appellation::class): return self::getAppellation($id);
+            case strtolower(Categorie::class): return self::getCategorie($id);
+            case strtolower(Degustation::class): return self::getDegustation($id);
+            case strtolower(Oenologue::class): return self::getOenologue($id);
+            case strtolower(Quantite::class): return self::getQuantite($id);
 
             default: return null;
         }

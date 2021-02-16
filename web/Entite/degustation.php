@@ -3,7 +3,7 @@
 class Degustation extends DatabaseObject
 {
     private int    $id_degustation;
-    private int    $note_degustation;
+    private float  $note_degustation;
     private string $date_degustation;
     private int    $id_bouteille;
     private int    $id_oenologue;
@@ -143,7 +143,7 @@ class Degustation extends DatabaseObject
 
     public function toStringPageForm(bool $isForModifier = false): string
     {
-        return "<tr><td>note_degustation </td><td>"." : "."<input type='text' name='note_degustation'  value=\"" . ( $isForModifier ? $this->note_degustation : "" ) . "\" required pattern='^((0|1)\d)|20 '
+        return "<tr><td>note_degustation </td><td>"." : "."<input type='number' name='note_degustation'  value=\"" . ( $isForModifier ? $this->note_degustation : "" ) . "\" required min='0' max='20' step='0.1'
                                                                  title='Doit être en 0 et 20 compris'/></td></tr>" .
                "<tr><td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value=\"". ( $isForModifier ? $this->date_degustation : date('Y-m-d')) ."\" /></td></tr>".
                "<tr><td>Bouteille        </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $this->id_bouteille : -1)."</td></tr>".
