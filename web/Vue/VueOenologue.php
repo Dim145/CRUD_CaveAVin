@@ -6,7 +6,7 @@ class VueOenologue extends AbstractVueRelation
 
     public function getHTML4Entity(DataBaseObject $e): string
     {
-        if("e instanceof oenologue"){
+        if($e instanceof oenologue){
             $PK = $e->getIdOenologue();
             return "<tr class='EntityDescription OenologueDescription'><td>" . $e->getNomOenologue() .
                 "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
@@ -19,12 +19,12 @@ class VueOenologue extends AbstractVueRelation
 
     public function getAllEntities(array $Entities): string
     {
-        $All = "<table class='AllEntities AllOenologue'>";
+        $All = "<div class='fondTableau'><table class='AllEntities AllOenologue'>";
         $All .= "<tr><th>nom_oenologue</th><th>Action</th></tr>";
         foreach($Entities as &$e){
             $All .= $this->getHTML4Entity($e);
         }
-        $All .= "</table>";
+        $All .= "</table></div>";
         return $All;
     }
 

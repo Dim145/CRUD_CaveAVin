@@ -22,12 +22,12 @@ class VueQuantite extends AbstractVueRelation
 
     public function getAllEntities(array $Entities): string
     {
-        $All = "<table class='AllEntities AllQuantite'>";
+        $All = "<div class='fondTableau'><table class='AllEntities AllQuantite'>";
         $All .= "<tr><th>nom_bouteille</th><th>volume_bouteille</th><th>millesime_bouteille</th><th>qte_bouteille</th><th>Action</th></tr>";
         foreach($Entities as &$e){
             $All .= $this->getHTML4Entity($e);
         }
-        $All .= "</table>";
+        $All .= "</table></div>";
         return $All;
     }
 

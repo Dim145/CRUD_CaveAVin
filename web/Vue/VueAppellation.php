@@ -6,7 +6,7 @@ class VueAppellation extends AbstractVueRelation
 
     public function getHTML4Entity(DataBaseObject $e): string
     {
-        if("e instanceof appelation") {
+        if($e instanceOf appellation) {
             return "<tr class='EntityDescription AppellationDescription'><td>" . $e->getNomAppellation() . "</td><td>"
                 . $e->getCategorieAppellation() . "</td>".
                 /*"<td><a href='?action=ModifierEntite&PK=".$PK."'>Modifier</a>".
@@ -36,7 +36,7 @@ class VueAppellation extends AbstractVueRelation
 
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
-        if("e instanceof appelation") {
+        if($e instanceof appellation) {
             $value = $isForModifier ? $e->getCategorieAppellation() : null;
             $selectCategorie = self::getSelectForAttribute("categorie_appellation", "--Selectionnez une catégorie",appellation::categories, $isForModifier, $value);
             $Form =

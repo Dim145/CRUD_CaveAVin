@@ -6,7 +6,7 @@ class VueBouteille extends AbstractVueRelation
 
     public function getHTML4Entity(DataBaseObject $e): string
     {
-        if("e instanceof bouteille") {
+        if($e instanceof bouteille) {
             return "<tr class='EntityDescription BouteilleDescription'><td>" . $e->getNomBouteille() . "</td><td>" .
                 $e->getMillesimeBouteille() . "</td><td>" .
                 $e->getPrixBouteille() . "</td><td>" .
@@ -23,18 +23,18 @@ class VueBouteille extends AbstractVueRelation
 
     public function getAllEntities(array $Entities): string
     {
-        $All = "<table class='AllEntities AllBouteille'>";
+        $All = "<div class='fondTableau'><table class='AllEntities AllBouteille'>";
         $All .= "<tr><th>nom_bouteille</th><th>millesime_bouteille</th><th>prix_bouteille</th><th>volume_bouteille</th><th>nom_appellation</th><th>robe_bouteille</th><th>Action</th></tr>";
         foreach($Entities as &$e){
             $All .= $this->getHTML4Entity($e);
         }
-        $All .= "</table>";
+        $All .= "</table></div>";
         return $All;
     }
 
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
-        if("e instanceof bouteille") {
+        if($e instanceof bouteille) {
             $value = $isForModifier ? $e->getVolumeBouteille() : null;
             $selectVolume = self::getSelectForAttribute("volume_bouteille", "--Selectionnez un volume", bouteille::volumes, $isForModifier, $value);
             return "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".

@@ -6,7 +6,7 @@ class VueCategorie extends AbstractVueRelation
 
     public function getHTML4Entity(DataBaseObject $e): string
     {
-        if("e instanceof categorie") {
+        if($e instanceof categorie) {
             $PK = $e->getIdCategorie();
             return "<tr class='EntityDescription CategorieDescription'><td>" . $e->getRobeBouteille() . "</td><td>" .
                 $e->getSucrageBouteille() . "</td><td>" . $e->getTypeBouteille() . "</td>".
@@ -20,18 +20,18 @@ class VueCategorie extends AbstractVueRelation
 
     public function getAllEntities(array $Entities): string
     {
-        $All = "<table class='AllEntities AllCategorie'>";
+        $All = "<div class='fondTableau'><table class='AllEntities AllCategorie'>";
         $All .= "<tr><th>robe_bouteille</th><th>sucrage_bouteille</th><th>type_bouteille</th><th>Action</th></tr>";
         foreach($Entities as &$e){
             $All .= $this->getHTML4Entity($e);
         }
-        $All .= "</table>";
+        $All .= "</table></div>";
         return $All;
     }
 
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
-        if("e instanceof categorie") {
+        if($e instanceof categorie) {
             $valueRobe = null;
             $valueSucrage = null;
             $valueType = null;
@@ -45,7 +45,7 @@ class VueCategorie extends AbstractVueRelation
             $selectType = self::getSelectForAttribute("type_bouteille", "--Selectionnez un type", categorie::types, $isForModifier, $valueType);
             return
                 "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
-                    "<div clas='fondTableau'><table>".
+                    "<div class='fondTableau'><table>".
                         "<tr>".
                             "<td>robe_bouteille    </td>".
                             "<td>"." : " . $selectRobe . "</td>".
