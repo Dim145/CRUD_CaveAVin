@@ -40,7 +40,7 @@ class VueDegustation extends AbstractVueRelation
                     "<div class='fondTableau'><table>".
                         "<tr>".
                             "<td>note_degustation </td>".
-                            "<td>"." : "."<input type='text' name='note_degustation'  value=\"" . ( $isForModifier ? $e->getNoteDegustation() : "" ) . "\" min='0' max='20' step='0.1' title='Doit être entre 0 et 20 compris'/></td>".
+                            "<td>"." : "."<input type='text' name='note_degustation'  required value=\"" . ( $isForModifier ? $e->getNoteDegustation() : "" ) . "\" min='0' max='20' step='0.1' title='Doit être entre 0 et 20 compris'/></td>".
                         "</tr>".
                         "<tr>".
                             "<td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value=\"". ( $isForModifier ? $e->getDateDegustation() : date('Y-m-d')) ."\" /></td>".
