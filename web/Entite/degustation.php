@@ -29,9 +29,9 @@ class Degustation extends DatabaseObject
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getNoteDegustation(): int
+    public function getNoteDegustation(): float
     {
         return $this->note_degustation;
     }
