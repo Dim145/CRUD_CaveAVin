@@ -60,7 +60,9 @@ else
         case 'Créer':
             $vue = $vueClasse->newInstance();
             echo $vue->getForm4Entity($obj,isset($_POST['PK']));
+            echo "<a class='bouton' href='AffichageTable.php?table=". $_GET['table'] ."'>Annuler</a>";
             break;
+
         case 'Confirmer':
             echo 'save obj...';
 
