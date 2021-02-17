@@ -81,7 +81,7 @@ abstract class DataBaseObject
 
     public function saveInDB()  : void
     {
-        $bdd = FonctionsUtiles::getBDD();
+        $bdd = FonctionsSGBD::getBDD();
         $ref = $this->getReflexion();
 
         $tabName  = $this->getColumsName(false);

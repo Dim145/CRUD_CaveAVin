@@ -7,32 +7,32 @@ class Appellation extends DataBaseObject
     private string $nom_appellation;
     private string $categorie_appellation;
 
-    public function get_id_appellation(): int
+    public function getIdAppellation(): int
     {
         return $this->id_appellation;
     }
 
-    public function set_id_appellation(int $id_appellation)
+    public function setIdAppellation(int $id_appellation)
     {
         $this->id_appellation = $id_appellation;
     }
 
-    public function get_nom_appellation(): string
+    public function getNomAppellation(): string
     {
         return $this->nom_appellation;
     }
 
-    public function set_nom_appellation(string $nom_appellation)
+    public function setNomAppellation(string $nom_appellation)
     {
         $this->nom_appellation = $nom_appellation;
     }
 
-    public function get_categorie_appellation(): string
+    public function getCategorieAppellation(): string
     {
         return $this->categorie_appellation;
     }
 
-    public function set_categorie_appellation(string $categorie_appellation)
+    public function setCategorieAppellation(string $categorie_appellation)
     {
         $this->categorie_appellation = $categorie_appellation;
     }
@@ -68,7 +68,7 @@ class Appellation extends DataBaseObject
 
     public function getId()
     {
-        return $this->get_id_appellation();
+        return $this->getIdAppellation();
     }
 }
 ?>

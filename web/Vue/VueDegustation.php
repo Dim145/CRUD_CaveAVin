@@ -6,14 +6,17 @@ class VueDegustation extends AbstractVueRelation
 
     public function getHTML4Entity(DataBaseObject $e): string
     {
-        if($e instanceof degustation){
+        if("e instanceof degustation"){
             $PK = $e->getIdDegustation();
             return "<tr class='EntityDescription DegustationDescription'><td>" . $e->getNoteDegustation()     . "</td><td>"
                 . $e->getDateDegustation()               . "</td><td>"
                 . $e->getBouteille()->getNomBouteille()   . "</td><td>"
-                . $e->getOenologue()->get_nom_oenologue() . "</td><td>".
-                "<a href='?action=ModifierEntite&PK=".$PK."'>Modifier</a>".
-                "<a href='?action=SupprimerEntite&PK=".$PK."'>Supprimer</a> </td></tr>";
+                . $e->getOenologue()->get_nom_oenologue() . "</td>".
+                "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+                "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
+                "<input type='HIDDEN' name='ligne'          value='".$e->getId()."'/>".
+                "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
+                "</form></td></tr>";
         } else return "";
     }
 
@@ -30,13 +33,32 @@ class VueDegustation extends AbstractVueRelation
 
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
-        if($e instanceof degustation){
+        if("e instanceof degustation"){
             $get = $isForModifier ? "?action=ModifierEntite" : "?action=InsererEntite";
-            return "<form class='EntityForm DegustationForm' action='".$_SERVER['PHP_SELF']. $get . "' method='GET'><table><tr><td>note_degustation </td><td>"." : "."<input type='text' name='note_degustation'  value=\"" . ( $isForModifier ? $e->getNoteDegustation() : "" ) . "\" required pattern='^((0|1)\d)|20 '
-                                                                     title='Doit être en 0 et 20 compris'/></td></tr>" .
-                "<tr><td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value=\"". ( $isForModifier ? $e->getDateDegustation() : date('Y-m-d')) ."\" /></td></tr>".
-                "<tr><td>Bouteille        </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $e->getIdBouteille() : -1)."</td></tr>".
-                "<tr><td>Oenologue        </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Oenologue::class), 2, $isForModifier ? $this->getIdOenologue() : -1)."</td></tr></table></form>";
+            return
+                "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+                    "<div class='fondTableau'><table>".
+                        "<tr>".
+                            "<td>note_degustation </td>".
+                            "<td>"." : "."<input type='text' name='note_degustation'  value=\"" . ( $isForModifier ? $e->getNoteDegustation() : "" ) . "\" min='0' max='20' step='0.1' title='Doit être entre 0 et 20 compris'/></td>".
+                        "</tr>".
+                        "<tr>".
+                            "<td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value=\"". ( $isForModifier ? $e->getDateDegustation() : date('Y-m-d')) ."\" /></td>".
+                        "</tr>".
+                        "<tr>".
+                            "<td>Bouteille        </td>".
+                            "<td>"." : ". AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $e->getIdBouteille() : -1)."</td>".
+                        "</tr>".
+                        "<tr>".
+                            "<td>Oenologue        </td>".
+                            "<td>"." : ". AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Oenologue::class), 2, $isForModifier ? $e->getIdOenologue() : -1)."</td>".
+                        "</tr>".
+                        "<tr>".
+                            "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".
+                        "</tr>".
+                    "</table></div>".
+                    ($isForModifier ? "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$e->getId()."\"/>" : " ").
+                "</form>";
         } else return "";
     }
 }

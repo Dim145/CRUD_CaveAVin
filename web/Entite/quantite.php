@@ -12,7 +12,7 @@ class Quantite extends DataBaseObject
 
     function saveInDB(): void
     {
-        $bdd = FonctionsUtiles::getBDD();
+        $bdd = FonctionsSGBD::getBDD();
         $ref = $this->getReflexion();
 
         $tabName  = $this->getColumsName(false);
@@ -144,7 +144,7 @@ class Quantite extends DataBaseObject
     {
         if( $isForModifier )
         {
-            $bdd = FonctionsUtiles::getBDD();
+            $bdd = FonctionsSGBD::getBDD();
             $statement = $bdd->prepare("Select * from bouteille WHERE nom_bouteille = ? AND ".
             "volume_bouteille = ? AND millesime_bouteille = ?");
 
@@ -152,7 +152,7 @@ class Quantite extends DataBaseObject
             $obj = $statement->fetchObject(Bouteille::class);
         }
 
-        return "<tr><td>bouteille     </td><td> : " . FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td></tr>".
+        return "<tr><td>bouteille     </td><td> : " . FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td></tr>".
                "<tr><td>qte bouteille </td><td> : <input type='number' min='1' name='qte_bouteille' value=\"".( $isForModifier ? $this->qte_bouteille : "")."\" required /></td></tr>";
 
     }

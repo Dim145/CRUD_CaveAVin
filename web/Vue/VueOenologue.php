@@ -6,11 +6,14 @@ class VueOenologue extends AbstractVueRelation
 
     public function getHTML4Entity(DataBaseObject $e): string
     {
-        if($e instanceof oenologue){
+        if("e instanceof oenologue"){
             $PK = $e->get_id_oenologue();
-            return "<tr class='EntityDescription OenologueDescription'><td>" . $e->get_nom_oenologue() . "</td>".
-                "<a href='?action=ModifierEntite&PK=".$PK."'>Modifier</a>".
-                "<a href='?action=SupprimerEntite&PK=".$PK."'>Supprimer</a> </td></tr>";
+            return "<tr class='EntityDescription OenologueDescription'><td>" . $e->get_nom_oenologue() .
+                "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+                "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
+                "<input type='HIDDEN' name='ligne'          value='".$e->getId()."'/>".
+                "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
+                "</form></td></tr>";
         } else return "";
     }
 
@@ -28,9 +31,17 @@ class VueOenologue extends AbstractVueRelation
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
         if($e instanceof oenologue){
-            $get = $isForModifier ? "?action=ModifierEntite" : "?action=InsererEntite";
-            return "<form class='EntityForm OenologueForm' action='".$_SERVER['PHP_SELF']. $get . "' method='GET'><table><tr><td>nom_oenologue </td><td>"." : ". "<input type='text' name='nom_oenologue' value=\"" .
-                ( $isForModifier ? $e->get_nom_oenologue() : "" ) . "\" required /></td></tr></table></form>";
+            return
+                "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+                    "<div class='fondTableau'><table>".
+                        "<tr>".
+                            "<td>bouteille     </td><td> : " . AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td>".
+                        "<tr>".
+                            "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".
+                        "</tr>".
+                    "</table></div>".
+                    ($isForModifier ? "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$e->getId()."\"/>" : " ").
+                "</form>";
         } else return "";
     }
 }

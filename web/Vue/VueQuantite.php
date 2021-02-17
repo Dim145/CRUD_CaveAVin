@@ -12,8 +12,11 @@ class VueQuantite extends AbstractVueRelation
                 . $e->getVolumeBouteille()              . "</td><td>"
                 . $e->getMillesimeBouteille()           . "</td><td>"
                 . $e->getQteBouteille()                 . "</td>"
-                . "<td><a href='?action=ModifierEntite&PK=".$PK."'>Modifier</a>".
-                    "<a href='?action=SupprimerEntite&PK=".$PK."'>Supprimer</a> </td></tr>";
+                . "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+                "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
+                "<input type='HIDDEN' name='ligne'          value='".$e->getId()."'/>".
+                "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
+                "</form></td></tr>";
         } else return "";
     }
 
@@ -33,15 +36,29 @@ class VueQuantite extends AbstractVueRelation
         if($e instanceof quantite){
             if( $isForModifier )
             {
-                $bdd = FonctionsUtiles::getBDD();
+                $bdd = FonctionsSGBD::getBDD();
                 $statement = $bdd->prepare("Select * from bouteille WHERE nom_bouteille = ? AND ".
                     "volume_bouteille = ? AND millesime_bouteille = ?");
-                $statement->execute(array($this->nom_bouteille, $this->volume_bouteille, $this->millesime_bouteille));
+                $statement->execute(array($e->getNomBouteille(), $e->getVolumeBouteille(), $e->getMillesimeBouteille()));
                 $obj = $statement->fetchObject(Bouteille::class);
             }
-            $get = $isForModifier ? "?action=ModifierEntite" : "?action=InsererEntite";
-            return "<form class='EntityForm QuantiteForm' action='".$_SERVER['PHP_SELF']. $get . "' method='GET'><table><tr><td>bouteille     </td><td> : " . FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td></tr>".
-                "<tr><td>qte bouteille </td><td> : <input type='number' name='qte_bouteille' value=\"".( $isForModifier ? $e->getQteBouteille() : "")."\" required /></td></tr></table></form>";
+            return
+                "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+                    "<div class='fondTableau'><table>".
+                        "<tr>".
+                            "<td>bouteille     </td>".
+                            "<td> : " . AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td>".
+                        "</tr>".
+                        "<tr>".
+                            "<td>qte bouteille </td>".
+                            "<td> : <input type='number' min='1' name='qte_bouteille' value=\"".( $isForModifier ? $e->getQteBouteille() : "")."\" required /></td>".
+                        "</tr>".
+                        "<tr>".
+                            "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".
+                        "</tr>".
+                    "</table></div>".
+                    ($isForModifier ? "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$e->getId()."\"/>" : " ").
+                "</form>";
         } else return "";
     }
 }
