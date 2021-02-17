@@ -17,7 +17,7 @@ class DataBaseObjectIterator implements Iterator, Countable
 
         $this->count = -1;
 
-        $bdd = FonctionsUtiles::getBDD();
+        $bdd = FonctionsSGBD::getBDD();
         $this->statement = $bdd->query("SELECT * FROM $class");
 
         $this->next();
@@ -64,7 +64,7 @@ class DataBaseObjectIterator implements Iterator, Countable
      */
     public function rewind(): void
     {
-        $bdd = FonctionsUtiles::getBDD();
+        $bdd = FonctionsSGBD::getBDD();
         $this->statement = $bdd->query("SELECT * FROM " . $this->class->getName());
     }
 
@@ -77,6 +77,6 @@ class DataBaseObjectIterator implements Iterator, Countable
 
     public function majNbInstance(): void
     {
-        $this->count = FonctionsUtiles::getNbInstanceOf($this->class->getName());
+        $this->count = FonctionsSGBD::getNbInstanceOf($this->class->getName());
     }
 }

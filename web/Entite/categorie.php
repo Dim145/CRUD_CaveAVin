@@ -14,18 +14,18 @@ class Categorie extends DataBaseObject
     // Valeurs de $type_boutille :
     public const types = ['Vin tranquille', 'Vin effervescent', 'Vin doux naturel', 'Vin cuit'];
 
-    public function set_id_categorie($id_categorie)
+    public function setIdCategorie($id_categorie)
     {
         $this->id_categorie = $id_categorie;
     }
 
-    public function get_id_categorie(): int
+    public function getIdCategorie(): int
     {
         return $this->id_categorie;
     }
 
 
-    public function set_robe_bouteille($robe_bouteille)
+    public function setRobeBouteille($robe_bouteille)
     {
         if (in_array($robe_bouteille, self::robes))
             $this->robe_bouteille = $robe_bouteille;
@@ -33,13 +33,13 @@ class Categorie extends DataBaseObject
             throw new Exception("valeur de robe invalide");
     }
 
-    public function get_robe_bouteille(): string
+    public function getRobeBouteille(): string
     {
         return $this->robe_bouteille;
     }
 
 
-    public function set_sucrage_bouteille($sucrage_bouteille)
+    public function setSucrageBouteille($sucrage_bouteille)
     {
         if (in_array($sucrage_bouteille, self::sucrages))
             $this->sucrage_bouteille = $sucrage_bouteille;
@@ -47,12 +47,12 @@ class Categorie extends DataBaseObject
             throw new Exception("Valeur de sucrage invalide");
     }
 
-    public function get_sucrage_bouteille(): string
+    public function getSucrageBouteille(): string
     {
         return $this->sucrage_bouteille;
     }
 
-    public function set_type_bouteille($type_bouteille)
+    public function setTypeBouteille($type_bouteille)
     {
         if (in_array($type_bouteille, self::types))
             $this->type_bouteille = $type_bouteille;
@@ -60,7 +60,7 @@ class Categorie extends DataBaseObject
             throw new Exception("Type De bouteille invalide");
     }
 
-    public function get_type_bouteille(): string
+    public function getTypeBouteille(): string
     {
         return $this->type_bouteille;
     }
@@ -72,7 +72,7 @@ class Categorie extends DataBaseObject
 
     public function getId()
     {
-        return $this->get_id_categorie();
+        return $this->getIdCategorie();
     }
 
     public function getColumsName( bool $includeSubObjects ): array
@@ -94,11 +94,11 @@ class Categorie extends DataBaseObject
 
     public function toStringPageForm(bool $isForModifier = false): string
     {
-        return "<tr><td>robe_bouteille    </td><td>"." : "."<input type='text' name='1' value=\"" . ( $isForModifier ? $this->robe_bouteille : "" ) . "\" required pattern='(Rouge|Blanc|Rosé)'
+        return "<tr><td>robe_bouteille    </td><td>"." : "."<input type='text' name='robe_bouteille' value=\"" . ( $isForModifier ? $this->robe_bouteille : "" ) . "\" required pattern='(Rouge|Blanc|Rosé)'
                                                                   title='Doit être Rouge, Blanc ou Rosé'/></td></tr>" .
-               "<tr><td>sucrage_bouteille </td><td>"." : "."<input type='text' name='2' value=\"" . ( $isForModifier ? $this->sucrage_bouteille : "" ) . "\" required pattern='(Sec|Demi-sec|Moelleux|Liquoreux)'
+               "<tr><td>sucrage_bouteille </td><td>"." : "."<input type='text' name='sucrage_bouteille' value=\"" . ( $isForModifier ? $this->sucrage_bouteille : "" ) . "\" required pattern='(Sec|Demi-sec|Moelleux|Liquoreux)'
                                                                   title='Doit être Sec, Demi-sec, Moelleux, Liquoreux'/></td></tr>" .
-               "<tr><td>type_bouteille    </td><td>"." : "."<input type='text' name='3' value=\"" . ( $isForModifier ? $this->type_bouteille : "" ) . "\" required pattern='(Vin\stranquille|Vin\seffervesent|Vin\sdoux\snaturel|Vin\scuit)'
+               "<tr><td>type_bouteille    </td><td>"." : "."<input type='text' name='type_bouteille' value=\"" . ( $isForModifier ? $this->type_bouteille : "" ) . "\" required pattern='(Vin\stranquille|Vin\seffervesent|Vin\sdoux\snaturel|Vin\scuit)'
                                                                   title='Doit être Vin tranquille, Vin effervesent, Vin doux naturel ou Vin cuit'/></td></tr>";
     }
 }
