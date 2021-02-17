@@ -12,7 +12,7 @@ class VueCategorie extends AbstractVueRelation
                 $e->getSucrageBouteille() . "</td><td>" . $e->getTypeBouteille() . "</td>".
                 "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
-                "<input type='HIDDEN' name='ligne'          value='".$e->getId()."'/>".
+                "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
         } else return "";
@@ -46,13 +46,13 @@ class VueCategorie extends AbstractVueRelation
                         "</tr>".
                         "<tr>".
                             "<td>type_bouteille    </td>".
-                            "<td>"." : "."<input type='text' name='type_bouteille' value=\"" . ( $isForModifier ? $e->getTypeBouteille() : "" ) . "\" required pattern='(Vin\stranquille|Vin\seffervesent|Vin\sdoux\snaturel|Vin\scuit)' title='Doit être Vin tranquille, Vin effervesent, Vin doux naturel ou Vin cuit'/></td>".
+                            "<td>"." : "."<input type='text' name='type_bouteille' value=\"" . ( $isForModifier ? $e->getTypeBouteille() : "" ) . "\" required pattern='(Vin\stranquille|Vin\seffervescent|Vin\sdoux\snaturel|Vin\scuit)' title='Doit être Vin tranquille, Vin effervescent, Vin doux naturel ou Vin cuit'/></td>".
                         "</tr>".
                         "<tr>".
                             "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".
                         "</tr>".
                     "</table></div>".
-                    ($isForModifier ? "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$e->getId()."\"/>" : " ").
+                    ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
                 "</form>";
         } else return "";
     }

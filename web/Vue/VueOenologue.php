@@ -11,7 +11,7 @@ class VueOenologue extends AbstractVueRelation
             return "<tr class='EntityDescription OenologueDescription'><td>" . $e->get_nom_oenologue() .
                 "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
-                "<input type='HIDDEN' name='ligne'          value='".$e->getId()."'/>".
+                "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
         } else return "";
@@ -40,7 +40,7 @@ class VueOenologue extends AbstractVueRelation
                             "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".
                         "</tr>".
                     "</table></div>".
-                    ($isForModifier ? "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$e->getId()."\"/>" : " ").
+                    ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
                 "</form>";
         } else return "";
     }

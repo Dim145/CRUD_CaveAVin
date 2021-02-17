@@ -32,12 +32,9 @@ echo "<form action='..' class='enLigne'>
 
 if(!isset($_POST['actionSurTuple']))
 {
-    if($_GET['action'] == 'modifier')
-    {
-        echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST' class='enLigne'/>";
-        echo    "<input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
-        echo "</form>";
-    }
+    echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST' class='enLigne'/>";
+    echo    "<input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
+    echo "</form>";
 
     // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
     // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
@@ -48,67 +45,64 @@ if(!isset($_POST['actionSurTuple']))
 }
 else
 {
-    $obj = isset($_POST['ligne']) ? FonctionsSGBD::getDataBaseObject($_GET['table'], $_POST['ligne']) : $entiteClasse->newInstance();
+    $obj = isset($_POST['PK']) ? FonctionsSGBD::getDataBaseObject($_GET['table'], $_POST['PK']) : $entiteClasse->newInstance();
 
-    if($_POST['actionSurTuple'] == 'Supprimer')
-    {
-        $obj->setObjects();
-        echo "objet supprimer = <br/>";
-        echo "<table><tr>" . $obj . "</tr></table>";
+    switch($_POST['actionSurTuple']){
+        case 'Supprimer':
+            $obj->setObjects();
+            echo "objet supprimer = <br/>";
+            echo "<table><tr>" . $obj . "</tr></table>";
+            if( $entiteClasse->getName() == Quantite::class ) FonctionsSGBD::supprimerQuantite($obj);
+            else                                          FonctionsSGBD::supprimer($obj);
+            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+            break;
+        case 'Modifier':
+        case 'Créer':
+            $vue = $vueClasse->newInstance();
+            echo $vue->getForm4Entity($obj,isset($_POST['PK']));
+            break;
+        case 'Confirmer':
+            echo 'save obj...';
 
-        if( $entiteClasse->getName() == Quantite::class ) FonctionsSGBD::supprimerQuantite($obj);
-        else                                          FonctionsSGBD::supprimer($obj);
+            if( !isset($_POST['PK']) ) // si c'est un nouveaux
+                $obj->initAllVariables(); // permet aussi de réinitialiser l'objet si il n'est pas "vide". -> ne devrait pas arriver
 
-        header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
-    }
-    else if( $_POST['actionSurTuple'] == 'Modifier' || $_POST['actionSurTuple'] == 'Créer' )
-    {
-        $vue = $vueClasse->newInstance();
-        echo $vue->getForm4Entity($obj,isset($_POST['ligne']));
-    }
-    else if( $_POST['actionSurTuple'] == 'Confirmer')
-    {
-        echo 'save obj...';
-
-        if( !isset($_POST['ligne']) ) // si c'est un nouveaux
-            $obj->initAllVariables(); // permet aussi de réinitialiser l'objet si il n'est pas "vide". -> ne devrait pas arriver
-
-        if( $entiteClasse->getName() == Quantite::class )
-        {
-            $bouteille = FonctionsSGBD::getBouteille($_POST['id_bouteille']);
-            $obj->setVolumeBouteille($bouteille->getVolumeBouteille());
-            $obj->setMillesimeBouteille($bouteille->getMillesimeBouteille());
-            $obj->setNomBouteille($bouteille->getNomBouteille());
-            $obj->setQteBouteille($_POST['qte_bouteille']);
-        }
-        else
-        {
-            foreach ( $_POST as $key => $value )
+            if($entiteClasse->getName() == Quantite::class)
             {
-                if( $key != 'Save' && $key != 'actionSurTuple' && $key != 'ligne' )
+                $bouteille = FonctionsSGBD::getBouteille($_POST['id_bouteille']);
+                $obj->setVolumeBouteille($bouteille->getVolumeBouteille());
+                $obj->setMillesimeBouteille($bouteille->getMillesimeBouteille());
+                $obj->setNomBouteille($bouteille->getNomBouteille());
+                $obj->setQteBouteille($_POST['qte_bouteille']);
+            }
+            else
+            {
+                foreach ( $_POST as $key => $value )
                 {
-                    echo "<h1>".$key."</h1>";
-                    $properties = $entiteClasse->getProperty($key);
-                    $isAccessible = $properties->isPublic();
+                    if($key != 'Save' && $key != 'actionSurTuple' && $key != 'PK')
+                    {
+                        echo "<h1>".$key."</h1>";
+                        $properties = $entiteClasse->getProperty($key);
+                        $isAccessible = $properties->isPublic();
 
-                    if( !$isAccessible ) $properties->setAccessible(true);
+                        if( !$isAccessible ) $properties->setAccessible(true);
 
-                    $properties->setValue($obj, $value);
+                        $properties->setValue($obj, $value);
 
-                    if( !$isAccessible ) $properties->setAccessible(false);
+                        if( !$isAccessible ) $properties->setAccessible(false);
+                    }
                 }
             }
-        }
 
-        $obj->setObjects();
-        $obj->saveInDB();
+            $obj->setObjects();
+            $obj->saveInDB();
 
-        echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
-        header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
-    }
-    else
-    {
-        echo 'error';
+            echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
+            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+            break;
+        default:
+            echo 'error';
+            break;
     }
 }
 echo AbstractVueRelation::getFinHTML();

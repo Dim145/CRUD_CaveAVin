@@ -15,7 +15,7 @@ class VueBouteille extends AbstractVueRelation
                 $e->getCategorie()->getRobeBouteille() . "</td>".
                 "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
-                "<input type='HIDDEN' name='ligne'          value='".$e->getId()."'/>".
+                "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
         } else return "";
@@ -47,8 +47,8 @@ class VueBouteille extends AbstractVueRelation
                             "<tr><td>Appellation           </td><td>"." : ". AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Appellation::class), 2, $isForModifier ? $e->getIdAppellation() : -1)."</td></tr>".
                             "<tr><td>Categorie             </td><td>"." : ". AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Categorie::class), 3, $isForModifier ? $e->getIdCategorie() : -1)  ."</td></tr>".
                             "<tr><td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td></tr>".
-                "</table></div>".
-                        ($isForModifier ? "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$e->getId()."\"/>" : " ").
+                        "</table></div>".
+                        ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
                     "</form>";
         } else return "";
     }

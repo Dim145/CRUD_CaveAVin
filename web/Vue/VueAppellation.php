@@ -13,7 +13,7 @@ class VueAppellation extends AbstractVueRelation
                 "<a href='?action=SupprimerEntite&PK=".$PK."'>Supprimer</a> </td></tr>";*/
                 "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
-                    "<input type='HIDDEN' name='ligne'          value='".$e->getId()."'/>".
+                    "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
                     "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
         } else return "";
@@ -54,7 +54,7 @@ class VueAppellation extends AbstractVueRelation
                             "</tr>".
                         "</table>".
                     "</div>".
-                    ($isForModifier ? "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$e->getId()."\"/>" : " ").
+                    ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
                 "</form>";
 
             return $Form;
