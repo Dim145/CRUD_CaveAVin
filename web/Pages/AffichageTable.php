@@ -83,7 +83,6 @@ else
                 {
                     if($key != 'Save' && $key != 'actionSurTuple' && $key != 'PK')
                     {
-                        echo "<h1>".$key."</h1>";
                         $properties = $entiteClasse->getProperty($key);
                         $isAccessible = $properties->isPublic();
 
@@ -95,12 +94,19 @@ else
                     }
                 }
             }
-
-            $obj->setObjects();
-            $obj->saveInDB();
-
-            echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
-            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+            try
+            {
+                $obj->setObjects();
+                $obj->saveInDB();
+                echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
+                header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+            }
+            catch(PDOException $e)
+            {
+                echo "<div class='messageErreur'><h1>Erreur lors de l'édition de la base de données : </h1>";
+                echo "<p>".$e->getMessage()."</p></div>";
+                echo "<a class='bouton' href='AffichageTable.php?table=". $_GET['table'] ."'>Annuler</a>";
+            }
             break;
         default:
             echo 'error';
