@@ -4,11 +4,11 @@ required_one("FonctionsUtiles.php");
 required_one("DataBaseObject.php");
 
 session_start();
-echo cc;
+
 function getAcceuil() : String{
     $allFiles = scandir("../Entite"); // En partant du principe que les classes
     // ont le même nom que le fichier dans lequel elle se trouve. (pas sensible a la case)
-    echo "<center><h1>Que voulez vous faire?</h1></center>";
+    echo "<h1>Que voulez vous faire?</h1>";
     echo "<table>";
     foreach ($allFiles as $fichier )
     {
@@ -28,22 +28,25 @@ $contenu = AbstractVueRelation::getDebutHTML();
 $message = "";
 // initialisation du connecteur myPDO pour la connexion
 // (sans nom de Table à renseigner selon le contexte)
-$myPDO = new MyPDO();
+if(isset($_SESSION['myPDO'])){
+    $_SESSION['myPDO'] = new MyPDO();
+}
+$myPDO = $_SESSION['myPDO'];
 
 if (!isset($_GET['action']))
     $_GET['action'] = "initialiser";
 
 switch ($_GET['action']) {
     case 'Initialiser':
-        $_SESSION['état'] = 'Accueil';
+        $_SESSION['etat'] = 'Accueil';
         break;
     case 'SelectionnerTable':
-        $myPDO->setNomTable($_GET['table_name']);
-        $_SESSION['état'] = 'afficheTable';
-        $_SESSION['table_name'] = $_GET['table_name'];
+        $myPDO->setNomTable($_GET['table']);
+        $_SESSION['etat'] = 'afficheTable';
+        $_SESSION['table'] = $_GET['table'];
         break;
     case 'SupprimerEntite':
-        $myPDO->setNomTable($_SESSION['table_name']);
+        $myPDO->setNomTable($_SESSION['table']);
         // récupération du nom de colonne dans le GET
         $keyName = array_keys(array_diff_key($_GET, array('action'=>TRUE)))[0];
         $myPDO->delete(array($keyName => $_GET[$keyName]));

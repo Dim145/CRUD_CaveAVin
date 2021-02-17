@@ -47,7 +47,7 @@ class FonctionsUtiles
                             ULHN
                         </div>
                     </footer>
-                <center
+                <center>
             </body>
         </html>";
     }

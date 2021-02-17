@@ -6,7 +6,7 @@ class VueAppellation extends AbstractVueRelation
 
     public function getHTML4Entity(DataBaseObject $e): string
     {
-        if(($e instanceof appelation)) {
+        if("$e instanceof appelation") {
             $PK = $e->get_id_appellation();
             return "<tr class='EntityDescription AppellationDescription'><td>" . $e->get_nom_appellation() . "</td><td>"
                 . $e->get_categorie_appellation() . "</td>".
@@ -19,7 +19,7 @@ class VueAppellation extends AbstractVueRelation
     {
         $All = "<table class='AllEntities AllAppelation'>";
         $All .= "<tr><th>nom_appellation</th><th>categorie_appellation</th><th>Action</th></tr>";
-        foreach($Entities as &$e){
+        foreach($Entities as $e){
             $All .= $this->getHTML4Entity($e);
         }
         $All .= "</table>";
@@ -28,7 +28,7 @@ class VueAppellation extends AbstractVueRelation
 
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
-        if(($e instanceof appelation)) {
+        if($e instanceof appelation) {
             $get = $isForModifier ? "?action=ModifierEntite" : "?action=InsererEntite";
             $Form = "<form class='EntityForm AppellationForm' action='".$_SERVER['PHP_SELF']. $get ."' method='GET'>\n".
                 "<table><tr><td>nom_appellation</td><td>"." : ".

@@ -1,109 +1,93 @@
 <?php
     require_once "../Entite/DataBaseObject.php";
     require_once "../Entite/appellation.php";
+    require_once "../Vue/AbstractVueRelation.php";
+    require_once "../Vue/VueAppellation.php";
     require_once "../includes/FonctionsUtiles.php";
 
-    echo FonctionsUtiles::getDebutHTML("Test Appellation");
+    session_start();
+
+    $HTML = FonctionsUtiles::getDebutHTML("Test Appellation");
 
     if( !isset($_GET['table'])) die();
+    else $_SESSION['table'] = $_GET['table'];
 
-    $instance = null;
+    $classeEntite = null;
     try
     {
-        $instance = new ReflectionClass(htmlspecialchars($_GET['table'])); // test si la table donnée existe.
+        $classeEntite = new ReflectionClass(htmlspecialchars($_SESSION['table'])); // test si la table donnée existe.
+        $classeVue = new ReflectionClass("Vue" . ucfirst($_SESSION['table']));
     }
     catch (ReflectionException $e)
     {
-        header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
+        echo "Vue" . ucfirst($_SESSION['table']);
+        //header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
     }
 
-    echo "<form action='..' class='enLigne'>
+    // Bouton
+    $HTML .=
+        "<form action='..' class='enLigne'>
             <td><input type='SUBMIT' value='Menu' class='bouton boutonMenu'/></td>
-          </form>";
+         </form>";
 
-    if(!isset($_POST['actionSurTuple']))
+    if(!isset($_GET['action']))
     {
         if($_GET['action'] == 'modifier')
         {
-            echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST' class='enLigne'/>";
-            echo    "<input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
-            echo "</form>";
+            $HTML .= "<form action=".$_SERVER['PHP_SELF']."?table=".$_SESSION['table'] ." method='POST' class='enLigne'/>";
+            $HTML .=    "<input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
+            $HTML .= "</form>";
         }
 
         // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
         // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
-        echo"<div class='fondTableau'>
-                <table>";
-        $tab = FonctionsUtiles::getAllFromClassName(htmlspecialchars($_GET['table']));
-
-        if( count($tab) > 0 )
+        $HTML .= "<div class='fondTableau'>"; // S'en débarasser avec Flo pour css----------------------------------------
+        $Entites = FonctionsUtiles::getAllFromClassName(htmlspecialchars($_SESSION['table']));
+        $vue = $classeVue->newInstance();
+        if( count($Entites) > 0 )
         {
-            $colums = $tab[0]->getColumsName(true);
-            echo "<tr>";
-            foreach ( $colums as $col )
-                if( !str_contains($col, "id") )
-                    echo "<th>" . $col . "</th>";
-            echo "</tr>";
+            $HTML .= $vue->getAllEntities($Entites);
         }
-
-        $i = 1;
-
-        foreach ( $tab as $obj )
-        {
-            echo "<tr>";
-            echo $obj;
-            if($_GET['action'] == 'modifier')
-            {
-                echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
-                echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/></center></td>";
-                echo    "<input     type='HIDDEN' name='ligne'          value='".$obj->getId()."'/>";
-                echo    "<td><center><input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/></center></td>";
-                echo "</form>";
-            }
-            $i++;
-            echo "</tr>";
-        }
-        echo"</table>
-            </div>";
+        $HTML .="</div>";
     }
     else
     {
-        $obj = isset($_POST['ligne']) ? FonctionsUtiles::getDataBaseObject($_GET['table'], $_POST['ligne']) : $instance->newInstance();
+        $obj = isset($_POST['PK']) ? FonctionsUtiles::getDataBaseObject($_SESSION['table'] , $_POST['PK']) : $classeEntite->newInstance();
 
-        if($_POST['actionSurTuple'] == 'Supprimer')
+        if($_POST['action'] == 'Supprimer')
         {
             $obj->setObjects();
-            echo "objet supprimer = <br/>";
-            echo "<table><tr>" . $obj . "</tr></table>";
+            $HTML .= "objet supprimer = <br/>";
+            $HTML .= "<table><tr>" . $obj . "</tr></table>";
 
-            if( $instance->getName() == Quantite::class ) FonctionsUtiles::supprimerQuantite($obj);
+            if( $classeEntite->getName() == Quantite::class ) FonctionsUtiles::supprimerQuantite($obj);
             else                                          FonctionsUtiles::supprimer($obj);
 
-            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_SESSION['table'] ."&action=modifier");
         }
-        else if( $_POST['actionSurTuple'] == 'Modifier' || $_POST['actionSurTuple'] == 'Créer' )
+        else if($_GET['action'] == 'ModifierEntite' || $_POST['actionSurTuple'] == 'Créer' )
         {
-            echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>";
+            $HTML .= "<form action=".$_SERVER['PHP_SELF']."?table=".$_SESSION['table'] ." method='POST'>";
 
-            echo "<div class='fondTableau'><table>";
-            echo $obj->toStringPageForm(isset($_POST['ligne']));
-            echo "<tr><td><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td></tr>";
-            echo "<table>";
+            $HTML .= "<div class='fondTableau'><table>";
+            $HTML .= $obj->toStringPageForm(isset($_POST['PK']));
+            $HTML .= "<tr><td><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td></tr>";
+            $HTML .= "<table>";
 
-            if( isset($_POST['ligne']) )
-                echo "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$_POST['ligne']."\"/>";
+            if( isset($_POST['PK']) )
+                $HTML .= "<input type=\"HIDDEN\" name=\"ligne\" value=\"".$_POST['PK']."\"/>";
 
-            echo "</form>";
-            echo "</table></div>";
+            $HTML .= "</form>";
+            $HTML .= "</table></div>";
         }
         else if( $_POST['actionSurTuple'] == 'Confirmer' )
         {
-            echo 'save obj...';
+            $HTML .= 'save obj...';
 
-            if( !isset($_POST['ligne']) ) // si c un nouveaux
+            if( !isset($_POST['PK']) ) // si c un nouveaux
                 $obj->initAllVariables(); // permet aussi de réinitialiser l'objet si il n'est pas "vide". -> ne devrais pas arriver
 
-            if( $instance->getName() == Quantite::class )
+            if( $classeEntite->getName() == Quantite::class )
             {
                 $bouteille = FonctionsUtiles::getBouteille($_POST['id_bouteille']);
 
@@ -119,7 +103,7 @@
                 {
                     if( $key != 'Save' && $key != 'actionSurTuple' && $key != 'ligne' )
                     {
-                        $properties = $instance->getProperty($key);
+                        $properties = $classeEntite->getProperty($key);
                         $isAccessible = $properties->isPublic();
 
                         if( !$isAccessible ) $properties->setAccessible(true);
@@ -134,14 +118,15 @@
             $obj->setObjects();
             $obj->saveInDB();
 
-            echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
-            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+            $HTML .= "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
+            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_SESSION['table'] ."&action=modifier");
         }
         else
         {
-            echo 'error';
+            $HTML .= 'error';
         }
     }
-    echo FonctionsUtiles::getFinHTML();
+    $HTML .= FonctionsUtiles::getFinHTML();
 
+    echo $HTML;
 ?>
