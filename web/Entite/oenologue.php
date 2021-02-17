@@ -5,7 +5,7 @@ class Oenologue extends DataBaseObject
     private int $id_oenologue;
     private string $nom_oenologue;
 
-    public function get_id_oenologue(): int
+    public function getIdOenologue(): int
     {
         return $this->id_oenologue;
     }
@@ -15,7 +15,7 @@ class Oenologue extends DataBaseObject
         $this->id_oenologue = $id_oenologue;
     }
 
-    public function get_nom_oenologue(): string
+    public function getNomOenologue(): string
     {
         return $this->nom_oenologue;
     }
@@ -44,7 +44,7 @@ class Oenologue extends DataBaseObject
 
     public function getId()
     {
-        return $this->get_id_oenologue();
+        return $this->getIdOenologue();
     }
 
     public function __toString(): string

@@ -37,17 +37,19 @@ class VueAppellation extends AbstractVueRelation
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
         if("e instanceof appelation") {
+            $value = $isForModifier ? $e->getCategorieAppellation() : null;
+            $selectCategorie = self::getSelectForAttribute("categorie_appellation", "--Selectionnez une catégorie",appellation::categories, $isForModifier, $value);
             $Form =
                 "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<div class='fondTableau'>".
                         "<table>".
                             "<tr>".
-                                "<td>nom_appellation       </td>".
+                                "<td>nom_appellation</td>".
                                 "<td>"." : "."<input type='text' name='nom_appellation' value=\"" . ( $isForModifier ? $e->getNomAppellation()       : "" ) . "\" required/></td>".
                             "</tr>".
                             "<tr>".
                                 "<td>categorie_appellation </td>".
-                                "<td>"." : "."<input type='text' name='categorie_appellation' value=\"" . ( $isForModifier ? $e->getCategorieAppellation() : "" ) . "\" required pattern='(Vin\sde\stable|AOC\/AOP|IGP|Vin\sde\spays|VDQS)'title='Doit être un Vin de table, Vin de pays, VDQS ou AOC/AOP'/></td>".
+                                 "<td>"." : ". $selectCategorie . "</td>".
                             "</tr>".
                             "<tr>".
                                 "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".

@@ -7,6 +7,9 @@ class Appellation extends DataBaseObject
     private string $nom_appellation;
     private string $categorie_appellation;
 
+    // Valeurs de $categorie_appellation :
+    public const categories = ["Vin de table", "Vin de pays", "VDQS", "AOC/AOP", "IGP"];
+
     public function getIdAppellation(): int
     {
         return $this->id_appellation;
@@ -34,7 +37,10 @@ class Appellation extends DataBaseObject
 
     public function setCategorieAppellation(string $categorie_appellation)
     {
-        $this->categorie_appellation = $categorie_appellation;
+        if(in_array($categorie_appellation, self::categories))
+            $this->categorie_appellation = $categorie_appellation;
+        else
+            throw new Exception("La catégorie doit etre égale a une de ces valeurs: " . implode(" - ", self::categories));
     }
 
     function setObjects(): void

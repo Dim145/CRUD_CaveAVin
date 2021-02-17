@@ -32,21 +32,31 @@ class VueCategorie extends AbstractVueRelation
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
         if("e instanceof categorie") {
-            $get = $isForModifier ? "?action=ModifierEntite" : "?action=InsererEntite";
+            $valueRobe = null;
+            $valueSucrage = null;
+            $valueType = null;
+            if($isForModifier){
+                $valueRobe = $e->getRobeBouteille();
+                $valueSucrage = $e->getSucrageBouteille();
+                $valueType = $e->getTypeBouteille();
+            }
+            $selectRobe = self::getSelectForAttribute("robe_bouteille", "--Selectionnez une robe", categorie::robes, $isForModifier, $valueRobe);
+            $selectSucrage = self::getSelectForAttribute("sucrage_bouteille", "--Selectionnez un sucrage", categorie::sucrages, $isForModifier, $valueSucrage);
+            $selectType = self::getSelectForAttribute("type_bouteille", "--Selectionnez un type", categorie::types, $isForModifier, $valueType);
             return
                 "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<div clas='fondTableau'><table>".
                         "<tr>".
                             "<td>robe_bouteille    </td>".
-                            "<td>"." : "."<input type='text' name='robe_bouteille' value=\"" . ( $isForModifier ? $e->getRobeBouteille() : "" ) . "\" required pattern='(Rouge|Blanc|Rosé)' title='Doit être Rouge, Blanc ou Rosé'/></td>".
+                            "<td>"." : " . $selectRobe . "</td>".
                         "</tr>".
                         "<tr>".
                             "<td>sucrage_bouteille </td>".
-                            "<td>"." : "."<input type='text' name='sucrage_bouteille' value=\"" . ( $isForModifier ? $e->getSucrageBouteille() : "" ) . "\" required pattern='(Sec|Demi-sec|Moelleux|Liquoreux' title='Doit être Sec, Demi-sec, Moelleux, Liquoreux'/></td>".
+                            "<td>"." : " . $selectSucrage . "</td>".
                         "</tr>".
                         "<tr>".
                             "<td>type_bouteille    </td>".
-                            "<td>"." : "."<input type='text' name='type_bouteille' value=\"" . ( $isForModifier ? $e->getTypeBouteille() : "" ) . "\" required pattern='(Vin\stranquille|Vin\seffervescent|Vin\sdoux\snaturel|Vin\scuit)' title='Doit être Vin tranquille, Vin effervescent, Vin doux naturel ou Vin cuit'/></td>".
+                            "<td>"." : " . $selectType . "</td>".
                         "</tr>".
                         "<tr>".
                             "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".

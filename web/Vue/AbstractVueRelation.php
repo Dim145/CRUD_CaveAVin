@@ -62,6 +62,21 @@ abstract class AbstractVueRelation
         return $sRet . "\n</select>";
     }
 
+    public static function getSelectForAttribute(string $name, string $instruction, array $Options, bool $isForModifier, $value){
+        $select = "<select required name='".$name."'>";
+        if($isForModifier) {
+            foreach($Options as $op){
+                $select .= "<option value='". $op ."' ".($value == $op ? "selected" : "") .">". $op." </option>";
+            }
+        }else {
+            $select .= ($isForModifier ? "" : "<option value='' selected>".$instruction."</option>");
+            foreach ($Options as $op) {
+                $select .= "<option value='" . $op . "'>" . $op . " </option>";
+            }
+        }
+        return $select ."</select>";
+    }
+
     public abstract function getHTML4Entity(DataBaseObject $e) : string;
 
     public abstract function getAllEntities(array $Entities) : string;

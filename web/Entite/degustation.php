@@ -133,7 +133,7 @@ class Degustation extends DatabaseObject
         return "<td>" . $this->note_degustation     . "</td><td>"
             . $this->date_degustation               . "</td><td>"
             . $this->bouteille->getNomBouteille()   . "</td><td>"
-            . $this->oenologue->get_nom_oenologue() . "</td>";
+            . $this->oenologue->getNomOenologue() . "</td>";
     }
 
     public function getId()
