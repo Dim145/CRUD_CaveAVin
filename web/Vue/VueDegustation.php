@@ -71,6 +71,7 @@ class VueDegustation extends AbstractVueRelation
                         "</tr>".
                     "</table></div>".
                     ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
+                    "<input type='HIDDEN' name='referer' value=\"" . $_SERVER['HTTP_REFERER'] . "\" />".
                 "</form>";
         }
         else return "";

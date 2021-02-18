@@ -38,7 +38,7 @@ if(!isset($_POST['actionSurTuple']))
 
     // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
     // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
-    $Entities = sgbd\FonctionsSGBD::getAllFromClassName(htmlspecialchars("entite\\".$_GET['table']), isset($_GET['orderBy']) ? $_GET['orderBy'] : "");
+    $Entities = sgbd\FonctionsSGBD::getAllFromClassName(htmlspecialchars("entite\\".$_GET['table']), isset($_GET['orderBy']) ? htmlspecialchars($_GET['orderBy']) : "");
     $vue = $vueClasse->newInstance();
     echo $vue->getAllEntities($Entities);
 }
@@ -55,7 +55,7 @@ else
             echo "<table><tr>" . $obj . "</tr></table>";
             if( $entiteClasse->getName() == entite\Quantite::class ) sgbd\FonctionsSGBD::supprimerQuantite($obj);
             else                                          sgbd\FonctionsSGBD::supprimer($obj);
-            header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+            header("Location: " . $_SERVER['HTTP_REFERER']);
         break;
 
         case 'Modifier':
@@ -63,7 +63,7 @@ else
             $vue = $vueClasse->newInstance();
 
             echo $vue->getForm4Entity($obj,isset($_POST['PK']));
-            echo "<a class='bouton' href='AffichageTable.php?table=". $_GET['table'] ."'>Annuler</a>";
+            echo "<a class='bouton' href=\"".$_SERVER['HTTP_REFERER']."\">Annuler</a>";
         break;
 
         case 'Confirmer':
@@ -84,7 +84,7 @@ else
             {
                 foreach ( $_POST as $key => $value )
                 {
-                    if($key != 'Save' && $key != 'actionSurTuple' && $key != 'PK')
+                    if($key != 'Save' && $key != 'actionSurTuple' && $key != 'PK' && $key != 'referer')
                     {
                         $properties = $entiteClasse->getProperty($key);
                         $isAccessible = $properties->isPublic();
@@ -105,13 +105,13 @@ else
 
                 echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
 
-                header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
+                header("Location: " . ($_POST['referer']));
             }
             catch(PDOException $e)
             {
                 echo "<div class='messageErreur'><h1>Erreur lors de l'édition de la base de données : </h1>";
                 echo "<p>".$e->getMessage()."</p></div>";
-                echo "<a class='bouton' href='AffichageTable.php?table=". $_GET['table'] ."'>Annuler</a>";
+                echo "<a class='bouton' href='".$_SERVER['HTTP_REFERER']."'>Annuler</a>";
             }
         break;
         default: echo 'error';
