@@ -26,15 +26,19 @@ class VueDegustation extends AbstractVueRelation
 
     public function getAllEntities(array $Entities): string
     {
-        $All = "<div class='fondTableau'><table class='AllEntities AllDegustation'>";
-        $All .= "<tr><th>note_degustation</th><th>date_degustation</th><th>nom_bouteille</th><th>nom_oenologue</th><th>Action</th></tr>";
+        if (count($Entities) > 0)
+        {
+            $All = "<div class='fondTableau'><table class='AllEntities AllDegustation'>";
+            $All .= "<tr><th>note_degustation</th><th>date_degustation</th><th>nom_bouteille</th><th>nom_oenologue</th><th>Action</th></tr>";
 
-        foreach($Entities as $e)
-            $All .= $this->getHTML4Entity($e);
+            foreach($Entities as $e)
+                $All .= $this->getHTML4Entity($e);
 
-        $All .= "</table></div>";
+            $All .= "</table></div>";
 
-        return $All;
+            return $All;
+        } else
+            return "<div class='fondTableau'>Table degustation vide</div>";
     }
 
     public function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier): string

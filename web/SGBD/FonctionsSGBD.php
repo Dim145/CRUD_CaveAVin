@@ -24,21 +24,21 @@ class FonctionsSGBD
     /**
      * Récupère toutes les instance d'une class dans la base de donnée
      * @param ReflectionClass $class classe visée
-     * @return DataBaseObject[] tableau d'objet correpondant
+     * @return DataBaseObject[] tableau d'objets correpondant
      */
     public static function getAllFromClass( \ReflectionClass $class ): array
     {
         $bdd = self::getBDD();
 
-        $nom = $class->getShortName();
-        $requete = $bdd->query("SELECT * FROM $nom");
-
+        $nom = strtolower($class->getName());
+        $iterator = new entite\DataBaseObjectIterator($nom);
+        //$iterator->next();
         $tab = array();
-
-        while( ($obj = $requete->fetchObject($class->getName())) != null )
+        while( $iterator->valid() )
         {
-            $obj->setObjects();
+            $obj = $iterator->current();
             array_push($tab, $obj);
+            $iterator->next();
         }
 
         return $tab;

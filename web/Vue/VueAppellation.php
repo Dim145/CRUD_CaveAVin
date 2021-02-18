@@ -37,7 +37,7 @@ class VueAppellation extends AbstractVueRelation
             $All .= "</table></div>";
         }
         else
-            return "<div class='fondTableau'>Table Appellation vide</div>";
+            return "<div class='fondTableau'>Table appellation vide</div>";
 
         return $All;
     }

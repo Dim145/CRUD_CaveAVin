@@ -5,22 +5,20 @@ use sgbd;
 class DataBaseObjectIterator implements \Iterator, \Countable
 {
     private ?DataBaseObject  $current;
-    private ReflectionClass $class;
+    private \ReflectionClass $class;
 
     private int $count; // stockage dans un objets pour eviter un nb de requetes trop grand a la base de donnée
     // une methode pour refresh ce nb seras implémenter.
 
-    private PDOStatement $statement;
+    private \PDOStatement $statement;
 
     public function __construct( string $class )
     {
         $this->class     = new \ReflectionClass($class);
-
         $this->count = -1;
-
         $bdd = sgbd\FonctionsSGBD::getBDD();
-        $this->statement = $bdd->query("SELECT * FROM $class");
-
+        $tableName = $this->class->getShortName();
+        $this->statement = $bdd->query("SELECT * FROM $tableName");
         $this->next();
     }
 
@@ -66,7 +64,7 @@ class DataBaseObjectIterator implements \Iterator, \Countable
     public function rewind(): void
     {
         $bdd = sgbd\FonctionsSGBD::getBDD();
-        $this->statement = $bdd->query("SELECT * FROM " . $this->class->getName());
+        $this->statement = $bdd->query("SELECT * FROM " . $this->class->getShortName());
     }
 
     public function count()
