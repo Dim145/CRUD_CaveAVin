@@ -1,4 +1,6 @@
 <?php
+namespace entite;
+use sgbd;
 
 class Degustation extends DatabaseObject
 {
@@ -7,7 +9,7 @@ class Degustation extends DatabaseObject
     private string $date_degustation;
     private int    $id_bouteille;
     private int    $id_oenologue;
-    protected DateTime  $date;
+    protected \DateTime  $date;
 
     protected Bouteille $bouteille;
     protected Oenologue $oenologue;
@@ -44,7 +46,7 @@ class Degustation extends DatabaseObject
         if($note_degustation >=0 && $note_degustation <=20)
             $this->note_degustation = $note_degustation;
         else
-            throw new Exception("La note n'est pas comprise entre 0 et 20");
+            throw new \Exception("La note n'est pas comprise entre 0 et 20");
     }
 
     /**
@@ -105,14 +107,14 @@ class Degustation extends DatabaseObject
 
     public function setObjects(): void
     {
-        $this->date      = new DateTime($this->date_degustation);
-        $this->bouteille = FonctionsSGBD::getBouteille($this->id_bouteille);
-        $this->oenologue = FonctionsSGBD::getOenologue($this->id_oenologue);
+        $this->date      = new \DateTime($this->date_degustation);
+        $this->bouteille = sgbd\FonctionsSGBD::getBouteille($this->id_bouteille);
+        $this->oenologue = sgbd\FonctionsSGBD::getOenologue($this->id_oenologue);
     }
 
     public function getColumsName( bool $includeSubObjects ): array
     {
-        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+        $allAtribute = $this->getReflexion()->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         $colums = array();
 
@@ -146,7 +148,7 @@ class Degustation extends DatabaseObject
         return "<tr><td>note_degustation </td><td>"." : "."<input type='number' name='note_degustation'  value=\"" . ( $isForModifier ? $this->note_degustation : "" ) . "\" required min='0' max='20' step='0.1'
                                                                  title='Doit être en 0 et 20 compris'/></td></tr>" .
                "<tr><td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value=\"". ( $isForModifier ? $this->date_degustation : date('Y-m-d')) ."\" /></td></tr>".
-               "<tr><td>Bouteille        </td><td>"." : ". FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $this->id_bouteille : -1)."</td></tr>".
-               "<tr><td>Oenologue        </td><td>"." : ". FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Oenologue::class), 2, $isForModifier ? $this->id_oenologue : -1)."</td></tr>";
+               "<tr><td>Bouteille        </td><td>"." : ". sgbd\FonctionsSGBD::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $this->id_bouteille : -1)."</td></tr>".
+               "<tr><td>Oenologue        </td><td>"." : ". sgbd\FonctionsSGBD::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(Oenologue::class), 2, $isForModifier ? $this->id_oenologue : -1)."</td></tr>";
     }
 }

@@ -1,6 +1,8 @@
 <?php
+namespace entite;
+use sgbd;
 
-class Bouteille extends DatabaseObject
+class Bouteille extends DataBaseObject
 {
     private int    $id_bouteille;
     private string $nom_bouteille;
@@ -18,8 +20,8 @@ class Bouteille extends DatabaseObject
 
     public function setObjects(): void
     {
-        $this->appellation = FonctionsSGBD::getAppellation($this->id_appellation);
-        $this->categorie   = FonctionsSGBD::getCategorie($this->id_categorie);
+        $this->appellation = sgbd\FonctionsSGBD::getAppellation($this->id_appellation);
+        $this->categorie   = sgbd\FonctionsSGBD::getCategorie($this->id_categorie);
     }
 
     public function getId()
@@ -76,7 +78,7 @@ class Bouteille extends DatabaseObject
         if(in_array($volume_bouteille, self::volumes))
             $this->volume_bouteille = $volume_bouteille;
         else
-            throw new Exception("Le volume doit etre egale a une de ces valeurs: " . implode(" - ", self::volumes));
+            throw new \Exception("Le volume doit etre egale a une de ces valeurs: " . implode(" - ", self::volumes));
     }
 
     /**
@@ -96,7 +98,7 @@ class Bouteille extends DatabaseObject
         if($millesime_bouteille > 0 && $millesime_bouteille <= 2099)
             $this->millesime_bouteille = $millesime_bouteille;
         else
-            throw new Exception("la millesime doit etre comprise entre 1 et 2099.");
+            throw new \Exception("la millesime doit etre comprise entre 1 et 2099.");
     }
 
     /**
@@ -116,7 +118,7 @@ class Bouteille extends DatabaseObject
         if($prix_bouteille >= 0)
             $this->prix_bouteille = $prix_bouteille;
         else
-            throw new Exception("Le prix ne peut pas etre inférieur a 0");
+            throw new \Exception("Le prix ne peut pas etre inférieur a 0");
     }
 
     /**
@@ -134,7 +136,7 @@ class Bouteille extends DatabaseObject
     {
         $this->id_appellation = $id_appellation;
 
-        $this->appellation = FonctionsSGBD::getAppellation($id_appellation); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
+        $this->appellation = sgbd\FonctionsSGBD::getAppellation($id_appellation); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
     }
 
     /**
@@ -152,7 +154,7 @@ class Bouteille extends DatabaseObject
     {
         $this->id_categorie = $id_categorie;
 
-        $this->categorie = FonctionsSGBD::getCategorie($id_categorie); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
+        $this->categorie = sgbd\FonctionsSGBD::getCategorie($id_categorie); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
     }
 
     /**
@@ -187,7 +189,7 @@ class Bouteille extends DatabaseObject
      */
     public function getColumsName( bool $includeSubObjects ): array
     {
-        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+        $allAtribute = $this->getReflexion()->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         $colums = array();
 
@@ -222,7 +224,7 @@ class Bouteille extends DatabaseObject
                                                                       title='Doit être entre 1 et 2099 compris'/></td></tr>" .
                "<tr><td>prix_bouteille        </td><td>"." : "."<input type='number' name='prix_bouteille'        value=\"" . ($isForModifier ? $this->prix_bouteille : "") . "\" required pattern='^\d+(.\d{1,2})?$'
                                                                       title='Doit être composé de chiffre et eventuellement de 2 chiffres apres le point'/></td></tr>" .
-               "<tr><td>Appellation           </td><td>"." : ". FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Appellation::class), 2, $isForModifier ? $this->id_appellation : -1)."</td></tr>".
-               "<tr><td>Categorie             </td><td>"." : ". FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Categorie::class), 3, $isForModifier ? $this->id_categorie : -1)  ."</td></tr>";
+               "<tr><td>Appellation           </td><td>"." : ". sgbd\FonctionsSGBD::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(Appellation::class), 2, $isForModifier ? $this->id_appellation : -1)."</td></tr>".
+               "<tr><td>Categorie             </td><td>"." : ". sgbd\FonctionsSGBD::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(Categorie::class), 3, $isForModifier ? $this->id_categorie : -1)  ."</td></tr>";
     }
 }

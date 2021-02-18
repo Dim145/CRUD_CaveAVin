@@ -1,13 +1,13 @@
 <?php
-
+namespace vues;
+use entite;
 
 class VueOenologue extends AbstractVueRelation
 {
 
-    public function getHTML4Entity(DataBaseObject $e): string
+    public function getHTML4Entity(entite\DataBaseObject $e): string
     {
-        if($e instanceof oenologue)
-        {
+        if($e instanceof entite\oenologue){
             $PK = $e->getIdOenologue();
 
             return "<tr class='EntityDescription OenologueDescription'><td>" . $e->getNomOenologue() .
@@ -33,11 +33,11 @@ class VueOenologue extends AbstractVueRelation
         return $All;
     }
 
-    public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
+    public function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier): string
     {
-        if($e instanceof oenologue)
-        {
-            return "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+        if($e instanceof entite\oenologue){
+            return
+                "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<div class='fondTableau'><table>".
                         "<tr>".
                             "<td>nom_oenologue </td>".
