@@ -8,7 +8,8 @@ class VueAppellation extends AbstractVueRelation
 
     public function getHTML4Entity(entite\DataBaseObject $e): string
     {
-        if($e instanceOf entite\appellation) {
+        if($e instanceOf entite\appellation)
+        {
             return "<tr class='EntityDescription AppellationDescription'><td>" . $e->getNomAppellation() . "</td><td>"
                 . $e->getCategorieAppellation() . "</td>".
                 /*"<td><a href='?action=ModifierEntite&PK=".$PK."'>Modifier</a>".
@@ -18,21 +19,26 @@ class VueAppellation extends AbstractVueRelation
                     "<input type='HIDDEN' name='PK'             value='".$e->getId()."'/>".
                     "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
-        } else return "";
+        }
+        else
+            return "";
     }
 
     public function getAllEntities(array $Entities): string
     {
-        if( count($Entities) > 0 ){
+        if (count($Entities) > 0)
+        {
             $All = "<div class='fondTableau'> <table class='AllEntities AllAppelation'>";
             $All .= "<tr><th>nom_appellation</th><th>categorie_appellation</th><th>Action</th></tr>";
-            foreach($Entities as $e){
+
+            foreach ($Entities as $e)
                 $All .= $this->getHTML4Entity($e);
-            }
+
             $All .= "</table></div>";
-        } else {
-            return "<div class='fondTableau'>Table Appellation vide</div>";
         }
+        else
+            return "<div class='fondTableau'>Table Appellation vide</div>";
+
         return $All;
     }
 
@@ -62,6 +68,7 @@ class VueAppellation extends AbstractVueRelation
                 "</form>";
 
             return $Form;
-        } else return "";
+        }
+        else return "";
     }
 }

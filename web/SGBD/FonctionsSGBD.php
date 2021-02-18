@@ -101,8 +101,7 @@ class FonctionsSGBD
 
         $bouteille = $reponse->fetchObject(entite\Bouteille::class);
 
-        if( $bouteille === false )
-            return null;
+        if( $bouteille === false ) return null;
 
         $bouteille->setObjects();
 
@@ -170,7 +169,7 @@ class FonctionsSGBD
      * NE DEVRAIS PAS EXISTER. Mais comme la class Quantite ne possede pas
      * d'attribut de type "id", nous ne pouvons pas utiliser la recursivité pour celle-ci.
      *
-     * @param int $ids_quantite sous forme nom_bouteille,volume_bouteille,millesime_bouteille
+     * @param string $ids_quantite sous forme nom_bouteille,volume_bouteille,millesime_bouteille
      * @return Quantite|null Objet de type Quantité
      */
     public static function getQuantite(string $ids_quantite): ?entite\Quantite
@@ -179,6 +178,7 @@ class FonctionsSGBD
 
         $reponse = $bdd->prepare("SELECT * FROM quantite WHERE nom_bouteille = ? AND ".
         "volume_bouteille = ? AND millesime_bouteille = ?");
+
         $reponse->execute(explode(",", $ids_quantite));
 
         $obj = $reponse->fetchObject(entite\Quantite::class);
@@ -192,17 +192,17 @@ class FonctionsSGBD
      */
     public static function getDataBaseObject(string $objectClassName, $id): ?entite\DataBaseObject
     {
-        switch (strtolower($objectClassName))
+        return match (strtolower($objectClassName))
         {
-            case strtolower(entite\Bouteille::class): return self::getBouteille($id);
-            case strtolower(entite\Appellation::class): return self::getAppellation($id);
-            case strtolower(entite\Categorie::class): return self::getCategorie($id);
-            case strtolower(entite\Degustation::class): return self::getDegustation($id);
-            case strtolower(entite\Oenologue::class): return self::getOenologue($id);
-            case strtolower(entite\Quantite::class): return self::getQuantite($id);
+            cstrtolower(entite\Bouteille::class) => self::getBouteille($id),
+            strtolower(entite\Appellation::class)=> self::getAppellation($id),
+            strtolower(entite\Categorie::class)  => self::getCategorie($id),
+            strtolower(entite\Degustation::class)=> self::getDegustation($id),
+            strtolower(entite\Oenologue::class)  => self::getOenologue($id),
+            strtolower(entite\Quantite::class)   => self::getQuantite($id),
 
-            default: return null;
-        }
+            default => null,
+        };
     }
 
     public static function getNbInstanceOf( string $class ): int
@@ -210,16 +210,14 @@ class FonctionsSGBD
         try
         {
             $refClass = new \ReflectionClass($class);
-
             $bdd = self::getBDD();
-
             $reponse = $bdd->query("SELECT count(*) FROM $refClass->name");
 
             return $reponse->fetch()[0];
         }
         catch (\Exception $e)
         {
-            echo "Error: " . $e;
+            //echo "Error: " . $e;
 
             return 0;
         }
@@ -235,7 +233,7 @@ class FonctionsSGBD
         $arraysColumnsName = $obj->getColumsName(false);
         $res = $bdd->exec("DELETE FROM " . (new \ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
 
-        return $res;
+        return $bdd->exec("DELETE FROM " . $obj::class . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
     }
 
     public static function supprimerQuantite( entite\Quantite $qte ):bool
@@ -251,11 +249,9 @@ class FonctionsSGBD
 
         $str = substr($str, 0, strlen($str) - 5); // enleve le dernier and
 
-        echo $str;
+        //echo $str;
 
-        $res = $bdd->exec($str);
-
-        return $res;
+        return $bdd->exec($str);
     }
 }
 

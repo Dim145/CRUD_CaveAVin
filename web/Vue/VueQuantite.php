@@ -10,6 +10,7 @@ class VueQuantite extends AbstractVueRelation
     {
         if($e instanceof entite\quantite){
             $PK = $e->getNomBouteille() . "," . $e->getVolumeBouteille() . "," . $e->getMillesimeBouteille();
+
             return "<tr class='EntityDescription QuantiteDescription'><td>" . $e->getNomBouteille()       . "</td><td>"
                 . $e->getVolumeBouteille()              . "</td><td>"
                 . $e->getMillesimeBouteille()           . "</td><td>"
@@ -19,16 +20,18 @@ class VueQuantite extends AbstractVueRelation
                 "<input type='HIDDEN' name='PK'             value='".$e->getId()."'/>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
-        } else return "";
+        }
+        else return "";
     }
 
     public function getAllEntities(array $Entities): string
     {
         $All = "<div class='fondTableau'><table class='AllEntities AllQuantite'>";
         $All .= "<tr><th>nom_bouteille</th><th>volume_bouteille</th><th>millesime_bouteille</th><th>qte_bouteille</th><th>Action</th></tr>";
-        foreach($Entities as &$e){
+
+        foreach($Entities as $e)
             $All .= $this->getHTML4Entity($e);
-        }
+
         $All .= "</table></div>";
         return $All;
     }
@@ -44,8 +47,8 @@ class VueQuantite extends AbstractVueRelation
                 $statement->execute(array($e->getNomBouteille(), $e->getVolumeBouteille(), $e->getMillesimeBouteille()));
                 $obj = $statement->fetchObject(entite\Bouteille::class);
             }
-            return
-                "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+
+            return "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<div class='fondTableau'><table>".
                         "<tr>".
                             "<td>bouteille     </td>".
@@ -61,6 +64,7 @@ class VueQuantite extends AbstractVueRelation
                     "</table></div>".
                     ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
                 "</form>";
-        } else return "";
+        }
+        else return "";
     }
 }

@@ -1,6 +1,4 @@
 <?php
-namespace pages;
-
 require_once "../Entite/DataBaseObject.php";
 require_once "../Entite/appellation.php";
 require_once "../Vue/AbstractVueRelation.php";
@@ -21,6 +19,7 @@ if( !isset($_GET['table'])) die();
 
 $entiteClasse = null;
 $vueClasse = null;
+
 try
 {
     $entiteClasse = new \ReflectionClass("entite\\".htmlspecialchars($_GET['table'])); // test si la table donnée existe.
@@ -33,13 +32,13 @@ catch (\ReflectionException $e)
 
 echo "<form action='..' class='enLigne'>
             <td><input type='SUBMIT' value='Menu' class='bouton boutonMenu'/></td>
-          </form>";
+      </form>";
 
 if(!isset($_POST['actionSurTuple']))
 {
 
     echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST' class='enLigne'/>";
-    echo    "<input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
+    echo "    <input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
     echo "</form>";
 
     // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
@@ -47,27 +46,30 @@ if(!isset($_POST['actionSurTuple']))
     $Entities = sgbd\FonctionsSGBD::getAllFromClassName(htmlspecialchars("entite\\".$_GET['table']));
     $vue = $vueClasse->newInstance();
     echo $vue->getAllEntities($Entities);
-
 }
 else
 {
     $obj = isset($_POST['PK']) ? sgbd\FonctionsSGBD::getDataBaseObject("entite\\".$_GET['table'], $_POST['PK']) : $entiteClasse->newInstance();
 
-    switch($_POST['actionSurTuple']){
+    switch($_POST['actionSurTuple'])
+    {
         case 'Supprimer':
             $obj->setObjects();
+
             echo "objet supprimer = <br/>";
             echo "<table><tr>" . $obj . "</tr></table>";
             if( $entiteClasse->getName() == entite\Quantite::class ) sgbd\FonctionsSGBD::supprimerQuantite($obj);
             else                                          sgbd\FonctionsSGBD::supprimer($obj);
             header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
-            break;
+        break;
+
         case 'Modifier':
         case 'Créer':
             $vue = $vueClasse->newInstance();
+
             echo $vue->getForm4Entity($obj,isset($_POST['PK']));
             echo "<a class='bouton' href='AffichageTable.php?table=". $_GET['table'] ."'>Annuler</a>";
-            break;
+        break;
 
         case 'Confirmer':
             echo 'save obj...';
@@ -100,11 +102,14 @@ else
                     }
                 }
             }
+
             try
             {
                 $obj->setObjects();
                 $obj->saveInDB();
+
                 echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
+
                 header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
             }
             catch(\PDOException $e)
@@ -113,10 +118,8 @@ else
                 echo "<p>".$e->getMessage()."</p></div>";
                 echo "<a class='bouton' href='AffichageTable.php?table=". $_GET['table'] ."'>Annuler</a>";
             }
-            break;
-        default:
-            echo 'error';
-            break;
+        break;
+        default: echo 'error';
     }
 }
 echo vues\AbstractVueRelation::getFinHTML();

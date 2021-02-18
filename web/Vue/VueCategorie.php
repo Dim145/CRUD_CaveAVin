@@ -7,8 +7,10 @@ class VueCategorie extends AbstractVueRelation
 
     public function getHTML4Entity(entite\DataBaseObject $e): string
     {
-        if($e instanceof entite\categorie) {
+        if($e instanceof entite\categorie)
+        {
             $PK = $e->getIdCategorie();
+
             return "<tr class='EntityDescription CategorieDescription'><td>" . $e->getRobeBouteille() . "</td><td>" .
                 $e->getSucrageBouteille() . "</td><td>" . $e->getTypeBouteille() . "</td>".
                 "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
@@ -16,17 +18,20 @@ class VueCategorie extends AbstractVueRelation
                 "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
-        } else return "";
+        }
+        else return "";
     }
 
     public function getAllEntities(array $Entities): string
     {
-        $All = "<div class='fondTableau'><table class='AllEntities AllCategorie'>";
+        $All  = "<div class='fondTableau'><table class='AllEntities AllCategorie'>";
         $All .= "<tr><th>robe_bouteille</th><th>sucrage_bouteille</th><th>type_bouteille</th><th>Action</th></tr>";
-        foreach($Entities as &$e){
+
+        foreach($Entities as $e)
             $All .= $this->getHTML4Entity($e);
-        }
+
         $All .= "</table></div>";
+
         return $All;
     }
 
@@ -36,7 +41,9 @@ class VueCategorie extends AbstractVueRelation
             $valueRobe = null;
             $valueSucrage = null;
             $valueType = null;
-            if($isForModifier){
+
+            if($isForModifier)
+            {
                 $valueRobe = $e->getRobeBouteille();
                 $valueSucrage = $e->getSucrageBouteille();
                 $valueType = $e->getTypeBouteille();
@@ -65,6 +72,7 @@ class VueCategorie extends AbstractVueRelation
                     "</table></div>".
                     ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
                 "</form>";
-        } else return "";
+        }
+        else return "";
     }
 }
