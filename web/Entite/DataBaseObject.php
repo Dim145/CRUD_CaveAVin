@@ -94,7 +94,7 @@ abstract class DataBaseObject
             $str = "UPDATE " . $ref->getName() . " SET ";
 
             foreach ($tabValue as $key => $value )
-                $str .= $key . " = " . (is_string($value) ? "'$value'" : $value ) . ", ";
+                $str .= $key . " = " . (is_string($value) ? "'".str_replace("'", "''", $value). "'" : $value ) . ", ";
             $str = substr($str, 0, strlen($str)-2) . " WHERE " . $tabName[0] . " = " . $tabValue[$tabName[0]];
 
             $bdd->exec($str);
@@ -109,7 +109,7 @@ abstract class DataBaseObject
 
             foreach ($tabValue as $key => $value )
                 if( !str_contains($key, "id_" . strtolower($ref->getName())) )
-                    $str .= (is_string($value) ? "'$value'" : $value ) . ", ";
+                    $str .= (is_string($value) ? "'".str_replace("'", "''", $value). "'" : $value ) . ", ";
             $str = substr($str, 0, strlen($str)-2) . ")";
 
             $bdd->exec($str);
