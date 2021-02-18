@@ -22,12 +22,15 @@ class DataBaseObjectIterator implements \Iterator, \Countable
         $this->orderBy = $orderBy;
         $this->count = -1;
 
+        if( array_search($orderBy, $this->class->newInstance()->getColumsName(false)) === false )
+            $orderBy = "";
+
         $bdd = sgbd\FonctionsSGBD::getBDD();
         $tableName = $this->class->getShortName();
-        if($orderBy == "")
-            $this->statement = $bdd->query("SELECT * FROM $tableName");
-        else
-            $this->statement = $bdd->query("SELECT * FROM $tableName ORDER BY $orderBy");
+
+        if($orderBy == "") $this->statement = $bdd->query("SELECT * FROM $tableName");
+        else               $this->statement = $bdd->query("SELECT * FROM $tableName ORDER BY $orderBy");
+
         $this->next();
     }
 

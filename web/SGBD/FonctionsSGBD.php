@@ -42,7 +42,7 @@ class FonctionsSGBD
     {
         $nom = strtolower($class->getName());
         $iterator = new entite\DataBaseObjectIterator($nom, $orderBy);
-        //$iterator->next();
+
         $tab = array();
         foreach( $iterator as $tuple )
         {

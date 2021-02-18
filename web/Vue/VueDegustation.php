@@ -8,7 +8,8 @@ class VueDegustation extends AbstractVueRelation
 
     public function getHTML4Entity(entite\DataBaseObject $e): string
     {
-        if($e instanceof entite\degustation){
+        if($e instanceof entite\degustation)
+        {
             $PK = $e->getIdDegustation();
 
             return "<tr class='EntityDescription DegustationDescription'><td>" . $e->getNoteDegustation() . "</td><td>"
