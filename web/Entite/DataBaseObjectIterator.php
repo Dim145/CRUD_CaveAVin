@@ -1,5 +1,8 @@
 <?php
 namespace entite;
+
+use PDOStatement;
+use ReflectionClass;
 use sgbd;
 
 class DataBaseObjectIterator implements \Iterator, \Countable
@@ -14,7 +17,7 @@ class DataBaseObjectIterator implements \Iterator, \Countable
 
     public function __construct( string $class )
     {
-        $this->class     = new \ReflectionClass($class);
+        $this->class     = new ReflectionClass($class);
 
         $this->count = -1;
 

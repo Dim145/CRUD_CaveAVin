@@ -16,9 +16,9 @@ class VueQuantite extends AbstractVueRelation
                 . $e->getMillesimeBouteille()           . "</td><td>"
                 . $e->getQteBouteille()                 . "</td>"
                 . "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
-                "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
-                "<input type='HIDDEN' name='PK'          value=\"".$e->getId()."\"/>".
-                "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
+                "<button type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'><img src='../images/edit.png' height='15'  alt='oups'/> </button>".
+                "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
+                "<button type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'><img src='../images/trash.png' height='15'  alt='oups'/> </button>".
                 "</form></td></tr>";
         }
         else return "";
