@@ -49,12 +49,22 @@ td:nth-child(8)  { background: hsl(135, 92%, 50%); }
 td:nth-child(9)  { background: hsl(140, 94%, 50%); }
 td:nth-child(10) { background: hsl(145, 96%, 50%); }/* Arretez d'effacer celle ci! Sinon ca fait bugger bouteille*/
 
+.fondTableau table tr td form{
+    display: table-cell;
+}
+
+.fondTableau table tr td input, .fondTableau table tr td select{
+    width : 90%;
+    margin:auto;
+}
+
 /* Style commun des boutons*/
 .bouton
 {
     border-radius: 150px 25px / 150px;
     color: white;
     font-family: Consolas;
+    margin:4px;
 }
 
 /* Couleur du bouton de Création */

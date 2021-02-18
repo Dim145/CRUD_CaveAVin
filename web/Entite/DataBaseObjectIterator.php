@@ -16,7 +16,7 @@ class DataBaseObjectIterator implements \Iterator, \Countable
 
     private PDOStatement $statement;
 
-    public function __construct( string $class , string $orderBy)
+    public function __construct( string $class, string $orderBy)
     {
         $this->class = new ReflectionClass($class);
         $this->orderBy = $orderBy;

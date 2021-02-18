@@ -67,7 +67,7 @@ else
         break;
 
         case 'Confirmer':
-            echo 'save obj...';
+            echo 'sauvegarde du tuple...';
 
             if( !isset($_POST['PK']) ) // si c'est un nouveaux
                 $obj->initAllVariables(); // permet aussi de réinitialiser l'objet si il n'est pas "vide". -> ne devrait pas arriver
