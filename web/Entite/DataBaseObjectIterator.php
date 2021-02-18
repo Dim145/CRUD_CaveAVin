@@ -23,10 +23,7 @@ class DataBaseObjectIterator implements \Iterator, \Countable
         $this->count = -1;
 
         if( array_search($orderBy, $this->class->newInstance()->getColumsName(false)) === false )
-            $orderBy = "";
-
-        $bdd = sgbd\FonctionsSGBD::getBDD();
-        $tableName = $this->class->getShortName();
+            $this->orderBy = "";
     }
 
     /**
@@ -75,6 +72,7 @@ class DataBaseObjectIterator implements \Iterator, \Countable
     {
         $bdd = sgbd\FonctionsSGBD::getBDD();
         $tableName = $this->class->getShortName();
+
         if($this->orderBy == "")
             $this->statement = $bdd->query("SELECT * FROM $tableName");
         else
