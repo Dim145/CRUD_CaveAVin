@@ -104,8 +104,10 @@ else
                 $obj->saveInDB();
 
                 echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
-
-                header("Location: " . ($_POST['referer']));
+                echo vues\AbstractVueRelation::getFinHTML();
+                echo "<script type=\"text/javascript\">
+                        history.go(-2);
+                      </script>";// plus propre qu'un post/get
             }
             catch(PDOException $e)
             {
