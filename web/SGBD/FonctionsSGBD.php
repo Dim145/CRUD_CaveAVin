@@ -186,6 +186,11 @@ class FonctionsSGBD
     }
 
     /**
+     * Cette méthode n'est pas récursive... C'est a cause de la table Quantite
+     * Qui ne devrais meme pas exister. Cette table doit subir un traitement
+     * spécifique, et donc ne peut pas etre traiter en lot de facon recursif.
+     * TOUS LES GET d'objet au dessus ne devrais même pas exister de ce fait.
+     *
      * @param string $objectClassName
      * @param $id
      * @return DataBaseObject|null
@@ -194,12 +199,12 @@ class FonctionsSGBD
     {
         return match (strtolower($objectClassName))
         {
-            strtolower(entite\Bouteille::class)  => self::getBouteille($id),
-            strtolower(entite\Appellation::class)=> self::getAppellation($id),
-            strtolower(entite\Categorie::class)  => self::getCategorie($id),
-            strtolower(entite\Degustation::class)=> self::getDegustation($id),
-            strtolower(entite\Oenologue::class)  => self::getOenologue($id),
-            strtolower(entite\Quantite::class)   => self::getQuantite($id),
+            strtolower(entite\Bouteille::class  ) => self::getBouteille($id),
+            strtolower(entite\Appellation::class) => self::getAppellation($id),
+            strtolower(entite\Categorie::class  ) => self::getCategorie($id),
+            strtolower(entite\Degustation::class) => self::getDegustation($id),
+            strtolower(entite\Oenologue::class  ) => self::getOenologue($id),
+            strtolower(entite\Quantite::class   ) => self::getQuantite($id),
 
             default => null,
         };
