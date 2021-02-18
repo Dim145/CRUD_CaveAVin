@@ -6,9 +6,11 @@ class VueDegustation extends AbstractVueRelation
 
     public function getHTML4Entity(DataBaseObject $e): string
     {
-        if($e instanceof degustation){
+        if($e instanceof degustation)
+        {
             $PK = $e->getIdDegustation();
-            return "<tr class='EntityDescription DegustationDescription'><td>" . $e->getNoteDegustation()     . "</td><td>"
+
+            return "<tr class='EntityDescription DegustationDescription'><td>" . $e->getNoteDegustation() . "</td><td>"
                 . $e->getDateDegustation()               . "</td><td>"
                 . $e->getBouteille()->getNomBouteille()   . "</td><td>"
                 . $e->getOenologue()->getNomOenologue() . "</td>".
@@ -17,26 +19,30 @@ class VueDegustation extends AbstractVueRelation
                 "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
                 "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
-        } else return "";
+        }
+        else return "";
     }
 
     public function getAllEntities(array $Entities): string
     {
         $All = "<div class='fondTableau'><table class='AllEntities AllDegustation'>";
         $All .= "<tr><th>note_degustation</th><th>date_degustation</th><th>nom_bouteille</th><th>nom_oenologue</th><th>Action</th></tr>";
-        foreach($Entities as &$e){
+
+        foreach($Entities as $e)
             $All .= $this->getHTML4Entity($e);
-        }
+
         $All .= "</table></div>";
+
         return $All;
     }
 
     public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
     {
-        if($e instanceof degustation){
+        if($e instanceof degustation)
+        {
             $get = $isForModifier ? "?action=ModifierEntite" : "?action=InsererEntite";
-            return
-                "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
+
+            return "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<div class='fondTableau'><table>".
                         "<tr>".
                             "<td>note_degustation </td>".
@@ -59,6 +65,7 @@ class VueDegustation extends AbstractVueRelation
                     "</table></div>".
                     ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
                 "</form>";
-        } else return "";
+        }
+        else return "";
     }
 }

@@ -97,8 +97,7 @@ class FonctionsSGBD
 
         $bouteille = $reponse->fetchObject(Bouteille::class);
 
-        if( $bouteille === false )
-            return null;
+        if( $bouteille === false ) return null;
 
         $bouteille->setObjects();
 
@@ -159,6 +158,7 @@ class FonctionsSGBD
         $reponse = $bdd->query("SELECT * FROM degustation WHERE id_degustation = $id_degustation");
 
         $obj = $reponse->fetchObject(Degustation::class);
+
         return $obj === false ? null : $obj;
     }
 
@@ -175,9 +175,11 @@ class FonctionsSGBD
 
         $reponse = $bdd->prepare("SELECT * FROM quantite WHERE nom_bouteille = ? AND ".
         "volume_bouteille = ? AND millesime_bouteille = ?");
+
         $reponse->execute(explode(",", $ids_quantite));
 
         $obj = $reponse->fetchObject(Quantite::class);
+
         return $obj === false ? null : $obj;
     }
 
@@ -205,16 +207,14 @@ class FonctionsSGBD
         try
         {
             $refClass = new ReflectionClass($class);
-
-            $bdd = self::getBDD();
-
-            $reponse = $bdd->query("SELECT count(*) FROM $refClass->name");
+            $bdd      = self::getBDD();
+            $reponse  = $bdd->query("SELECT count(*) FROM $refClass->name");
 
             return $reponse->fetch()[0];
         }
         catch (Exception $e)
         {
-            echo "Error: " . $e;
+            //echo "Error: " . $e;
 
             return 0;
         }
@@ -228,9 +228,8 @@ class FonctionsSGBD
         $bdd = self::getBDD();
 
         $arraysColumnsName = $obj->getColumsName(false);
-        $res = $bdd->exec("DELETE FROM " . $obj::class . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
 
-        return $res;
+        return $bdd->exec("DELETE FROM " . $obj::class . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
     }
 
     public static function supprimerQuantite( Quantite $qte ):bool
@@ -246,7 +245,7 @@ class FonctionsSGBD
 
         $str = substr($str, 0, strlen($str) - 5); // enleve le dernier and
 
-        echo $str;
+        //echo $str;
 
         return $bdd->exec($str);
     }

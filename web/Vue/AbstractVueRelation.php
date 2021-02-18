@@ -3,7 +3,8 @@
 
 abstract class AbstractVueRelation
 {
-    public static function getDebutHTML(string $titre) : string {
+    public static function getDebutHTML(string $titre) : string
+    {
         return
             "<html lang=\"fr\">
                     <head>
@@ -14,7 +15,8 @@ abstract class AbstractVueRelation
                         <center>";
     }
 
-    public static function getFinHTML() : string {
+    public static function getFinHTML() : string
+    {
         return
             "    <footer>
                         <marquee scrolldelay=\"25\" width=\"80%\" direction=\"LEFT\">
@@ -62,18 +64,23 @@ abstract class AbstractVueRelation
         return $sRet . "\n</select>";
     }
 
-    public static function getSelectForAttribute(string $name, string $instruction, array $Options, bool $isForModifier, $value){
-        $select = "<select required name='".$name."'>";
-        if($isForModifier) {
-            foreach($Options as $op){
-                $select .= "<option value='". $op ."' ".($value == $op ? "selected" : "") .">". $op." </option>";
-            }
-        }else {
-            $select .= ($isForModifier ? "" : "<option value='' selected>".$instruction."</option>");
-            foreach ($Options as $op) {
-                $select .= "<option value='" . $op . "'>" . $op . " </option>";
-            }
+    public static function getSelectForAttribute(string $name, string $instruction, array $Options, bool $isForModifier, $value): string
+    {
+        $select = "<select required name='$name'>";
+
+        if($isForModifier)
+        {
+            foreach($Options as $op)
+                $select .= "<option value='$op' ".($value == $op ? "selected" : "") ."> $op </option>";
         }
+        else
+        {
+            $select .= ($isForModifier ? "" : "<option value='' selected>$instruction</option>");
+
+            foreach ($Options as $op)
+                $select .= "<option value='$op'> $op </option>";
+        }
+
         return $select ."</select>";
     }
 
