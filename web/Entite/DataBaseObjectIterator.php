@@ -27,11 +27,6 @@ class DataBaseObjectIterator implements \Iterator, \Countable
 
         $bdd = sgbd\FonctionsSGBD::getBDD();
         $tableName = $this->class->getShortName();
-
-        if($orderBy == "") $this->statement = $bdd->query("SELECT * FROM $tableName");
-        else               $this->statement = $bdd->query("SELECT * FROM $tableName ORDER BY $orderBy");
-
-        $this->next();
     }
 
     /**
@@ -84,6 +79,8 @@ class DataBaseObjectIterator implements \Iterator, \Countable
             $this->statement = $bdd->query("SELECT * FROM $tableName");
         else
             $this->statement = $bdd->query("SELECT * FROM $tableName ORDER BY $this->orderBy");
+
+        $this->next();
     }
 
     public function count()
