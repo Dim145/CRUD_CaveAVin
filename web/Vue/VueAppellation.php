@@ -29,7 +29,13 @@ class VueAppellation extends AbstractVueRelation
         if (count($Entities) > 0)
         {
             $All = "<div class='fondTableau'> <table class='AllEntities AllAppelation'>";
-            $All .= "<tr><th>nom_appellation</th><th>categorie_appellation</th><th>Action</th></tr>";
+            $All .= "<tr>";
+
+            foreach ($Entities[0]->getColumsName(false) as $name)
+                if( !str_contains($name, "id"))
+                    $All .= "<th><a href='AffichageTable.php?table=". $_GET['table'] ."&orderBy=$name'>$name</a></th>";
+
+            $All .= "<th>Action</th></tr>";
 
             foreach ($Entities as $e)
                 $All .= $this->getHTML4Entity($e);

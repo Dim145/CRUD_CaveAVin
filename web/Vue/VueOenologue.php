@@ -22,19 +22,21 @@ class VueOenologue extends AbstractVueRelation
 
     public function getAllEntities(array $Entities): string
     {
-        if (count($Entities) > 0)
-        {
-            $All  = "<div class='fondTableau'><table class='AllEntities AllOenologue'>";
-            $All .= "<tr><th>nom_oenologue</th><th>Action</th></tr>";
+        $All  = "<div class='fondTableau'><table class='AllEntities AllOenologue'>";
+        $All .= "<tr>";
 
-            foreach($Entities as $e)
-                $All .= $this->getHTML4Entity($e);
+        foreach ($Entities[0]->getColumsName(false) as $name)
+            if( !str_contains($name, "id"))
+                $All .= "<th><a href='AffichageTable.php?table=". $_GET['table'] ."&orderBy=$name'>$name</a></th>";
 
-            $All .= "</table></div>";
+        $All .= "<th>Action</th></tr>";
 
-            return $All;
-        } else
-            return "<div class='fondTableau'>Table oenologue vide</div>";
+        foreach($Entities as $e)
+            $All .= $this->getHTML4Entity($e);
+
+        $All .= "</table></div>";
+
+        return $All;
     }
 
     public function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier): string

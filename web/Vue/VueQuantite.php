@@ -26,18 +26,20 @@ class VueQuantite extends AbstractVueRelation
 
     public function getAllEntities(array $Entities): string
     {
-        if (count($Entities) > 0)
-        {
-            $All = "<div class='fondTableau'><table class='AllEntities AllQuantite'>";
-            $All .= "<tr><th>nom_bouteille</th><th>volume_bouteille</th><th>millesime_bouteille</th><th>qte_bouteille</th><th>Action</th></tr>";
+        $All = "<div class='fondTableau'><table class='AllEntities AllQuantite'>";
+        $All .= "<tr>";
 
-            foreach($Entities as $e)
-                $All .= $this->getHTML4Entity($e);
+        foreach ($Entities[0]->getColumsName(false) as $name)
+            if( !str_contains($name, "id"))
+                $All .= "<th><a href='AffichageTable.php?table=". $_GET['table'] ."&orderBy=$name'>$name</a></th>";
 
-            $All .= "</table></div>";
-            return $All;
-        } else
-            return "<div class='fondTableau'>Table quantite vide</div>";
+        $All .= "<th>Action</th></tr>";
+
+        foreach($Entities as $e)
+            $All .= $this->getHTML4Entity($e);
+
+        $All .= "</table></div>";
+        return $All;
     }
 
     public function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier): string

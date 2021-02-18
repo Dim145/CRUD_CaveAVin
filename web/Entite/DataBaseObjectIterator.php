@@ -12,13 +12,16 @@ class DataBaseObjectIterator implements \Iterator, \Countable
 
     private \PDOStatement $statement;
 
-    public function __construct( string $class )
+    public function __construct( string $class , string $orderBy)
     {
         $this->class     = new \ReflectionClass($class);
         $this->count = -1;
         $bdd = sgbd\FonctionsSGBD::getBDD();
         $tableName = $this->class->getShortName();
-        $this->statement = $bdd->query("SELECT * FROM $tableName");
+        if($orderBy == "")
+            $this->statement = $bdd->query("SELECT * FROM $tableName");
+        else
+            $this->statement = $bdd->query("SELECT * FROM $tableName ORDER BY $orderBy");
         $this->next();
     }
 
@@ -37,9 +40,11 @@ class DataBaseObjectIterator implements \Iterator, \Countable
     public function next(): void
     {
         $tmp = $this->statement->fetchObject($this->class->getName());
-
         if( $tmp === false ) $this->current = null;
-        else                 $this->current = $tmp;
+        else {
+            $tmp->setObjects();
+            $this->current = $tmp;
+        }
     }
 
     /**

@@ -12,26 +12,36 @@ require_once "../Entite/oenologue.php";
 require_once "../Entite/DataBaseObjectIterator.php";
 
 use entite;
+use entite\Appellation;
+use entite\Bouteille;
+use entite\Categorie;
+use entite\DataBaseObject;
+use entite\Degustation;
+use entite\Oenologue;
+use entite\Quantite;
+use Exception;
+use PDO;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Class FonctionsUtiles
  */
 class FonctionsSGBD
 {
-    private static ?\PDO $bdd = null;
+    private static ?PDO $bdd = null;
 
 
     /**
      * Récupère toutes les instance d'une class dans la base de donnée
      * @param ReflectionClass $class classe visée
-     * @return DataBaseObject[] tableau d'objets correpondant
+     * @param string|null $orderBy
+     * @return DataBaseObject[] tableau d'objet correpondant
      */
-    public static function getAllFromClass( \ReflectionClass $class ): array
+    public static function getAllFromClass(ReflectionClass $class, string $orderBy = "" ): array
     {
-        $bdd = self::getBDD();
-
         $nom = strtolower($class->getName());
-        $iterator = new entite\DataBaseObjectIterator($nom);
+        $iterator = new entite\DataBaseObjectIterator($nom, $orderBy);
         //$iterator->next();
         $tab = array();
         while( $iterator->valid() )
@@ -49,13 +59,13 @@ class FonctionsSGBD
      * @param string $className nom de la classe visée
      * @return DataBaseObject[] tableau d'objet correpondant
      */
-    public static function getAllFromClassName( string $className ): array
+    public static function getAllFromClassName( string $className, string $orderBy = ""): array
     {
         try
         {
-            return self::getAllFromClass((new \ReflectionClass($className)));
+            return self::getAllFromClass((new ReflectionClass($className)), $orderBy);
         }
-        catch (\ReflectionException $e)
+        catch (ReflectionException)
         {
             return array();
         }
@@ -65,7 +75,7 @@ class FonctionsSGBD
      * Retourne une PDO déjà instanciée ou en instancie une avant de la retourner
      * @return PDO L'instance actuelle de PDO
      */
-    public static function getBDD(): \PDO
+    public static function getBDD(): PDO
     {
         if( self::$bdd == null ) self::$bdd = self::connexionBD();
 
@@ -85,7 +95,7 @@ class FonctionsSGBD
      * Connexion a la base de donnée
      * @return PDO L'instance de PDO
      */
-    public static function connexionBD(): \PDO
+    public static function connexionBD(): PDO
     {
         return connexionBD();
     }
@@ -214,13 +224,13 @@ class FonctionsSGBD
     {
         try
         {
-            $refClass = new \ReflectionClass($class);
+            $refClass = new ReflectionClass($class);
             $bdd = self::getBDD();
             $reponse = $bdd->query("SELECT count(*) FROM $refClass->name");
 
             return $reponse->fetch()[0];
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             //echo "Error: " . $e;
 
@@ -231,14 +241,14 @@ class FonctionsSGBD
     public static function supprimer( entite\DataBaseObject $obj ): bool
     {
         if( is_a($obj, entite\Quantite::class) )
-            throw new \Exception("Une méthode spécial doit etre utilisé pour quantité car elle n'as pas d'id");
+            throw new Exception("Une méthode spécial doit etre utilisé pour quantité car elle n'as pas d'id");
 
         $bdd = self::getBDD();
 
         $arraysColumnsName = $obj->getColumsName(false);
-        $res = $bdd->exec("DELETE FROM " . (new \ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
+        $res = $bdd->exec("DELETE FROM " . (new ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
 
-        return $bdd->exec("DELETE FROM " . (new \ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
+        return $bdd->exec("DELETE FROM " . (new ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
     }
 
     public static function supprimerQuantite( entite\Quantite $qte ):bool
@@ -247,7 +257,7 @@ class FonctionsSGBD
 
         $arrayColumsvalue  = $qte->getColumsValues();
 
-        $str = "DELETE FROM " . (new \ReflectionClass($qte))->getShortName() . " WHERE ";
+        $str = "DELETE FROM " . (new ReflectionClass($qte))->getShortName() . " WHERE ";
 
         foreach ( $arrayColumsvalue as $key => $value )
             $str .= $key . " = " . (is_string($value) ? "'$value'" : $value) . " AND ";
