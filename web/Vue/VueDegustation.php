@@ -27,7 +27,13 @@ class VueDegustation extends AbstractVueRelation
     public function getAllEntities(array $Entities): string
     {
         $All = "<div class='fondTableau'><table class='AllEntities AllDegustation'>";
-        $All .= "<tr><th>note_degustation</th><th>date_degustation</th><th>nom_bouteille</th><th>nom_oenologue</th><th>Action</th></tr>";
+        $All .= "<tr>";
+
+        foreach ($Entities[0]->getColumsName(false) as $name)
+            if( !str_contains($name, "id"))
+                $All .= "<th><a href='AffichageTable.php?table=". $_GET['table'] ."&orderBy=$name'>$name</a></th>";
+
+        $All .= "<th>nom_oenologue</th><th>Action</th></tr>";
 
         foreach($Entities as $e)
             $All .= $this->getHTML4Entity($e);

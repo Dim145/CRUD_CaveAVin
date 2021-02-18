@@ -1,6 +1,4 @@
 <?php
-require_once "../Entite/DataBaseObject.php";
-require_once "../Entite/appellation.php";
 require_once "../Vue/AbstractVueRelation.php";
 require_once "../Vue/VueAppellation.php";
 require_once "../Vue/VueDegustation.php";
@@ -9,9 +7,6 @@ require_once "../Vue/VueBouteille.php";
 require_once "../Vue/VueOenologue.php";
 require_once "../Vue/VueQuantite.php";
 require_once "../SGBD/FonctionsSGBD.php";
-
-use vues;
-use sgbd;
 
 echo vues\AbstractVueRelation::getDebutHTML("Test Appellation");
 
@@ -22,10 +17,10 @@ $vueClasse = null;
 
 try
 {
-    $entiteClasse = new \ReflectionClass("entite\\".htmlspecialchars($_GET['table'])); // test si la table donnée existe.
-    $vueClasse = new \ReflectionClass("vues\\Vue".ucfirst($_GET['table']));
+    $entiteClasse = new ReflectionClass("entite\\".htmlspecialchars($_GET['table'])); // test si la table donnée existe.
+    $vueClasse = new ReflectionClass("vues\\Vue".ucfirst($_GET['table']));
 }
-catch (\ReflectionException $e)
+catch (ReflectionException $e)
 {
     header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
 }
@@ -43,7 +38,7 @@ if(!isset($_POST['actionSurTuple']))
 
     // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
     // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
-    $Entities = sgbd\FonctionsSGBD::getAllFromClassName(htmlspecialchars("entite\\".$_GET['table']));
+    $Entities = sgbd\FonctionsSGBD::getAllFromClassName(htmlspecialchars("entite\\".$_GET['table']), isset($_GET['orderBy']) ? $_GET['orderBy'] : null);
     $vue = $vueClasse->newInstance();
     echo $vue->getAllEntities($Entities);
 }
@@ -112,7 +107,7 @@ else
 
                 header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
             }
-            catch(\PDOException $e)
+            catch(PDOException $e)
             {
                 echo "<div class='messageErreur'><h1>Erreur lors de l'édition de la base de données : </h1>";
                 echo "<p>".$e->getMessage()."</p></div>";
