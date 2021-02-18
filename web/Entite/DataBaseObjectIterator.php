@@ -18,16 +18,19 @@ class DataBaseObjectIterator implements \Iterator, \Countable
 
     public function __construct( string $class , string $orderBy)
     {
-        $this->class = new ReflectionClass($class);
+        $this->class   = new ReflectionClass($class);
         $this->orderBy = $orderBy;
-        $this->count = -1;
+        $this->count   = -1;
+
+        if( $orderBy == null || array_search($orderBy, $this->class->newInstance()->getColumsName(false)) === false )
+            $orderBy = "";
 
         $bdd = sgbd\FonctionsSGBD::getBDD();
         $tableName = $this->class->getShortName();
-        if($orderBy == "")
-            $this->statement = $bdd->query("SELECT * FROM $tableName");
-        else
-            $this->statement = $bdd->query("SELECT * FROM $tableName ORDER BY $orderBy");
+
+        if($orderBy == "") $this->statement = $bdd->query("SELECT * FROM $tableName");
+        else               $this->statement = $bdd->query("SELECT * FROM $tableName ORDER BY $orderBy");
+
         $this->next();
     }
 
@@ -47,8 +50,12 @@ class DataBaseObjectIterator implements \Iterator, \Countable
     {
         $tmp = $this->statement->fetchObject($this->class->getName());
 
-        if( $tmp === false ) $this->current = null;
-        else {
+        if( $tmp === false )
+        {
+            $this->current = null;
+        }
+        else
+        {
             $tmp->setObjects();
             $this->current = $tmp;
         }
@@ -76,10 +83,8 @@ class DataBaseObjectIterator implements \Iterator, \Countable
     public function rewind(): void
     {
         $bdd = sgbd\FonctionsSGBD::getBDD();
-        if($this->orderBy == "")
-            $this->statement = $bdd->query("SELECT * FROM $this->class->getShortName()");
-        else
-            $this->statement = $bdd->query("SELECT * FROM $this->class->getShortName() ORDER BY $this->orderBy");
+
+        $this->statement = $bdd->query("SELECT * FROM $this->class->getShortName()" . ($this->orderBy == "" ? " ORDER BY $this->orderBy" : ""));
     }
 
     public function count()
