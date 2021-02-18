@@ -76,10 +76,11 @@ class DataBaseObjectIterator implements \Iterator, \Countable
     public function rewind(): void
     {
         $bdd = sgbd\FonctionsSGBD::getBDD();
+        $tableName = $this->class->getShortName();
         if($this->orderBy == "")
-            $this->statement = $bdd->query("SELECT * FROM $this->class->getShortName()");
+            $this->statement = $bdd->query("SELECT * FROM $tableName");
         else
-            $this->statement = $bdd->query("SELECT * FROM $this->class->getShortName() ORDER BY $this->orderBy");
+            $this->statement = $bdd->query("SELECT * FROM $tableName ORDER BY $this->orderBy");
     }
 
     public function count()

@@ -44,11 +44,9 @@ class FonctionsSGBD
         $iterator = new entite\DataBaseObjectIterator($nom, $orderBy);
         //$iterator->next();
         $tab = array();
-        while( $iterator->valid() )
+        foreach( $iterator as $tuple )
         {
-            $obj = $iterator->current();
-            array_push($tab, $obj);
-            $iterator->next();
+            array_push($tab, $tuple);
         }
 
         return $tab;
