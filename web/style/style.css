@@ -3,6 +3,7 @@
 /* Style de la page globale*/
 body
 {
+    padding-bottom: 15px;
     font-family: Consolas;
     background-color: darkslategrey;
 }
