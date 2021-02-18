@@ -33,7 +33,7 @@ class VueDegustation extends AbstractVueRelation
             if( !str_contains($name, "id"))
                 $All .= "<th><a href='AffichageTable.php?table=". $_GET['table'] ."&orderBy=$name'>$name</a></th>";
 
-        $All .= "<th>nom_oenologue</th><th>Action</th></tr>";
+        $All .= "<th>nom_bouteille</th><th>nom_oenologue</th><th>Action</th></tr>";
 
         foreach($Entities as $e)
             $All .= $this->getHTML4Entity($e);
