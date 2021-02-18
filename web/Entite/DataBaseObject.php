@@ -1,4 +1,6 @@
 <?php
+namespace entite;
+use sgbd;
 
 /**
  * Class DataBaseObject
@@ -7,7 +9,7 @@
  */
 abstract class DataBaseObject
 {
-    private ?ReflectionClass $reflexion = null;
+    private ?\ReflectionClass $reflexion = null;
 
     public abstract function getColumsName( bool $includeSubObjects ): array; // abstract = Important pour filtrer les nom de colums selon la class si besoin
     public abstract function setObjects(): void;
@@ -20,9 +22,9 @@ abstract class DataBaseObject
      */
     public abstract function toStringPageForm(bool $isForModifier = false): string;
 
-    public function getReflexion(): ReflectionClass
+    public function getReflexion(): \ReflectionClass
     {
-        if( $this->reflexion == null ) $this->reflexion = new ReflectionClass($this);
+        if( $this->reflexion == null ) $this->reflexion = new \ReflectionClass($this);
 
         return $this->reflexion;
     }
@@ -32,7 +34,7 @@ abstract class DataBaseObject
      */
     public function initAllVariables(): void
     {
-        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+        $allAtribute = $this->getReflexion()->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         foreach ( $allAtribute as $attribute )
         {
@@ -81,38 +83,43 @@ abstract class DataBaseObject
 
     public function saveInDB()  : void
     {
-        $bdd = FonctionsSGBD::getBDD();
+        $bdd = sgbd\FonctionsSGBD::getBDD();
         $ref = $this->getReflexion();
 
         $tabName  = $this->getColumsName(false);
         $tabValue = $this->getColumsValues();
 
-        $statement = $bdd->query("SELECT * FROM " . $ref->getName() . " WHERE $tabName[0] = " . $tabValue[$tabName[0]] );
+        $statement = $bdd->query("SELECT * FROM " . $ref->getShortName() . " WHERE $tabName[0] = " . $tabValue[$tabName[0]] );
 
         if( $statement->fetch() && $tabValue[$tabName[0]] > 0 ) // n'est pas un nouveaux
         {
-            $str = "UPDATE " . $ref->getName() . " SET ";
+            $str = "UPDATE " . $ref->getShortName() . " SET ";
 
             foreach ($tabValue as $key => $value )
-                $str .= $key . " = " . (is_string($value) ? $bdd->quote($value) : $value ) . ", ";
+                $str .= $key . " = " . (is_string($value) ? "'".str_replace("'", "''", $value). "'" : $value ) . ", ";
             $str = substr($str, 0, strlen($str)-2) . " WHERE " . $tabName[0] . " = " . $tabValue[$tabName[0]];
 
             $bdd->exec($str);
         }
         else // est un nouveau
         {
-            $str = "INSERT INTO " . $ref->getName() . " (";
+            $str = "INSERT INTO " . $ref->getShortName() . " (";
             foreach ( $tabName as $nameCol )
-                if( !str_contains($nameCol, "id_" . strtolower($ref->getName())) )
+                if( !str_contains($nameCol, "id_" . strtolower($ref->getShortName())) )
                     $str .= $nameCol . ", ";
             $str = substr($str, 0, strlen($str)-2) . ") VALUES (";
 
             foreach ($tabValue as $key => $value )
-                if( !str_contains($key, "id_" . strtolower($ref->getName())) )
-                    $str .= (is_string($value) ? $bdd->quote($value) : $value ) . ", ";
+                if( !str_contains($key, "id_" . strtolower($ref->getShortName())) )
+                    $str .= (is_string($value) ? "'".str_replace("'", "''", $value). "'" : $value ) . ", ";
             $str = substr($str, 0, strlen($str)-2) . ")";
 
             $bdd->exec($str);
         }
+    }
+
+    public function getNom() {
+        $nom = explode('\\', __CLASS__);
+        return array_pop($nom);
     }
 }

@@ -1,7 +1,8 @@
 <?php
+namespace entite;
+use sgbd;
 
-
-class DataBaseObjectIterator implements Iterator, Countable
+class DataBaseObjectIterator implements \Iterator, \Countable
 {
     private ?DataBaseObject  $current;
     private ReflectionClass $class;
@@ -13,11 +14,11 @@ class DataBaseObjectIterator implements Iterator, Countable
 
     public function __construct( string $class )
     {
-        $this->class     = new ReflectionClass($class);
+        $this->class     = new \ReflectionClass($class);
 
         $this->count = -1;
 
-        $bdd = FonctionsSGBD::getBDD();
+        $bdd = sgbd\FonctionsSGBD::getBDD();
         $this->statement = $bdd->query("SELECT * FROM $class");
 
         $this->next();
@@ -64,7 +65,7 @@ class DataBaseObjectIterator implements Iterator, Countable
      */
     public function rewind(): void
     {
-        $bdd = FonctionsSGBD::getBDD();
+        $bdd = sgbd\FonctionsSGBD::getBDD();
         $this->statement = $bdd->query("SELECT * FROM " . $this->class->getName());
     }
 
@@ -77,6 +78,6 @@ class DataBaseObjectIterator implements Iterator, Countable
 
     public function majNbInstance(): void
     {
-        $this->count = FonctionsSGBD::getNbInstanceOf($this->class->getName());
+        $this->count = sgbd\FonctionsSGBD::getNbInstanceOf($this->class->getName());
     }
 }

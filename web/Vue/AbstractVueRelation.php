@@ -1,4 +1,6 @@
 <?php
+namespace vues;
+use entite;
 
 
 abstract class AbstractVueRelation
@@ -84,9 +86,9 @@ abstract class AbstractVueRelation
         return $select ."</select>";
     }
 
-    public abstract function getHTML4Entity(DataBaseObject $e) : string;
+    public abstract function getHTML4Entity(entite\DataBaseObject $e) : string;
 
     public abstract function getAllEntities(array $Entities) : string;
 
-    public abstract function getForm4Entity(DataBaseObject $e, bool $isForModifier) : string;
+    public abstract function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier) : string;
 }

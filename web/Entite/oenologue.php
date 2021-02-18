@@ -1,4 +1,5 @@
 <?php
+namespace entite;
 
 class Oenologue extends DataBaseObject
 {
@@ -32,7 +33,7 @@ class Oenologue extends DataBaseObject
 
     public function getColumsName( bool $includeSubObjects ): array
     {
-        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+        $allAtribute = $this->getReflexion()->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         $colums = array();
 

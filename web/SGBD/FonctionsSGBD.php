@@ -1,21 +1,24 @@
 <?php
-    require_once "../connexionPerso.php";
-    require_once "../Entite/DataBaseObject.php";
-    require_once "../Entite/degustation.php";
-    require_once "../Entite/quantite.php";
-    require_once "../Entite/bouteille.php";
-    require_once "../Entite/appellation.php";
-    require_once "../Entite/categorie.php";
-    require_once "../Entite/oenologue.php";
+namespace sgbd;
 
-    require_once "../Entite/DataBaseObjectIterator.php";
+require_once "../connexionPerso.php";
+require_once "../Entite/DataBaseObject.php";
+require_once "../Entite/degustation.php";
+require_once "../Entite/quantite.php";
+require_once "../Entite/bouteille.php";
+require_once "../Entite/appellation.php";
+require_once "../Entite/categorie.php";
+require_once "../Entite/oenologue.php";
+require_once "../Entite/DataBaseObjectIterator.php";
+
+use entite;
 
 /**
  * Class FonctionsUtiles
  */
 class FonctionsSGBD
 {
-    private static ?PDO $bdd = null;
+    private static ?\PDO $bdd = null;
 
 
     /**
@@ -23,11 +26,12 @@ class FonctionsSGBD
      * @param ReflectionClass $class classe visée
      * @return DataBaseObject[] tableau d'objet correpondant
      */
-    public static function getAllFromClass( ReflectionClass $class ): array
+    public static function getAllFromClass( \ReflectionClass $class ): array
     {
         $bdd = self::getBDD();
 
-        $requete = $bdd->query("SELECT * FROM $class->name");
+        $nom = $class->getShortName();
+        $requete = $bdd->query("SELECT * FROM $nom");
 
         $tab = array();
 
@@ -49,19 +53,19 @@ class FonctionsSGBD
     {
         try
         {
-            return self::getAllFromClass((new ReflectionClass($className)));
+            return self::getAllFromClass((new \ReflectionClass($className)));
         }
-        catch (ReflectionException)
+        catch (\ReflectionException $e)
         {
             return array();
         }
     }
 
     /**
-     * Return une PDO déjà instanciée ou en instancie une avant de la retourner
+     * Retourne une PDO déjà instanciée ou en instancie une avant de la retourner
      * @return PDO L'instance actuelle de PDO
      */
-    public static function getBDD(): PDO
+    public static function getBDD(): \PDO
     {
         if( self::$bdd == null ) self::$bdd = self::connexionBD();
 
@@ -81,7 +85,7 @@ class FonctionsSGBD
      * Connexion a la base de donnée
      * @return PDO L'instance de PDO
      */
-    public static function connexionBD(): PDO
+    public static function connexionBD(): \PDO
     {
         return connexionBD();
     }
@@ -90,12 +94,12 @@ class FonctionsSGBD
      * @param int $id_bouteille L'identifiant de la bouteille voulue
      * @return Bouteille|null Objet de type Bouteille
      */
-    public static function getBouteille(int $id_bouteille): ?Bouteille
+    public static function getBouteille(int $id_bouteille): ?entite\Bouteille
     {
         $bdd = self::getBDD();
         $reponse = $bdd->query("SELECT * FROM bouteille where id_bouteille = $id_bouteille");
 
-        $bouteille = $reponse->fetchObject(Bouteille::class);
+        $bouteille = $reponse->fetchObject(entite\Bouteille::class);
 
         if( $bouteille === false ) return null;
 
@@ -108,12 +112,12 @@ class FonctionsSGBD
      * @param int $id_appellation L'identifiant de l'appellation voulue
      * @return Appellation|null Objet de type Appellation
      */
-    public static function getAppellation(int $id_appellation): ?Appellation
+    public static function getAppellation(int $id_appellation): ?entite\Appellation
     {
         $bdd = self::getBDD();
         $reponse = $bdd->query("SELECT * FROM appellation where id_appellation = $id_appellation");
 
-        $obj = $reponse->fetchObject(Appellation::class);
+        $obj = $reponse->fetchObject(entite\Appellation::class);
 
         return $obj === false ? null : $obj;
     }
@@ -122,12 +126,12 @@ class FonctionsSGBD
      * @param int $id_categorie L'identifiant de la catégorie voulue
      * @return Categorie|null Objet de type Categorie
      */
-    public static function getCategorie(int $id_categorie): ?Categorie
+    public static function getCategorie(int $id_categorie): ?entite\Categorie
     {
         $bdd = self::getBDD();
         $reponse = $bdd->query("SELECT * FROM categorie where id_categorie = $id_categorie");
 
-        $obj = $reponse->fetchObject(Categorie::class);
+        $obj = $reponse->fetchObject(entite\Categorie::class);
 
         return $obj === false ? null : $obj;
     }
@@ -136,13 +140,13 @@ class FonctionsSGBD
      * @param int $id_oenologue L'identifiant de l'oenologue voulue
      * @return Oenologue|null Objet de type Oenologue
      */
-    public static function getOenologue(int $id_oenologue): ?Oenologue
+    public static function getOenologue(int $id_oenologue): ?entite\Oenologue
     {
         $bdd = self::getBDD();
 
         $reponse = $bdd->query("SELECT * FROM oenologue WHERE id_oenologue = $id_oenologue");
 
-        $obj = $reponse->fetchObject(Oenologue::class);
+        $obj = $reponse->fetchObject(entite\Oenologue::class);
 
         return $obj === false ? null : $obj;
     }
@@ -151,14 +155,13 @@ class FonctionsSGBD
      * @param int $id_degustation L'identifiant de la dégustation voulue
      * @return Degustation|null Objet de type Dégustation
      */
-    public static function getDegustation(int $id_degustation): ?Degustation
+    public static function getDegustation(int $id_degustation): ?entite\Degustation
     {
         $bdd = self::getBDD();
 
         $reponse = $bdd->query("SELECT * FROM degustation WHERE id_degustation = $id_degustation");
 
-        $obj = $reponse->fetchObject(Degustation::class);
-
+        $obj = $reponse->fetchObject(entite\Degustation::class);
         return $obj === false ? null : $obj;
     }
 
@@ -169,7 +172,7 @@ class FonctionsSGBD
      * @param string $ids_quantite sous forme nom_bouteille,volume_bouteille,millesime_bouteille
      * @return Quantite|null Objet de type Quantité
      */
-    public static function getQuantite(string $ids_quantite): ?Quantite
+    public static function getQuantite(string $ids_quantite): ?entite\Quantite
     {
         $bdd = self::getBDD();
 
@@ -178,8 +181,7 @@ class FonctionsSGBD
 
         $reponse->execute(explode(",", $ids_quantite));
 
-        $obj = $reponse->fetchObject(Quantite::class);
-
+        $obj = $reponse->fetchObject(entite\Quantite::class);
         return $obj === false ? null : $obj;
     }
 
@@ -193,31 +195,32 @@ class FonctionsSGBD
      * @param $id
      * @return DataBaseObject|null
      */
-    public static function getDataBaseObject(string $objectClassName, $id): ?DataBaseObject
+    public static function getDataBaseObject(string $objectClassName, $id): ?entite\DataBaseObject
     {
         return match (strtolower($objectClassName))
         {
-            strtolower(Bouteille::class   ) => self::getBouteille($id),
-            strtolower(Appellation::class ) => self::getAppellation($id),
-            strtolower(Categorie::class   ) => self::getCategorie($id),
-            strtolower(Degustation::class ) => self::getDegustation($id),
-            strtolower(Oenologue::class   ) => self::getOenologue($id),
-            strtolower(Quantite::class    ) => self::getQuantite($id),
+            strtolower(entite\Bouteille::class  ) => self::getBouteille($id),
+            strtolower(entite\Appellation::class) => self::getAppellation($id),
+            strtolower(entite\Categorie::class  ) => self::getCategorie($id),
+            strtolower(entite\Degustation::class) => self::getDegustation($id),
+            strtolower(entite\Oenologue::class  ) => self::getOenologue($id),
+            strtolower(entite\Quantite::class   ) => self::getQuantite($id),
+
             default => null,
-        }; // remplace un switch
+        };
     }
 
     public static function getNbInstanceOf( string $class ): int
     {
         try
         {
-            $refClass = new ReflectionClass($class);
-            $bdd      = self::getBDD();
-            $reponse  = $bdd->query("SELECT count(*) FROM $refClass->name");
+            $refClass = new \ReflectionClass($class);
+            $bdd = self::getBDD();
+            $reponse = $bdd->query("SELECT count(*) FROM $refClass->name");
 
             return $reponse->fetch()[0];
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
             //echo "Error: " . $e;
 
@@ -225,25 +228,26 @@ class FonctionsSGBD
         }
     }
 
-    public static function supprimer( DataBaseObject $obj ): bool
+    public static function supprimer( entite\DataBaseObject $obj ): bool
     {
-        if( is_a($obj, Quantite::class) )
-            throw new Exception("Une méthode spécial doit etre utilisé pour quantité car elle n'as pas d'id");
+        if( is_a($obj, entite\Quantite::class) )
+            throw new \Exception("Une méthode spécial doit etre utilisé pour quantité car elle n'as pas d'id");
 
         $bdd = self::getBDD();
 
         $arraysColumnsName = $obj->getColumsName(false);
+        $res = $bdd->exec("DELETE FROM " . (new \ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
 
-        return $bdd->exec("DELETE FROM " . $obj::class . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
+        return $bdd->exec("DELETE FROM " . (new \ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
     }
 
-    public static function supprimerQuantite( Quantite $qte ):bool
+    public static function supprimerQuantite( entite\Quantite $qte ):bool
     {
         $bdd = self::getBDD();
 
         $arrayColumsvalue  = $qte->getColumsValues();
 
-        $str = "DELETE FROM " . $qte::class . " WHERE ";
+        $str = "DELETE FROM " . (new \ReflectionClass($qte))->getShortName() . " WHERE ";
 
         foreach ( $arrayColumsvalue as $key => $value )
             $str .= $key . " = " . (is_string($value) ? "'$value'" : $value) . " AND ";

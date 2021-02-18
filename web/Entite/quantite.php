@@ -1,4 +1,6 @@
 <?php
+namespace entite;
+use sgbd;
 
 class Quantite extends DataBaseObject
 {
@@ -12,7 +14,7 @@ class Quantite extends DataBaseObject
 
     function saveInDB(): void
     {
-        $bdd = FonctionsSGBD::getBDD();
+        $bdd = sgbd\FonctionsSGBD::getBDD();
         $ref = $this->getReflexion();
 
         $tabName  = $this->getColumsName(false);
@@ -60,7 +62,7 @@ class Quantite extends DataBaseObject
         if(in_array($volume_bouteille, self::volumes))
             $this->volume_bouteille = $volume_bouteille;
         else
-            throw new Exception("Le volume doit etre egale a une de ces valeurs: " . implode(" - ", self::volumes));
+            throw new \Exception("Le volume doit etre egale a une de ces valeurs: " . implode(" - ", self::volumes));
     }
 
     /**
@@ -96,7 +98,7 @@ class Quantite extends DataBaseObject
         if($millesime_bouteille > 0 && $millesime_bouteille <= 2099)
             $this->millesime_bouteille = $millesime_bouteille;
         else
-            throw new Exception("la millesime doit etre comprise entre 1 et 2099.");
+            throw new \Exception("la millesime doit etre comprise entre 1 et 2099.");
     }
 
     /**
@@ -122,7 +124,7 @@ class Quantite extends DataBaseObject
 
     public function getColumsName( bool $includeSubObjects ): array
     {
-        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+        $allAtribute = $this->getReflexion()->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         $colums = array();
 
@@ -144,7 +146,7 @@ class Quantite extends DataBaseObject
     {
         if( $isForModifier )
         {
-            $bdd = FonctionsSGBD::getBDD();
+            $bdd = sgbd\FonctionsSGBD::getBDD();
             $statement = $bdd->prepare("Select * from bouteille WHERE nom_bouteille = ? AND ".
             "volume_bouteille = ? AND millesime_bouteille = ?");
 
@@ -152,7 +154,7 @@ class Quantite extends DataBaseObject
             $obj = $statement->fetchObject(Bouteille::class);
         }
 
-        return "<tr><td>bouteille     </td><td> : " . FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td></tr>".
+        return "<tr><td>bouteille     </td><td> : " . sgbd\FonctionsSGBD::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $obj->getIdBouteille() : -1) . "</td></tr>".
                "<tr><td>qte bouteille </td><td> : <input type='number' min='1' name='qte_bouteille' value=\"".( $isForModifier ? $this->qte_bouteille : "")."\" required /></td></tr>";
 
     }

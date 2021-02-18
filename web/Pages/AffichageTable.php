@@ -10,7 +10,10 @@ require_once "../Vue/VueOenologue.php";
 require_once "../Vue/VueQuantite.php";
 require_once "../SGBD/FonctionsSGBD.php";
 
-echo AbstractVueRelation::getDebutHTML("Test Appellation");
+use vues;
+use sgbd;
+
+echo vues\AbstractVueRelation::getDebutHTML("Test Appellation");
 
 if( !isset($_GET['table'])) die();
 
@@ -19,10 +22,10 @@ $vueClasse = null;
 
 try
 {
-    $entiteClasse = new ReflectionClass(htmlspecialchars($_GET['table'])); // test si la table donnée existe.
-    $vueClasse    = new ReflectionClass("Vue".ucfirst($_GET['table']));
+    $entiteClasse = new \ReflectionClass("entite\\".htmlspecialchars($_GET['table'])); // test si la table donnée existe.
+    $vueClasse = new \ReflectionClass("vues\\Vue".ucfirst($_GET['table']));
 }
-catch (ReflectionException $e)
+catch (\ReflectionException $e)
 {
     header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
 }
@@ -33,21 +36,20 @@ echo "<form action='..' class='enLigne'>
 
 if(!isset($_POST['actionSurTuple']))
 {
+
     echo "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST' class='enLigne'/>";
     echo "    <input type='SUBMIT' name='actionSurTuple' value='Créer' class='bouton boutonCreer'/>";
     echo "</form>";
 
     // ATTENTION, getAllFromClassName renvoie un tableau de DataBaseObjects.
     // Pour pouvoir utiliser / mofifier une colonne/valeur spécifique, il faut utiliser getColumsValues et/ou getColumsName
-    $Entities = FonctionsSGBD::getAllFromClassName(htmlspecialchars($_GET['table']));
-    $vue      = $vueClasse->newInstance();
-
+    $Entities = sgbd\FonctionsSGBD::getAllFromClassName(htmlspecialchars("entite\\".$_GET['table']));
+    $vue = $vueClasse->newInstance();
     echo $vue->getAllEntities($Entities);
-
 }
 else
 {
-    $obj = isset($_POST['PK']) ? FonctionsSGBD::getDataBaseObject($_GET['table'], $_POST['PK']) : $entiteClasse->newInstance();
+    $obj = isset($_POST['PK']) ? sgbd\FonctionsSGBD::getDataBaseObject("entite\\".$_GET['table'], $_POST['PK']) : $entiteClasse->newInstance();
 
     switch($_POST['actionSurTuple'])
     {
@@ -56,10 +58,8 @@ else
 
             echo "objet supprimer = <br/>";
             echo "<table><tr>" . $obj . "</tr></table>";
-
-            if( $entiteClasse->getName() == Quantite::class ) FonctionsSGBD::supprimerQuantite($obj);
-            else                                              FonctionsSGBD::supprimer($obj);
-
+            if( $entiteClasse->getName() == entite\Quantite::class ) sgbd\FonctionsSGBD::supprimerQuantite($obj);
+            else                                          sgbd\FonctionsSGBD::supprimer($obj);
             header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
         break;
 
@@ -77,9 +77,9 @@ else
             if( !isset($_POST['PK']) ) // si c'est un nouveaux
                 $obj->initAllVariables(); // permet aussi de réinitialiser l'objet si il n'est pas "vide". -> ne devrait pas arriver
 
-            if($entiteClasse->getName() == Quantite::class)
+            if($entiteClasse->getName() == entite\Quantite::class)
             {
-                $bouteille = FonctionsSGBD::getBouteille($_POST['id_bouteille']);
+                $bouteille = sgbd\FonctionsSGBD::getBouteille($_POST['id_bouteille']);
                 $obj->setVolumeBouteille($bouteille->getVolumeBouteille());
                 $obj->setMillesimeBouteille($bouteille->getMillesimeBouteille());
                 $obj->setNomBouteille($bouteille->getNomBouteille());
@@ -112,7 +112,7 @@ else
 
                 header("Location: " . $_SERVER['PHP_SELF'] . "?table=".$_GET['table']."&action=modifier");
             }
-            catch(PDOException $e)
+            catch(\PDOException $e)
             {
                 echo "<div class='messageErreur'><h1>Erreur lors de l'édition de la base de données : </h1>";
                 echo "<p>".$e->getMessage()."</p></div>";
@@ -122,6 +122,6 @@ else
         default: echo 'error';
     }
 }
-echo AbstractVueRelation::getFinHTML();
+echo vues\AbstractVueRelation::getFinHTML();
 
 ?>
