@@ -18,8 +18,8 @@ class Bouteille extends DatabaseObject
 
     public function setObjects(): void
     {
-        $this->appellation = FonctionsUtiles::getAppellation($this->id_appellation);
-        $this->categorie   = FonctionsUtiles::getCategorie($this->id_categorie);
+        $this->appellation = FonctionsSGBD::getAppellation($this->id_appellation);
+        $this->categorie   = FonctionsSGBD::getCategorie($this->id_categorie);
     }
 
     public function getId()
@@ -134,7 +134,7 @@ class Bouteille extends DatabaseObject
     {
         $this->id_appellation = $id_appellation;
 
-        $this->appellation = FonctionsUtiles::getAppellation($id_appellation); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
+        $this->appellation = FonctionsSGBD::getAppellation($id_appellation); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
     }
 
     /**
@@ -152,15 +152,23 @@ class Bouteille extends DatabaseObject
     {
         $this->id_categorie = $id_categorie;
 
-        $this->categorie = FonctionsUtiles::getCategorie($id_categorie); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
+        $this->categorie = FonctionsSGBD::getCategorie($id_categorie); // surtout pas $this car ici on apelle bien la fonction dans FonctionUtile.php
     }
 
     /**
-     * @return Appellation
+     * @return appellation
      */
-    public function getAppellation(): Appellation
+    public function getAppellation(): appellation
     {
         return $this->appellation;
+    }
+
+    /**
+     * @return categorie
+     */
+    public function getCategorie() : categorie
+    {
+        return $this->categorie;
     }
 
     /**
@@ -170,7 +178,7 @@ class Bouteille extends DatabaseObject
     {
         $this->appellation = $appellation;
 
-        $this->id_appellation = $appellation->get_id_appellation();
+        $this->id_appellation = $appellation->getIdAppellation();
     }
 
     /**
@@ -201,8 +209,8 @@ class Bouteille extends DatabaseObject
             $this->millesime_bouteille        . "</td><td>" .
             $this->volume_bouteille           . "</td><td>" .
             $this->prix_bouteille             . "</td><td>" .
-            $this->appellation->get_nom_appellation() . "</td><td>" .
-            $this->categorie->get_robe_bouteille()    . "</td>";
+            $this->appellation->getNomAppellation() . "</td><td>" .
+            $this->categorie->getRobeBouteille()    . "</td>";
     }
 
     public function toStringPageForm(bool $isForModifier = false ): string
@@ -214,7 +222,7 @@ class Bouteille extends DatabaseObject
                                                                       title='Doit être entre 1 et 2099 compris'/></td></tr>" .
                "<tr><td>prix_bouteille        </td><td>"." : "."<input type='number' name='prix_bouteille'        value=\"" . ($isForModifier ? $this->prix_bouteille : "") . "\" required pattern='^\d+(.\d{1,2})?$'
                                                                       title='Doit être composé de chiffre et eventuellement de 2 chiffres apres le point'/></td></tr>" .
-               "<tr><td>Appellation           </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Appellation::class), 2, $isForModifier ? $this->id_appellation : -1)."</td></tr>".
-               "<tr><td>Categorie             </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Categorie::class), 3, $isForModifier ? $this->id_categorie : -1)  ."</td></tr>";
+               "<tr><td>Appellation           </td><td>"." : ". FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Appellation::class), 2, $isForModifier ? $this->id_appellation : -1)."</td></tr>".
+               "<tr><td>Categorie             </td><td>"." : ". FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Categorie::class), 3, $isForModifier ? $this->id_categorie : -1)  ."</td></tr>";
     }
 }

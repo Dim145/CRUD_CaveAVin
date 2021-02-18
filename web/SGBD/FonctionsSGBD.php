@@ -1,53 +1,22 @@
 <?php
     require_once "../connexionPerso.php";
-    require_once "../classes/DataBaseObject.php";
-    require_once "../classes/degustation.php";
-    require_once "../classes/quantite.php";
-    require_once "../classes/bouteille.php";
-    require_once "../classes/appellation.php";
-    require_once "../classes/categorie.php";
-    require_once "../classes/oenologue.php";
+    require_once "../Entite/DataBaseObject.php";
+    require_once "../Entite/degustation.php";
+    require_once "../Entite/quantite.php";
+    require_once "../Entite/bouteille.php";
+    require_once "../Entite/appellation.php";
+    require_once "../Entite/categorie.php";
+    require_once "../Entite/oenologue.php";
 
-    require_once "../classes/DataBaseObjectIterator.php";
+    require_once "../Entite/DataBaseObjectIterator.php";
 
 /**
  * Class FonctionsUtiles
  */
-class FonctionsUtiles
+class FonctionsSGBD
 {
     private static ?PDO $bdd = null;
 
-    /**
-     * Crée le debut de la page HTML
-     * @param string $titre Le titre de la page
-     * @return string Le contenu de la page
-     */
-    public static function getDebutHTML(string $titre):string
-    {
-        $str = "<html lang=\"fr\">
-                    <head>
-                        <title>$titre</title>
-                        <link href='../style/style.css' rel='stylesheet' type='text/css'/>
-                    </head>
-                    <body>
-                        <center>";
-        if($titre != "Accueil")
-            $str .= "<form action='..'>
-                        <td><input type='SUBMIT' value='Menu' class='bouton boutonMenu'/></td>
-                     </form>";
-        return $str;
-    }
-
-    /**
-     * crée la fin de la page HTML
-     * @return string Le contenue de la page
-     */
-    public static function getFinHTML():string
-    {
-        return "<center
-            </body>
-        </html>";
-    }
 
     /**
      * Récupère toutes les instance d'une class dans la base de donnée
@@ -280,39 +249,6 @@ class FonctionsUtiles
         echo $str;
 
         return $bdd->exec($str);
-    }
-
-    /**
-     * Renvoi une liste déroulante en HTML selon un tableau de DataBaseObject.
-     * @param DataBaseObject[] $objects Le tableau d'objets a afficher.
-     * @param int $nbColumsDisplay Le nombre de colonnes a afficher. 1 par défaut.
-     * @param int $currentIdSelected valeur selectionnée par default. -1 = aucune valeur de selectionnée
-     * @return string
-     */
-    public static function getHTMLListFor( array $objects, int $nbColumsDisplay = 1, int $currentIdSelected = -1 ): string
-    {
-        if (count($objects) < 1   ) return "";
-        if( $nbColumsDisplay < 1  ) $nbColumsDisplay = 1;
-
-        $tabColumsName = $objects[0]->getColumsName(false);
-
-        if ( $nbColumsDisplay > count($tabColumsName)-1 ) $nbColumsDisplay = count($tabColumsName)-1;
-
-        $sRet = "<select name=\"".$tabColumsName[0]."\">\n";
-
-        foreach ( $objects as $obj )
-        {
-            $tabValues = $obj->getColumsValues();
-
-            $sRet .= "\t<option value=\"" . $tabValues[$tabColumsName[0]] . "\"" . ($tabValues[$tabColumsName[0]] == $currentIdSelected ? "selected" : " ") . ">";
-
-            for ($cpt = 0; $cpt < $nbColumsDisplay; $cpt++ )
-                $sRet .= $tabValues[$tabColumsName[$cpt+1]] . ", ";
-
-            $sRet = substr($sRet, 0, strlen($sRet)-2) . "</option>\n";
-        }
-
-        return $sRet . "\n</select>";
     }
 }
 

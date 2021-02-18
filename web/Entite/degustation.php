@@ -29,9 +29,9 @@ class Degustation extends DatabaseObject
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getNoteDegustation(): int
+    public function getNoteDegustation(): float
     {
         return $this->note_degustation;
     }
@@ -95,13 +95,19 @@ class Degustation extends DatabaseObject
         $this->id_oenologue = $id_oenologue;
     }
 
+    public function getBouteille() : bouteille{
+        return $this->bouteille;
+    }
 
+    public function getOenologue() : oenologue{
+        return $this->oenologue;
+    }
 
     public function setObjects(): void
     {
         $this->date      = new DateTime($this->date_degustation);
-        $this->bouteille = FonctionsUtiles::getBouteille($this->id_bouteille);
-        $this->oenologue = FonctionsUtiles::getOenologue($this->id_oenologue);
+        $this->bouteille = FonctionsSGBD::getBouteille($this->id_bouteille);
+        $this->oenologue = FonctionsSGBD::getOenologue($this->id_oenologue);
     }
 
     public function getColumsName( bool $includeSubObjects ): array
@@ -127,7 +133,7 @@ class Degustation extends DatabaseObject
         return "<td>" . $this->note_degustation     . "</td><td>"
             . $this->date_degustation               . "</td><td>"
             . $this->bouteille->getNomBouteille()   . "</td><td>"
-            . $this->oenologue->get_nom_oenologue() . "</td>";
+            . $this->oenologue->getNomOenologue() . "</td>";
     }
 
     public function getId()
@@ -140,7 +146,7 @@ class Degustation extends DatabaseObject
         return "<tr><td>note_degustation </td><td>"." : "."<input type='number' name='note_degustation'  value=\"" . ( $isForModifier ? $this->note_degustation : "" ) . "\" required min='0' max='20' step='0.1'
                                                                  title='Doit être en 0 et 20 compris'/></td></tr>" .
                "<tr><td>date_degustation </td><td>"." : "."<input type='date' name='date_degustation'  value=\"". ( $isForModifier ? $this->date_degustation : date('Y-m-d')) ."\" /></td></tr>".
-               "<tr><td>Bouteille        </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $this->id_bouteille : -1)."</td></tr>".
-               "<tr><td>Oenologue        </td><td>"." : ". FonctionsUtiles::getHTMLListFor(FonctionsUtiles::getAllFromClassName(Oenologue::class), 2, $isForModifier ? $this->id_oenologue : -1)."</td></tr>";
+               "<tr><td>Bouteille        </td><td>"." : ". FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $this->id_bouteille : -1)."</td></tr>".
+               "<tr><td>Oenologue        </td><td>"." : ". FonctionsSGBD::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Oenologue::class), 2, $isForModifier ? $this->id_oenologue : -1)."</td></tr>";
     }
 }
