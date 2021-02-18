@@ -194,7 +194,7 @@ class FonctionsSGBD
     {
         return match (strtolower($objectClassName))
         {
-            cstrtolower(entite\Bouteille::class) => self::getBouteille($id),
+            strtolower(entite\Bouteille::class)  => self::getBouteille($id),
             strtolower(entite\Appellation::class)=> self::getAppellation($id),
             strtolower(entite\Categorie::class)  => self::getCategorie($id),
             strtolower(entite\Degustation::class)=> self::getDegustation($id),
@@ -233,7 +233,7 @@ class FonctionsSGBD
         $arraysColumnsName = $obj->getColumsName(false);
         $res = $bdd->exec("DELETE FROM " . (new \ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
 
-        return $bdd->exec("DELETE FROM " . $obj::class . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
+        return $bdd->exec("DELETE FROM " . (new \ReflectionClass($obj))->getShortName() . " WHERE " . $arraysColumnsName[0] . " = " . $obj->getColumsValues()[$arraysColumnsName[0]] );
     }
 
     public static function supprimerQuantite( entite\Quantite $qte ):bool
@@ -242,7 +242,7 @@ class FonctionsSGBD
 
         $arrayColumsvalue  = $qte->getColumsValues();
 
-        $str = "DELETE FROM " . (new \ReflectionClass(obj))->getShortName() . " WHERE ";
+        $str = "DELETE FROM " . (new \ReflectionClass($qte))->getShortName() . " WHERE ";
 
         foreach ( $arrayColumsvalue as $key => $value )
             $str .= $key . " = " . (is_string($value) ? "'$value'" : $value) . " AND ";
