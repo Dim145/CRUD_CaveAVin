@@ -1,12 +1,13 @@
 <?php
-
+namespace vues;
+use entite;
 
 class VueCategorie extends AbstractVueRelation
 {
 
-    public function getHTML4Entity(DataBaseObject $e): string
+    public function getHTML4Entity(entite\DataBaseObject $e): string
     {
-        if($e instanceof categorie) {
+        if($e instanceof entite\categorie) {
             $PK = $e->getIdCategorie();
             return "<tr class='EntityDescription CategorieDescription'><td>" . $e->getRobeBouteille() . "</td><td>" .
                 $e->getSucrageBouteille() . "</td><td>" . $e->getTypeBouteille() . "</td>".
@@ -29,9 +30,9 @@ class VueCategorie extends AbstractVueRelation
         return $All;
     }
 
-    public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
+    public function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier): string
     {
-        if($e instanceof categorie) {
+        if($e instanceof entite\categorie) {
             $valueRobe = null;
             $valueSucrage = null;
             $valueType = null;
@@ -40,9 +41,9 @@ class VueCategorie extends AbstractVueRelation
                 $valueSucrage = $e->getSucrageBouteille();
                 $valueType = $e->getTypeBouteille();
             }
-            $selectRobe = self::getSelectForAttribute("robe_bouteille", "--Selectionnez une robe", categorie::robes, $isForModifier, $valueRobe);
-            $selectSucrage = self::getSelectForAttribute("sucrage_bouteille", "--Selectionnez un sucrage", categorie::sucrages, $isForModifier, $valueSucrage);
-            $selectType = self::getSelectForAttribute("type_bouteille", "--Selectionnez un type", categorie::types, $isForModifier, $valueType);
+            $selectRobe = self::getSelectForAttribute("robe_bouteille", "--Selectionnez une robe", entite\categorie::robes, $isForModifier, $valueRobe);
+            $selectSucrage = self::getSelectForAttribute("sucrage_bouteille", "--Selectionnez un sucrage", entite\categorie::sucrages, $isForModifier, $valueSucrage);
+            $selectType = self::getSelectForAttribute("type_bouteille", "--Selectionnez un type", entite\categorie::types, $isForModifier, $valueType);
             return
                 "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<div class='fondTableau'><table>".

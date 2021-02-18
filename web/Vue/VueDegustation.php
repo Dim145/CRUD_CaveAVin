@@ -1,12 +1,14 @@
 <?php
-
+namespace vues;
+use entite;
+use sgbd;
 
 class VueDegustation extends AbstractVueRelation
 {
 
-    public function getHTML4Entity(DataBaseObject $e): string
+    public function getHTML4Entity(entite\DataBaseObject $e): string
     {
-        if($e instanceof degustation){
+        if($e instanceof entite\degustation){
             $PK = $e->getIdDegustation();
             return "<tr class='EntityDescription DegustationDescription'><td>" . $e->getNoteDegustation()     . "</td><td>"
                 . $e->getDateDegustation()               . "</td><td>"
@@ -31,9 +33,9 @@ class VueDegustation extends AbstractVueRelation
         return $All;
     }
 
-    public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
+    public function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier): string
     {
-        if($e instanceof degustation){
+        if($e instanceof entite\degustation){
             $get = $isForModifier ? "?action=ModifierEntite" : "?action=InsererEntite";
             return
                 "<form form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
@@ -47,11 +49,11 @@ class VueDegustation extends AbstractVueRelation
                         "</tr>".
                         "<tr>".
                             "<td>Bouteille        </td>".
-                            "<td>"." : ". AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Bouteille::class), 2, $isForModifier ? $e->getIdBouteille() : -1)."</td>".
+                            "<td>"." : ". AbstractVueRelation::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(entite\Bouteille::class), 2, $isForModifier ? $e->getIdBouteille() : -1)."</td>".
                         "</tr>".
                         "<tr>".
                             "<td>Oenologue        </td>".
-                            "<td>"." : ". AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Oenologue::class), 2, $isForModifier ? $e->getIdOenologue() : -1)."</td>".
+                            "<td>"." : ". AbstractVueRelation::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(entite\Oenologue::class), 2, $isForModifier ? $e->getIdOenologue() : -1)."</td>".
                         "</tr>".
                         "<tr>".
                             "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".

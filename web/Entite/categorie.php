@@ -1,4 +1,5 @@
 <?php
+namespace entite;
 
 class Categorie extends DataBaseObject
 {
@@ -30,7 +31,7 @@ class Categorie extends DataBaseObject
         if (in_array($robe_bouteille, self::robes))
             $this->robe_bouteille = $robe_bouteille;
         else
-            throw new Exception("valeur de robe invalide");
+            throw new \Exception("valeur de robe invalide");
     }
 
     public function getRobeBouteille(): string
@@ -44,7 +45,7 @@ class Categorie extends DataBaseObject
         if (in_array($sucrage_bouteille, self::sucrages))
             $this->sucrage_bouteille = $sucrage_bouteille;
         else
-            throw new Exception("Valeur de sucrage invalide");
+            throw new \Exception("Valeur de sucrage invalide");
     }
 
     public function getSucrageBouteille(): string
@@ -57,7 +58,7 @@ class Categorie extends DataBaseObject
         if (in_array($type_bouteille, self::types))
             $this->type_bouteille = $type_bouteille;
         else
-            throw new Exception("Type De bouteille invalide");
+            throw new \Exception("Type De bouteille invalide");
     }
 
     public function getTypeBouteille(): string
@@ -77,7 +78,7 @@ class Categorie extends DataBaseObject
 
     public function getColumsName( bool $includeSubObjects ): array
     {
-        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+        $allAtribute = $this->getReflexion()->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         $colums = array();
 

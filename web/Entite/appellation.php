@@ -1,4 +1,6 @@
 <?php
+namespace entite;
+use entite;
 
 class Appellation extends DataBaseObject
 {
@@ -40,7 +42,7 @@ class Appellation extends DataBaseObject
         if(in_array($categorie_appellation, self::categories))
             $this->categorie_appellation = $categorie_appellation;
         else
-            throw new Exception("La catégorie doit etre égale a une de ces valeurs: " . implode(" - ", self::categories));
+            throw new \Exception("La catégorie doit etre égale a une de ces valeurs: " . implode(" - ", self::categories));
     }
 
     function setObjects(): void
@@ -50,7 +52,7 @@ class Appellation extends DataBaseObject
 
     public function getColumsName( bool $includeSubObjects ): array
     {
-        $allAtribute = $this->getReflexion()->getProperties(ReflectionProperty::IS_PRIVATE);
+        $allAtribute = $this->getReflexion()->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         $colums = array();
 

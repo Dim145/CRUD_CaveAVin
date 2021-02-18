@@ -1,12 +1,14 @@
 <?php
-
+namespace vues;
+use entite;
+use sgbd;
 
 class VueBouteille extends AbstractVueRelation
 {
 
-    public function getHTML4Entity(DataBaseObject $e): string
+    public function getHTML4Entity(entite\DataBaseObject $e): string
     {
-        if($e instanceof bouteille) {
+        if($e instanceof entite\bouteille) {
             return "<tr class='EntityDescription BouteilleDescription'><td>" . $e->getNomBouteille() . "</td><td>" .
                 $e->getMillesimeBouteille() . "</td><td>" .
                 $e->getPrixBouteille() . "</td><td>" .
@@ -32,11 +34,11 @@ class VueBouteille extends AbstractVueRelation
         return $All;
     }
 
-    public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
+    public function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier): string
     {
-        if($e instanceof bouteille) {
+        if($e instanceof entite\bouteille) {
             $value = $isForModifier ? $e->getVolumeBouteille() : null;
-            $selectVolume = self::getSelectForAttribute("volume_bouteille", "--Selectionnez un volume", bouteille::volumes, $isForModifier, $value);
+            $selectVolume = self::getSelectForAttribute("volume_bouteille", "--Selectionnez un volume", entite\bouteille::volumes, $isForModifier, $value);
             return "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                         "<div class='fondTableau'><table>".
                             "<tr>".
@@ -53,8 +55,8 @@ class VueBouteille extends AbstractVueRelation
                                 "<td>"." : "."<input type='number' name='millesime_bouteille'   value=\"" . ($isForModifier ? $e->getMillesimeBouteille() : "") . "\" required min='1' max='2099' step='1' title='Doit être entre 1 et 2099 compris'/></td></tr>" .
                             "<tr><td>prix_bouteille        </td><td>"." : "."<input type='number' name='prix_bouteille'        value=\"" . ($isForModifier ? $e->getPrixBouteille() : "") . "\" required pattern='^\d+(.\d{1,2})?$'
                                                                                   title='Doit être composé de chiffre et eventuellement de 2 chiffres apres le point'/></td></tr>" .
-                            "<tr><td>Appellation           </td><td>"." : ". AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Appellation::class), 2, $isForModifier ? $e->getIdAppellation() : -1)."</td></tr>".
-                            "<tr><td>Categorie             </td><td>"." : ". AbstractVueRelation::getHTMLListFor(FonctionsSGBD::getAllFromClassName(Categorie::class), 3, $isForModifier ? $e->getIdCategorie() : -1)  ."</td></tr>".
+                            "<tr><td>Appellation           </td><td>"." : ". AbstractVueRelation::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(entite\Appellation::class), 2, $isForModifier ? $e->getIdAppellation() : -1)."</td></tr>".
+                            "<tr><td>Categorie             </td><td>"." : ". AbstractVueRelation::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(entite\Categorie::class), 3, $isForModifier ? $e->getIdCategorie() : -1)  ."</td></tr>".
                             "<tr><td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td></tr>".
                         "</table></div>".
                         ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").

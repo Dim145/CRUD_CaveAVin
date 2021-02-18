@@ -1,19 +1,21 @@
 <?php
+namespace vues;
+use entite;
 
 
 class VueAppellation extends AbstractVueRelation
 {
 
-    public function getHTML4Entity(DataBaseObject $e): string
+    public function getHTML4Entity(entite\DataBaseObject $e): string
     {
-        if($e instanceOf appellation) {
+        if($e instanceOf entite\appellation) {
             return "<tr class='EntityDescription AppellationDescription'><td>" . $e->getNomAppellation() . "</td><td>"
                 . $e->getCategorieAppellation() . "</td>".
                 /*"<td><a href='?action=ModifierEntite&PK=".$PK."'>Modifier</a>".
                 "<a href='?action=SupprimerEntite&PK=".$PK."'>Supprimer</a> </td></tr>";*/
                 "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
-                    "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
+                    "<input type='HIDDEN' name='PK'             value='".$e->getId()."'/>".
                     "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
                 "</form></td></tr>";
         } else return "";
@@ -34,11 +36,11 @@ class VueAppellation extends AbstractVueRelation
         return $All;
     }
 
-    public function getForm4Entity(DataBaseObject $e, bool $isForModifier): string
+    public function getForm4Entity(entite\DataBaseObject $e, bool $isForModifier): string
     {
-        if($e instanceof appellation) {
+        if($e instanceof entite\Appellation) {
             $value = $isForModifier ? $e->getCategorieAppellation() : null;
-            $selectCategorie = self::getSelectForAttribute("categorie_appellation", "--Selectionnez une catégorie",appellation::categories, $isForModifier, $value);
+            $selectCategorie = self::getSelectForAttribute("categorie_appellation", "--Selectionnez une catégorie",entite\appellation::categories, $isForModifier, $value);
             $Form =
                 "<form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
                     "<div class='fondTableau'>".
