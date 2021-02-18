@@ -40,7 +40,7 @@ class FonctionsUtiles
 
     /**
      * crée la fin de la page HTML
-     * @return string Le contenu de la page
+     * @return string Le contenue de la page
      */
     public static function getFinHTML():string
     {
@@ -82,14 +82,14 @@ class FonctionsUtiles
         {
             return self::getAllFromClass((new ReflectionClass($className)));
         }
-        catch (ReflectionException $e)
+        catch (ReflectionException)
         {
             return array();
         }
     }
 
     /**
-     * Retourne une PDO déjà instanciée ou en instancie une avant de la retourner
+     * Return une PDO déjà instanciée ou en instancie une avant de la retourner
      * @return PDO L'instance actuelle de PDO
      */
     public static function getBDD(): PDO
@@ -197,7 +197,7 @@ class FonctionsUtiles
      * NE DEVRAIS PAS EXISTER. Mais comme la class Quantite ne possede pas
      * d'attribut de type "id", nous ne pouvons pas utiliser la recursivité pour celle-ci.
      *
-     * @param int $ids_quantite sous forme nom_bouteille,volume_bouteille,millesime_bouteille
+     * @param string $ids_quantite sous forme nom_bouteille,volume_bouteille,millesime_bouteille
      * @return Quantite|null Objet de type Quantité
      */
     public static function getQuantite(string $ids_quantite): ?Quantite
@@ -219,17 +219,16 @@ class FonctionsUtiles
      */
     public static function getDataBaseObject(string $objectClassName, $id): ?DataBaseObject
     {
-        switch (strtolower($objectClassName))
+        return match (strtolower($objectClassName))
         {
-            case strtolower(Bouteille::class): return self::getBouteille($id);
-            case strtolower(Appellation::class): return self::getAppellation($id);
-            case strtolower(Categorie::class): return self::getCategorie($id);
-            case strtolower(Degustation::class): return self::getDegustation($id);
-            case strtolower(Oenologue::class): return self::getOenologue($id);
-            case strtolower(Quantite::class): return self::getQuantite($id);
-
-            default: return null;
-        }
+            strtolower(Bouteille::class) => self::getBouteille($id),
+            strtolower(Appellation::class) => self::getAppellation($id),
+            strtolower(Categorie::class) => self::getCategorie($id),
+            strtolower(Degustation::class) => self::getDegustation($id),
+            strtolower(Oenologue::class) => self::getOenologue($id),
+            strtolower(Quantite::class) => self::getQuantite($id),
+            default => null,
+        }; // remplace un switch
     }
 
     public static function getNbInstanceOf( string $class ): int
@@ -280,9 +279,7 @@ class FonctionsUtiles
 
         echo $str;
 
-        $res = $bdd->exec($str);
-
-        return $res;
+        return $bdd->exec($str);
     }
 
     /**
