@@ -1,21 +1,27 @@
 <?php
 namespace entite;
+
+use PDOStatement;
+use ReflectionClass;
 use sgbd;
 
 class DataBaseObjectIterator implements \Iterator, \Countable
 {
     private ?DataBaseObject  $current;
-    private \ReflectionClass $class;
+    private ReflectionClass $class;
+    private string $orderBy;
 
     private int $count; // stockage dans un objets pour eviter un nb de requetes trop grand a la base de donnée
     // une methode pour refresh ce nb seras implémenter.
 
-    private \PDOStatement $statement;
+    private PDOStatement $statement;
 
     public function __construct( string $class , string $orderBy)
     {
-        $this->class     = new \ReflectionClass($class);
+        $this->class = new ReflectionClass($class);
+        $this->orderBy = $orderBy;
         $this->count = -1;
+
         $bdd = sgbd\FonctionsSGBD::getBDD();
         $tableName = $this->class->getShortName();
         if($orderBy == "")
@@ -40,6 +46,7 @@ class DataBaseObjectIterator implements \Iterator, \Countable
     public function next(): void
     {
         $tmp = $this->statement->fetchObject($this->class->getName());
+
         if( $tmp === false ) $this->current = null;
         else {
             $tmp->setObjects();
@@ -69,7 +76,10 @@ class DataBaseObjectIterator implements \Iterator, \Countable
     public function rewind(): void
     {
         $bdd = sgbd\FonctionsSGBD::getBDD();
-        $this->statement = $bdd->query("SELECT * FROM " . $this->class->getShortName());
+        if($this->orderBy == "")
+            $this->statement = $bdd->query("SELECT * FROM $this->class->getShortName()");
+        else
+            $this->statement = $bdd->query("SELECT * FROM $this->class->getShortName() ORDER BY $this->orderBy");
     }
 
     public function count()

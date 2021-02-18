@@ -15,9 +15,9 @@ class VueAppellation extends AbstractVueRelation
                 /*"<td><a href='?action=ModifierEntite&PK=".$PK."'>Modifier</a>".
                 "<a href='?action=SupprimerEntite&PK=".$PK."'>Supprimer</a> </td></tr>";*/
                 "<td><form action=".$_SERVER['PHP_SELF']."?table=".$_GET['table']." method='POST'>".
-                    "<input type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'/>".
-                    "<input type='HIDDEN' name='PK'             value='".$e->getId()."'/>".
-                    "<input type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'/>".
+                "<button type='SUBMIT' name='actionSurTuple' value='Modifier'  class='bouton boutonModifier'><img src='../images/edit.png' height='15'  alt='oups'/> </button>".
+                "<input type='HIDDEN' name='PK'          value='".$e->getId()."'/>".
+                "<button type='SUBMIT' name='actionSurTuple' value='Supprimer' class='bouton boutonSupprimer'><img src='../images/trash.png' height='15'  alt='oups'/> </button>".
                 "</form></td></tr>";
         }
         else
