@@ -103,11 +103,7 @@ else
                 $obj->setObjects();
                 $obj->saveInDB();
 
-                echo "<table><tr>" . $obj . "</tr></table>";
-                echo vues\AbstractVueRelation::getFinHTML();
-                echo "<script type=\"text/javascript\">
-                        history.go(-2))
-                      </script>";// plus propre qu'un post/get
+                header("Location: " . $_SERVER['HTTP_REFERER'] );
             }
             catch(PDOException $e)
             {
@@ -115,7 +111,6 @@ else
                 echo "<p>".$e->getMessage()."</p></div>";
                 echo "<a class='bouton' href='".$_SERVER['HTTP_REFERER']."'>Annuler</a>";
             }
-            echo "<meta http-equiv='refresh' content='3;url=http:./SelectionPage.php' />";
         break;
         default: echo 'error';
     }
