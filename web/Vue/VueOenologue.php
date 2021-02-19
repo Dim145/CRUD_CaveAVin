@@ -49,7 +49,7 @@ class VueOenologue extends AbstractVueRelation
                             "<td>nom_oenologue </td>".
                             "<td>"." : "."<input type='text' name='nom_oenologue' value=\"" . ( $isForModifier ? $e->getNomOenologue() : "" ) . "\" required /></td>".
                         "</tr>".
-                            "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".
+                            "<td colspan=2><center><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></center></td>".
                         "</tr>".
                     "</table></div>".
                     ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").

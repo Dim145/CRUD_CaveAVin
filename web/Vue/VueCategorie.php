@@ -73,7 +73,7 @@ class VueCategorie extends AbstractVueRelation
                             "<td>"." : " . $selectType . "</td>".
                         "</tr>".
                         "<tr>".
-                            "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".
+                            "<td colspan=2><center><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></center></td>".
                         "</tr>".
                     "</table></div>".
                     ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").

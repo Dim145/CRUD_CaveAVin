@@ -104,7 +104,7 @@ else
                 $obj->setObjects();
                 $obj->saveInDB();
 
-                echo "<table><tr>" . $obj . "</tr></table>" . $obj->getId();
+                echo "<table><tr>" . $obj . "</tr></table>";
                 echo vues\AbstractVueRelation::getFinHTML();
                 echo "<script type=\"text/javascript\">
                         history.go(-2))

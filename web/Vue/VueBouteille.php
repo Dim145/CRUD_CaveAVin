@@ -73,7 +73,7 @@ class VueBouteille extends AbstractVueRelation
                                                                                   title='Doit être composé de chiffre et eventuellement de 2 chiffres apres le point'/></td></tr>" .
                             "<tr><td>Appellation           </td><td>"." : ". AbstractVueRelation::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(entite\Appellation::class), 2, $isForModifier ? $e->getIdAppellation() : -1)."</td></tr>".
                             "<tr><td>Categorie             </td><td>"." : ". AbstractVueRelation::getHTMLListFor(sgbd\FonctionsSGBD::getAllFromClassName(entite\Categorie::class), 3, $isForModifier ? $e->getIdCategorie() : -1)  ."</td></tr>".
-                            "<tr><td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td></tr>".
+                            "<tr><td colspan=2><center><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></center></td></tr>".
                         "</table></div>".
                         ($isForModifier ? "<input type='HIDDEN' name='PK' value='".$e->getId()."'/>" : " ").
                     "</form>";
