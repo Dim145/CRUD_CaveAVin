@@ -49,7 +49,6 @@ else
     switch($_POST['actionSurTuple'])
     {
         case 'Supprimer':
-            var_dump($obj);
             $obj->setObjects();
 
             echo "objet supprimer = <br/>";
