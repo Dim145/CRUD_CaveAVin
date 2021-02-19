@@ -18,7 +18,7 @@ $vueClasse = null;
 try
 {
     $entiteClasse = new ReflectionClass("entite\\".htmlspecialchars($_GET['table'])); // test si la table donnée existe.
-    $vueClasse = new ReflectionClass("vues\\Vue".ucfirst($_GET['table']));
+    $vueClasse    = new ReflectionClass("vues\\Vue".ucfirst($_GET['table']));
 }
 catch (ReflectionException $e)
 {
@@ -49,12 +49,13 @@ else
     switch($_POST['actionSurTuple'])
     {
         case 'Supprimer':
+            var_dump($obj);
             $obj->setObjects();
 
             echo "objet supprimer = <br/>";
             echo "<table><tr>" . $obj . "</tr></table>";
             if( $entiteClasse->getName() == entite\Quantite::class ) sgbd\FonctionsSGBD::supprimerQuantite($obj);
-            else                                          sgbd\FonctionsSGBD::supprimer($obj);
+            else                                                     sgbd\FonctionsSGBD::supprimer($obj);
             header("Location: " . $_SERVER['HTTP_REFERER']);
         break;
 
