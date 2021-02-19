@@ -20,7 +20,7 @@ echo vues\AbstractVueRelation::getDebutHTML("Test Appellation");
 if( !isset($_GET['table'])) die();
 
 $entiteClasse = null;
-$vueClasse = null;
+$vueClasse    = null;
 
 try
 {
@@ -123,5 +123,3 @@ else
     }
 }
 echo vues\AbstractVueRelation::getFinHTML();
-
-?>
