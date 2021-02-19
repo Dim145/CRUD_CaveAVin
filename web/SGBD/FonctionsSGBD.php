@@ -90,6 +90,15 @@ class FonctionsSGBD
     }
 
     /**
+     * La methode connexionBD vient d'un fichier personnel qui n'est pas mis sur GIT.
+     * Cela pour pouvoir géré une connexion personnel pour les membre du groupe.
+     * Le fichier doit s'appeler connexionPerso.php, se trouve a la racine du serveur (dossier web par exemple) et son code est le suivant:
+     *  function connexionBD(): PDO
+        {
+            return new PDO('pgsql:host=postgresql-cavevin.alwaysdata.net;dbname=cavevin_base1', 'cavevin', 'iYMYpR7X@X@$qPDN', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        }
+     *
+     *  Le code ci-dessus correspond a la connexion a une connexion distante = lent;
      * Connexion a la base de donnée
      * @return PDO L'instance de PDO
      */
