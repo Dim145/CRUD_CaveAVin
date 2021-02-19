@@ -44,7 +44,7 @@ if(!isset($_POST['actionSurTuple']))
 }
 else
 {
-    $obj = isset($_POST['PK']) ? sgbd\FonctionsSGBD::getDataBaseObject("entite\\".$_GET['table'], $_POST['PK']) : $entiteClasse->newInstance();
+    $obj = isset($_POST['PK']) ? sgbd\FonctionsSGBD::getDataBaseObject($_GET['table'], $_POST['PK']) : $entiteClasse->newInstance();
 
     switch($_POST['actionSurTuple'])
     {
