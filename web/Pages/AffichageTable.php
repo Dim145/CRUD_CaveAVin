@@ -115,6 +115,7 @@ else
                 echo "<p>".$e->getMessage()."</p></div>";
                 echo "<a class='bouton' href='".$_SERVER['HTTP_REFERER']."'>Annuler</a>";
             }
+            echo "<meta http-equiv='refresh' content='3;url=http:./SelectionPage.php' />";
         break;
         default: echo 'error';
     }
