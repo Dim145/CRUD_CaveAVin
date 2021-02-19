@@ -1,4 +1,9 @@
 <?php
+namespace pages;
+use vues;
+use sgbd;
+use entite;
+
 require_once "../Vue/AbstractVueRelation.php";
 require_once "../Vue/VueAppellation.php";
 require_once "../Vue/VueDegustation.php";
@@ -7,6 +12,8 @@ require_once "../Vue/VueBouteille.php";
 require_once "../Vue/VueOenologue.php";
 require_once "../Vue/VueQuantite.php";
 require_once "../SGBD/FonctionsSGBD.php";
+
+
 
 echo vues\AbstractVueRelation::getDebutHTML("Test Appellation");
 
@@ -17,10 +24,10 @@ $vueClasse = null;
 
 try
 {
-    $entiteClasse = new ReflectionClass("entite\\".htmlspecialchars($_GET['table'])); // test si la table donnée existe.
-    $vueClasse    = new ReflectionClass("vues\\Vue".ucfirst($_GET['table']));
+    $entiteClasse = new \ReflectionClass("entite\\".htmlspecialchars($_GET['table'])); // test si la table donnée existe.
+    $vueClasse    = new \ReflectionClass("vues\\Vue".ucfirst($_GET['table']));
 }
-catch (ReflectionException $e)
+catch (\ReflectionException $e)
 {
     header("Location: SelectionPage.php"); // sinon, retourne sur la selection des tables
 }
