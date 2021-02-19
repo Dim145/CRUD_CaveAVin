@@ -300,9 +300,9 @@ class FonctionsSGBD
 }
 
 
-$object = FonctionsSGBD::getDataBaseObject(Quantite::class, "Blanc Essence,300,1997");
+/*$object = FonctionsSGBD::getDataBaseObject(Quantite::class, "Blanc Essence,300,1997");
 $object = FonctionsSGBD::getDataBaseObject(Appellation::class, "Blanc Essence,300,1997");
 if( $object != null )
     $object->setObjects();
 
-echo $object;
+echo $object;*/
