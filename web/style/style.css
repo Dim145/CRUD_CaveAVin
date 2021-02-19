@@ -1,5 +1,3 @@
-@import "compass/css3";
-
 /* Style de la page globale*/
 body
 {
@@ -116,3 +114,9 @@ marquee
 }
 
 .droite { float: right; }
+
+.messageErreur
+{
+    color: red;
+    font-weight: bold;
+}

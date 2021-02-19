@@ -66,7 +66,7 @@ class VueAppellation extends AbstractVueRelation
                                  "<td>"." : ". $selectCategorie . "</td>".
                             "</tr>".
                             "<tr>".
-                                "<td colspan=2><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></td>".
+                                "<td colspan=2><center><input type='SUBMIT' name='actionSurTuple' value='Confirmer' class='bouton boutonCreer'/></center></td>".
                             "</tr>".
                         "</table>".
                     "</div>".
