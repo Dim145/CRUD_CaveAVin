@@ -205,7 +205,38 @@ class FonctionsSGBD
      */
     public static function getDataBaseObject(string $objectClassName, $id): ?entite\DataBaseObject
     {
-        return match (strtolower($objectClassName))
+        $bdd = self::getBDD();
+        $class = null;
+
+        try
+        {
+            $class = new ReflectionClass($objectClassName); //erreur si class inexistante
+
+            $instanceExemple = $class->newInstance(); //erreur si class ininstenciable
+            if ( !is_a($instanceExemple, DataBaseObject::class ) ) // erreur si n'est pas une DataBaseObject
+                throw new Exception("La class donnée doit etre une instance de DatabaseObject");
+        }
+        catch (Exception) // récupère les differente erreurs prévu, qui indiquent que les types sont mauvais.
+        {
+            return null;
+        }
+
+        $requete = "SELECT * FROM " . $class->getShortName() . " WHERE ";
+
+        $tabAllAttribute = $instanceExemple->getColumsName(false); // je sais que je suis sur un DataBaseObject grace au try.
+        $nbId            = str_contains(strtolower($class->getShortName()), "quantite") ? 3 : 1;
+
+        if( $nbId == 1 && is_string($id) ) return null; // dans le cas ou on envoi une chaine pour id, mais que l'objet n'est pas quantite.
+
+        for ($cpt = 0; $cpt < $nbId; $cpt++ )
+            $requete .= $tabAllAttribute[$cpt] . " = ? AND ";
+
+        $reponse = $bdd->prepare(substr($requete, 0, -4)); // j'enleve le dernier And.
+        $reponse->execute( $nbId == 1 ? array($id) : explode(",", $id) );
+
+        return $reponse->fetchObject($class->getName());
+
+        /*return match (strtolower($objectClassName))
         {
             strtolower(entite\Bouteille::class  ) => self::getBouteille($id),
             strtolower(entite\Appellation::class) => self::getAppellation($id),
@@ -215,7 +246,7 @@ class FonctionsSGBD
             strtolower(entite\Quantite::class   ) => self::getQuantite($id),
 
             default => null,
-        };
+        };*/
     }
 
     public static function getNbInstanceOf( string $class ): int
@@ -268,17 +299,10 @@ class FonctionsSGBD
     }
 }
 
-/*$iterator = new DataBaseObjectIterator(Quantite::class);
-$quantite = new Quantite();
-$quantite->setNomBouteille("Nos Racines - Famille Raymond");
-$quantite->setMillesimeBouteille(2017);
-$quantite->setVolumeBouteille(75);
-$quantite->setQteBouteille(51);
-$quantite->saveInDB();
 
-echo "test: " . $iterator->count() . "<br/>";
-foreach ($iterator as $bouteille)
-{
-    $bouteille->setObjects();
-    echo $bouteille;
-}*/
+$object = FonctionsSGBD::getDataBaseObject(Quantite::class, "Blanc Essence,300,1997");
+$object = FonctionsSGBD::getDataBaseObject(Appellation::class, "Blanc Essence,300,1997");
+if( $object != null )
+    $object->setObjects();
+
+echo $object;
