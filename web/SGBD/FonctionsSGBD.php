@@ -210,14 +210,16 @@ class FonctionsSGBD
 
         try
         {
-            $class = new ReflectionClass($objectClassName); //erreur si class inexistante
+            $class = new ReflectionClass("entite\\".$objectClassName); //erreur si class inexistante
 
             $instanceExemple = $class->newInstance(); //erreur si class ininstenciable
             if ( !is_a($instanceExemple, DataBaseObject::class ) ) // erreur si n'est pas une DataBaseObject
                 throw new Exception("La class donnée doit etre une instance de DatabaseObject");
         }
-        catch (Exception) // récupère les differente erreurs prévu, qui indiquent que les types sont mauvais.
+        catch (Exception $e) // récupère les differente erreurs prévu, qui indiquent que les types sont mauvais.
         {
+            echo $e;
+
             return null;
         }
 
@@ -225,8 +227,6 @@ class FonctionsSGBD
 
         $tabAllAttribute = $instanceExemple->getColumsName(false); // je sais que je suis sur un DataBaseObject grace au try.
         $nbId            = str_contains(strtolower($class->getShortName()), "quantite") ? 3 : 1;
-
-        if( $nbId == 1 && is_string($id) ) return null; // dans le cas ou on envoi une chaine pour id, mais que l'objet n'est pas quantite.
 
         for ($cpt = 0; $cpt < $nbId; $cpt++ )
             $requete .= $tabAllAttribute[$cpt] . " = ? AND ";
