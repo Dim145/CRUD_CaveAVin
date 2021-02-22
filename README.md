@@ -6,9 +6,9 @@
 
 ## Auteur(s)
 
-|      Nom      |  Prénom  |
-|---------------|----------|
-|*Boireau*      | *Florian*|
-|*Dubois*       | *Dimitri*|
-|*Mittlestaedt* | *Arthur* |
+|       Nom      |   Prénom   |
+|----------------|------------|
+|*Boireau*       | *Florian*  |
+|*Dubois*        | *Dimitri*  |
+|*(Mittlestaedt)*| *(Arthur)* |
 
