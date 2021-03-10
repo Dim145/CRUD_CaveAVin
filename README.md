@@ -5,7 +5,7 @@
 - TP : *CRUD*
 
 # Lien YouTube:
-<a target="blank" href="https://www.youtube.com/watch?v=Kunyrh6liIY">Vidéo de présentation</a>
+<a target="_blank" href="https://www.youtube.com/watch?v=Kunyrh6liIY">Vidéo de présentation</a>
 
 ## Auteur(s)
 
